@@ -40,6 +40,20 @@
                         </div>
 
                         <div class="form-group row">
+                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Login Sebagai') }}</label>
+
+                            <div class="col-md-6">
+                                <select name="role" id="role" class="custom-select" required>
+                                    <option value="" disabled selected></option>
+                                    <option value="superadmin">Superadmin</option>
+                                    <option value="question_writer">Penulis Soal</option>
+                                    <option value="school_admin">Admin Sekolah</option>
+                                    <option value="student">Siswa</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
                             <div class="col-md-6 offset-md-4">
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>

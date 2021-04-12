@@ -15,6 +15,8 @@
                     @endif
 
                     {{ __('You are logged in!') }}
+
+                    {{ auth()->guard(session()->get('role'))->user()->name }}
                 </div>
             </div>
         </div>

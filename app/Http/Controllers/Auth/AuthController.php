@@ -22,7 +22,8 @@ class AuthController extends Controller
 
         $rules = [
             'username' => 'required|string|exists:' . $request->role . 's,username',
-            'password' => 'required|string'
+            'password' => 'required|string',
+            'role' => 'required|string'
         ];
 
         $messages = [
@@ -42,6 +43,8 @@ class AuthController extends Controller
                 ->intended(route('home'))
                 ->with('status', 'Selamat datang!'); 
         }
+        
+        return redirect()->back()->withErrors(['username' => 'Identitas tersebut tidak cocok dengan data kami.']);
     }
 
     public function logout()

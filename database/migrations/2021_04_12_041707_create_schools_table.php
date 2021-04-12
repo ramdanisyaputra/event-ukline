@@ -17,8 +17,9 @@ class CreateSchoolsTable extends Migration
             $table->id();
             $table->string('name');
             $table->text('address')->nullable();
+            $table->string('headmaster_name')->nullable();
             $table->boolean('active_status');
-            $table->enum('status',['tryout','event']);
+            $table->enum('status',['tryout','resmi']);
             $table->foreignId('education_level_id')->references('id')->on('education_levels')->onDelete('cascade');
             $table->foreignId('regency_id')->references('id')->on('regencies')->onDelete('cascade');
             $table->timestamps();

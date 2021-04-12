@@ -40,6 +40,10 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'question_writer' => [
+            'driver' => 'session',
+            'provider' => 'question_writers',
+        ],
         'school_admin' => [
             'driver' => 'session',
             'provider' => 'school_admins',
@@ -74,10 +78,15 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
+        'question_writers' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\QuestionWriter::class,
+        ],
         'school_admins' => [
             'driver' => 'eloquent',
             'model' => App\Models\SchoolAdmin::class,
         ],
+        
         
 
         // 'users' => [

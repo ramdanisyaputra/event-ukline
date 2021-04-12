@@ -46,4 +46,8 @@ class School extends Model
     {
         return $this->hasMany(ExamScore::class);
     }
+    public function questionWriters()
+    {
+        return $this->hasMany(QuestionWriter::class);
+    }
 }

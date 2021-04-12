@@ -20,7 +20,6 @@ class CreateStudentsTable extends Migration
             $table->string('name');
             $table->string('dob');
             $table->string('gender');
-            $table->string('gender');
             $table->foreignId('class_id')->references('id')->on('classes')->onDelete('cascade');
             $table->timestamps();
         });

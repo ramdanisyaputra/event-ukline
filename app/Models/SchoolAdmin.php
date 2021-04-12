@@ -14,4 +14,9 @@ class SchoolAdmin extends Model
     {
         return $this->belongsTo(School::class);
     }
+
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
 }

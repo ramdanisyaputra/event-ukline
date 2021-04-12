@@ -8,10 +8,14 @@ use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Auth;
 class SubjectController extends Controller
 {
+    public function adminGuard()
+    {
+        $adminGuard = Auth::guard(session()->get('role'))->user();
+        return $adminGuard;
+    }
     public function index(Request $request)
     {
-        dd(Auth::guard());
-        $subject = Subject::where('school_id', Auth::guard()->school_id);
+        $subject = Subject::where('school_id', $this->adminGuard()->school_id)->get();
         return view('/superadmin/subject/index',compact('subject'));
     }
     public function store(Request $request)

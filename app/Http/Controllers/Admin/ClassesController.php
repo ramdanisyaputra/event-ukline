@@ -4,15 +4,22 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Classes;
+use App\Models\Grade;
 use App\Models\Subject;
 use Illuminate\Support\Facades\Request;
-
+use Illuminate\Support\Facades\Auth;
 class ClassesController extends Controller
 {
+    public function adminGuard()
+    {
+        $adminGuard = Auth::guard(session()->get('role'))->user();
+        return $adminGuard;
+    }
     public function index(Request $request)
     {
-        $classes = Classes::all();
-        return view('/superadmin/classes/index',compact('classes'));
+        $classes = Classes::where('school_id', $this->adminGuard()->school_id)->get();
+        $grade = Grade::all();
+        return view('/superadmin/classes/index',compact('classes','grade'));
     }
     public function store(Request $request)
     {

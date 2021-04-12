@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class AuthController extends Controller
 {
@@ -54,4 +55,17 @@ class AuthController extends Controller
         return redirect('/')
             ->with('status', 'Anda telah keluar!');
     }
+
+    // public function gambar(Request $request)
+    // {
+    //         $file = $request->file('gambar');
+         
+    //         $nama_file = $file->getClientOriginalName();
+         
+    //         $tujuan_upload = 'coba-coba';
+           
+    //         Storage::put($tujuan_upload.'/'.$nama_file,file_get_contents($file),'public');
+
+    //         return redirect()->back();
+    // }
 }

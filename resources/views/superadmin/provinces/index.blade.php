@@ -3,11 +3,11 @@
 @section('content')
 <section class="section">
     <div class="section-header">
-        <h1>Regen</h1>
+        <h1>Provinsi</h1>
 
         <div class="section-header-breadcrumb">
             <div class="breadcrumb-item active"><a href="#">Beranda</a></div>
-            <div class="breadcrumb-item">Regen</div>
+            <div class="breadcrumb-item">Provinsi</div>
         </div>
     </div>
 
@@ -15,9 +15,9 @@
     <div class="section-body">
         <div class="card">
             <div class="card-header">
-                <h4>Daftar Regen</h4>
+                <h4>Daftar Provinsi</h4>
                 <div class="card-header-action">
-                    <button class="btn btn-primary" data-toggle="modal" data-target="#kelolaRegen"><i class="fa fa-plus"></i> Tambah Regen</button>
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#kelolaProvinsi"><i class="fa fa-plus"></i> Tambah Provinsi</button>
                 </div>
             </div>
             <div class="card-body">
@@ -27,6 +27,7 @@
                             <tr>
                                 <th>No</th>
                                 <th>ID</th>
+                                <th>Kode Provinsi</th>
                                 <th>Pronvisi</th>
                                 <th></th>
                             </tr>
@@ -35,10 +36,11 @@
                             @forelse ($provinces as $key => $province)
                             <tr>
                                 <td>{{ ++$key }}</td>
+                                <td>{{ $province->id }}</td>
                                 <td>{{ $province->province_code }}</td>
                                 <td>{{ $province->name }}</td>
                                 <td class="text-center">
-                                    <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#editProvince" data-id="{{ $province->id }}" data-name="{{ $province->name }}" data-province="{{ $province->province_id }}" data-province-code="{{ $province->province_code }}"><i class="fas fa-pencil-alt"></i></button>
+                                    <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#editProvince" data-id="{{ $province->id }}" data-name="{{ $province->name }}" data-province-code="{{ $province->province_code }}"><i class="fas fa-pencil-alt"></i></button>
                                 </td>
                             </tr>
                             @empty
@@ -54,13 +56,13 @@
     </div>
 </section>
 
-<div class="modal fade" id="kelolaRegen" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+<div class="modal fade" id="kelolaProvinsi" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form action="{{ route('superadmin.regencies.store') }}" method="POST" id="formKelolaRegen">
+            <form action="{{ route('superadmin.provinces.store') }}" method="POST" id="formKelolaProvince">
                 @csrf
                 <div class="modal-header">
-                    <h5 class="modal-title"><span>Tambah</span> Regen</h5>
+                    <h5 class="modal-title"><span>Tambah</span> Provinsi</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -68,7 +70,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="name">Nama Provinsi</label>
-                        <input type="text" class="form-control" id="name" name="name" required placeholder="Contoh: Kota Bekasi atau Kabupaten Bekasi">
+                        <input type="text" class="form-control" id="name" name="name" required placeholder="Contoh: Jawa Barat">
                     </div>
                     <div class="form-group">
                         <label for="province_code">Kode Provinsi</label>
@@ -88,12 +90,12 @@
 <div class="modal fade" id="editProvince" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form action="{{ route('superadmin.regencies.update') }}" method="POST" id="formKelolaRegen">
+            <form action="{{ route('superadmin.provinces.update') }}" method="POST" id="formKelolaProvince">
                 @csrf
                 @method('PUT')
                 <input type="hidden" name="id">
                 <div class="modal-header">
-                    <h5 class="modal-title"><span>Edit</span> Regen</h5>
+                    <h5 class="modal-title"><span>Edit</span> Provinsi</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -124,13 +126,11 @@
     $('#editProvince').on('show.bs.modal', (e) => {
         var id = $(e.relatedTarget).data('id');
         var name = $(e.relatedTarget).data('name');
-        var regencyCode= $(e.relatedTarget).data('regency-code');
-        var provinceId = $(e.relatedTarget).data('province');
+        var province_code= $(e.relatedTarget).data('province-code');
 
         $('#editProvince').find('input[name="id"]').val(id);
         $('#editProvince').find('input[name="name"]').val(name);
-        $('#editProvince').find('input[name="regency_code"]').val(regencyCode);
-        $('#editProvince').find('select[name="province_id"]').val(provinceId);
+        $('#editProvince').find('input[name="province_code"]').val(province_code);
     });
 </script>
 @endpush

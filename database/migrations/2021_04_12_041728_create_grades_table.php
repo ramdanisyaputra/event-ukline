@@ -15,8 +15,10 @@ class CreateGradesTable extends Migration
     {
         Schema::create('grades', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('number');
+            $table->string('roman');
             $table->string('school_year');
+            $table->foreignId('education_level_id')->references('id')->on('education_levels')->onDelete('cascade');
             $table->timestamps();
         });
     }

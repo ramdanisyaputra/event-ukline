@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Superadmin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Province;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class ProvinceController extends Controller
@@ -17,7 +17,8 @@ class ProvinceController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name'=>'unique:province',
+            'name'=>'unique:provinces',
+            'province_code'=>'unique:provinces',
         ]);
         if ($validator->fails()) {
             return redirect()->back()->with('alert','Gagal menginput data')->withInput();
@@ -28,7 +29,8 @@ class ProvinceController extends Controller
     public function update(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name'=>'unique:province,name,'. $request->id,
+            'name'=>'unique:provinces,name,'. $request->id,
+            'province_code'=>'unique:provinces,province_code,'. $request->id,
         ]);
         if ($validator->fails()) {
             return redirect()->back()->with('alert','Gagal mengubah data')->withInput();

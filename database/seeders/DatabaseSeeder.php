@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             School::class,
             QuestionWriter::class,
             SchoolAdmin::class,
+            StudentSeeder::class
         ]);
     }
 }

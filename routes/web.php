@@ -3,6 +3,8 @@
 use App\Http\Controllers\Admin\ClassesController;
 use App\Http\Controllers\Admin\SubjectController as AdminSubjectController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Student\ExamController;
+use App\Http\Controllers\Student\StudentController;
 use App\Http\Controllers\Superadmin\EducationLevelController;
 use App\Http\Controllers\Superadmin\ExamTypeController;
 use App\Http\Controllers\Superadmin\FaqController;
@@ -93,6 +95,9 @@ Route::prefix('superadmin')->name('superadmin.')->group(function() {
 });
 
 Route::prefix('school_admins')->name('school_admins.')->group(function(){
+    Route::get('/', function() {
+        return 'tes';
+    })->name('index');
     Route::prefix('subjects')->name('subjects.')->group(function(){
         Route::get('', [AdminSubjectController::class,'index'])->name('index');
         Route::post('store', [AdminSubjectController::class,'store'])->name('store');
@@ -110,5 +115,16 @@ Route::prefix('school_admins')->name('school_admins.')->group(function(){
     });
 });
 
+Route::namespace('student')->prefix('student')->name('student.')->group(function() {
+    Route::get('/', [StudentController::class, 'index'])->name('index');
+
+    Route::prefix('profile')->name('profile.')->group(function() {
+        Route::get('/', [StudentController::class, 'profile'])->name('index');
+    });
+
+    Route::prefix('exam')->name('exam.')->group(function() {
+        Route::get('/{exam}/boarding', [ExamController::class, 'boarding'])->name('boarding');
+    });
+});
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

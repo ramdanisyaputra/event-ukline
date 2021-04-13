@@ -17,6 +17,7 @@
     <!-- CSS Libraries -->
     <link rel="stylesheet" href="{{ asset('main/plugins/jqvmap/dist/jqvmap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('main/plugins/summernote/dist/summernote-bs4.css') }}">
+    <link rel="stylesheet" href="{{ asset('main/plugins/izitoast/dist/css/iziToast.min.css') }}">
 
     <!-- Template CSS -->
     <link rel="stylesheet" href="{{ asset('main/css/style.css')}}">
@@ -234,6 +235,7 @@
 <script src="{{ asset('main/plugins/jqvmap/dist/maps/jquery.vmap.world.js') }}"></script>
 <script src="{{ asset('main/plugins/summernote/dist/summernote-bs4.js') }}"></script>
 <script src="{{ asset('main/plugins/chocolat/dist/js/jquery.chocolat.min.js') }}"></script>
+<script src="{{ asset('main/plugins/izitoast/dist/js/iziToast.min.js') }}"></script>
 
 <!-- Template JS File -->
 <script src="{{ asset('main/js/scripts.js') }}"></script>
@@ -241,5 +243,27 @@
 
 <!-- Page Specific JS File -->
 <script src="{{ asset('main/js/page/index-0.js') }}"></script>
+
+@if (session()->has('alert'))
+<script>
+    iziToast.error({
+        title: 'Peringatan!',
+        message: "{{ session()->get('alert') }}",
+        position: 'topCenter'
+    });
+</script>
+@endif
+
+@if (session()->has('success'))
+<script>
+    iziToast.success({
+        title: 'Berhasil!',
+        message: "{{ session()->get('success') }}",
+        position: 'topCenter'
+    });
+</script>
+@endif
+
+@stack('script')
 
 </html>

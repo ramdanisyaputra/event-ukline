@@ -1,6 +1,6 @@
 <ul class="sidebar-menu">
     <li class="menu-header">Beranda</li>
-    <li class="nav-item {{ request()->is('superadmin/index') ? 'active' : '' }}">
+    <li class="nav-item {{ request()->is('superadmin') ? 'active' : '' }}">
         <a href="{{ route('superadmin.index') }}" class="nav-link"><i class="fas fa-fire"></i><span>Beranda</span></a>
     </li>
     <li class="menu-header">Data Utama</li>

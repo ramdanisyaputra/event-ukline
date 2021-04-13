@@ -4,9 +4,11 @@ use App\Http\Controllers\Admin\ClassesController;
 use App\Http\Controllers\Admin\SubjectController as AdminSubjectController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Superadmin\EducationLevelController;
+use App\Http\Controllers\Superadmin\ExamTypeController;
 use App\Http\Controllers\Superadmin\FaqController;
 use App\Http\Controllers\Superadmin\GradeController;
 use App\Http\Controllers\Superadmin\ProvinceController;
+use App\Http\Controllers\Superadmin\QuestionWriterController;
 use App\Http\Controllers\Superadmin\RegencyController;
 use App\Http\Controllers\Superadmin\SchoolAdminController;
 use App\Http\Controllers\Superadmin\SchoolController;
@@ -40,22 +42,32 @@ Route::prefix('superadmin')->name('superadmin.')->group(function() {
     Route::prefix('provinces')->name('provinces.')->group(function(){
         Route::get('', [ProvinceController::class,'index'])->name('index');
         Route::post('store', [ProvinceController::class,'store'])->name('store');
-        Route::post('update', [ProvinceController::class,'update'])->name('update');
+        Route::put('update', [ProvinceController::class,'update'])->name('update');
     });
     Route::prefix('regencies')->name('regencies.')->group(function(){
         Route::get('', [RegencyController::class,'index'])->name('index');
         Route::post('store', [RegencyController::class,'store'])->name('store');
-        Route::post('update', [RegencyController::class,'update'])->name('update');
+        Route::put('update', [RegencyController::class,'update'])->name('update');
     });
     Route::prefix('education-levels')->name('education-levels.')->group(function(){
         Route::get('', [EducationLevelController::class,'index'])->name('index');
         Route::post('store', [EducationLevelController::class,'store'])->name('store');
-        Route::post('update', [EducationLevelController::class,'update'])->name('update');
+        Route::put('update', [EducationLevelController::class,'update'])->name('update');
     });
     Route::prefix('grades')->name('grades.')->group(function(){
         Route::get('', [GradeController::class,'index'])->name('index');
         Route::post('store', [GradeController::class,'store'])->name('store');
-        Route::post('update', [GradeController::class,'update'])->name('update');
+        Route::put('update', [GradeController::class,'update'])->name('update');
+    });
+    Route::prefix('exam-types')->name('exam-types.')->group(function(){
+        Route::get('', [ExamTypeController::class,'index'])->name('index');
+        Route::post('store', [ExamTypeController::class,'store'])->name('store');
+        Route::put('update', [ExamTypeController::class,'update'])->name('update');
+    });
+    Route::prefix('question-writers')->name('question-writers.')->group(function(){
+        Route::get('', [QuestionWriterController::class,'index'])->name('index');
+        Route::post('store', [QuestionWriterController::class,'store'])->name('store');
+        Route::put('update', [QuestionWriterController::class,'update'])->name('update');
     });
     Route::prefix('schools')->name('schools.')->group(function(){
         Route::get('', [SchoolController::class,'index'])->name('index');
@@ -67,12 +79,12 @@ Route::prefix('superadmin')->name('superadmin.')->group(function() {
     Route::prefix('school-admins')->name('school-admins.')->group(function(){
         Route::get('', [SchoolAdminController::class,'index'])->name('index');
         Route::post('store', [SchoolAdminController::class,'store'])->name('store');
-        Route::post('update', [SchoolAdminController::class,'update'])->name('update');
+        Route::put('update', [SchoolAdminController::class,'update'])->name('update');
     });
     Route::prefix('faqs')->name('faqs.')->group(function(){
         Route::get('', [FaqController::class,'index'])->name('index');
         Route::post('store', [FaqController::class,'store'])->name('store');
-        Route::post('update', [FaqController::class,'update'])->name('update');
+        Route::put('update', [FaqController::class,'update'])->name('update');
     });
 
 });
@@ -81,12 +93,12 @@ Route::namespace('admins')->group(function(){
     Route::prefix('subjects')->name('subjects.')->group(function(){
         Route::get('', [AdminSubjectController::class,'index'])->name('index');
         Route::post('store', [AdminSubjectController::class,'store'])->name('store');
-        Route::post('update', [AdminSubjectController::class,'update'])->name('update');
+        Route::put('update', [AdminSubjectController::class,'update'])->name('update');
     });
     Route::prefix('classes')->name('classes.')->group(function(){
         Route::get('', [ClassesController::class,'index'])->name('index');
         Route::post('store', [ClassesController::class,'store'])->name('store');
-        Route::post('update', [ClassesController::class,'update'])->name('update');
+        Route::put('update', [ClassesController::class,'update'])->name('update');
     });
     Route::prefix('students')->name('students.')->group(function(){
         Route::get('', [ClassesController::class,'index'])->name('index');

@@ -12,7 +12,7 @@ class AuthController extends Controller
     public function loginForm()
     {
         if (Auth::guard(session()->get('role'))->user() != null) {
-            return redirect()->route(session()->get('role').'.index');
+            return redirect()->route(session()->get('role') == 'user' ? 'superadmin.index' : session()->get('role') .'.index');
         }
 
         return view('auth.login');
@@ -41,7 +41,7 @@ class AuthController extends Controller
         if (Auth::guard($request->role)->attempt(['username' => $request->username, 'password' => $request->password], $request->filled('remember'))) {
             session()->put('role', $request->role);
             return redirect()
-                ->intended(route('home'))
+                ->intended(route($request->role == 'user' ? 'superadmin.index' : $request->role .'.index'))
                 ->with('status', 'Selamat datang!'); 
         }
         

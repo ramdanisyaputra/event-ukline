@@ -23,6 +23,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        return redirect()->route(
+            session()->get('role') == 'user' ? 'superadmin.index' : session()->get('role') . '.index'
+        );
     }
 }

@@ -44,8 +44,7 @@
 
                             <div class="col-md-6">
                                 <select name="role" id="role" class="custom-select" required>
-                                    <option value="" disabled selected></option>
-                                    <option value="user">Superadmin</option>
+                                    <option value="user" selected></option>
                                     <option value="question_writer">Penulis Soal</option>
                                     <option value="school_admin">Admin Sekolah</option>
                                     <option value="student">Siswa</option>

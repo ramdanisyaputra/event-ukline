@@ -12,7 +12,7 @@ class EducationLevelController extends Controller
     public function index(Request $request)
     {
         $educationLevel = EducationLevel::all();
-        return view('/superadmin/master/education-level/index',compact('educationLevel'));
+        return view('superadmin/master/education-level/index',compact('educationLevel'));
     }
     public function store(Request $request)
     {

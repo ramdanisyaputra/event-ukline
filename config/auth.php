@@ -14,11 +14,7 @@ return [
     */
 
     'defaults' => [
-<<<<<<< HEAD
-        'guard' => 'web',
-=======
         'guard' => 'user',
->>>>>>> 0686dbfb90a80ba352cc8f189a6135d4c0bf2ebe
         'passwords' => 'users',
     ],
 

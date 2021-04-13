@@ -13,10 +13,10 @@
                 </div>
                 <div class="card-wrap">
                     <div class="card-header">
-                        <h4>Total Admin</h4>
+                        <h4>Total Superadmin</h4>
                     </div>
                     <div class="card-body">
-                        10
+                        {{ $total_superadmin }}
                     </div>
                 </div>
             </div>
@@ -28,10 +28,10 @@
                 </div>
                 <div class="card-wrap">
                     <div class="card-header">
-                        <h4>News</h4>
+                        <h4>Total Sekolah</h4>
                     </div>
                     <div class="card-body">
-                        42
+                        {{ $total_school }}
                     </div>
                 </div>
             </div>
@@ -43,10 +43,10 @@
                 </div>
                 <div class="card-wrap">
                     <div class="card-header">
-                        <h4>Reports</h4>
+                        <h4>Total Siswa</h4>
                     </div>
                     <div class="card-body">
-                        1,201
+                        {{ $total_student }}
                     </div>
                 </div>
             </div>
@@ -58,10 +58,10 @@
                 </div>
                 <div class="card-wrap">
                     <div class="card-header">
-                        <h4>Online Users</h4>
+                        <h4>Total Admin Sekolah</h4>
                     </div>
                     <div class="card-body">
-                        47
+                        {{ $total_school_admin }}
                     </div>
                 </div>
             </div>

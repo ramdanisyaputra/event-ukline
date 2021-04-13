@@ -27,7 +27,8 @@
                             <tr>
                                 <th>No</th>
                                 <th>ID</th>
-                                <th>Regensi</th>
+                                <th>Kode Regen</th>
+                                <th>Regen</th>
                                 <th>Pronvisi</th>
                                 <th></th>
                             </tr>
@@ -36,6 +37,7 @@
                             @forelse ($regencies as $key => $regency)
                             <tr>
                                 <td>{{ ++$key }}</td>
+                                <td>{{ $regency->id }}</td>
                                 <td>{{ $regency->regency_code }}</td>
                                 <td>{{ $regency->name }}</td>
                                 <td>{{ $regency->province->name }}</td>

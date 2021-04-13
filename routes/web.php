@@ -68,13 +68,23 @@ Route::prefix('superadmin')->name('superadmin.')->group(function() {
     });
     Route::prefix('question-writers')->name('question-writers.')->group(function(){
         Route::get('', [QuestionWriterController::class,'index'])->name('index');
-        Route::post('store', [QuestionWriterController::class,'store'])->name('store');
-        Route::put('update', [QuestionWriterController::class,'update'])->name('update');
+        Route::get('{regenyId}', [QuestionWriterController::class,'indexWriter'])->name('indexWriter');
+        Route::post('store/{regencyId}', [QuestionWriterController::class,'store'])->name('store');
+        Route::put('update/{regencyId}', [QuestionWriterController::class,'update'])->name('update');
+        Route::get('reset/{regencyId}/{questionWriterId}', [QuestionWriterController::class,'resetPasswordWriter'])->name('resetPasswordWriter');
     });
+    Route::prefix('schools')->name('schools.')->group(function(){
+        Route::get('', [SchoolController::class,'index'])->name('index');
+        Route::post('store', [SchoolController::class,'store'])->name('store');
+        Route::put('update', [SchoolController::class,'update'])->name('update');
+    });
+
+
     Route::prefix('school-admins')->name('school-admins.')->group(function(){
         Route::get('', [SchoolAdminController::class,'index'])->name('index');
         Route::post('store', [SchoolAdminController::class,'store'])->name('store');
         Route::put('update', [SchoolAdminController::class,'update'])->name('update');
+        Route::put('reset-password', [SchoolAdminController::class,'resetPassword'])->name('resetPassword');
     });
     Route::prefix('faqs')->name('faqs.')->group(function(){
         Route::get('', [FaqController::class,'index'])->name('index');
@@ -97,6 +107,11 @@ Route::namespace('admins')->prefix('school_admin')->name('school_admin.')->group
         Route::get('', [ClassesController::class,'index'])->name('index');
         Route::post('store', [ClassesController::class,'store'])->name('store');
         Route::put('update', [ClassesController::class,'update'])->name('update');
+    });
+    Route::prefix('students')->name('students.')->group(function(){
+        Route::get('', [ClassesController::class,'index'])->name('index');
+        Route::post('store', [ClassesController::class,'store'])->name('store');
+        Route::post('update', [ClassesController::class,'update'])->name('update');
     });
 });
 

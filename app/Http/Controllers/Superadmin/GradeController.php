@@ -3,21 +3,25 @@
 namespace App\Http\Controllers\Superadmin;
 
 use App\Http\Controllers\Controller;
+use App\Models\EducationLevel;
 use App\Models\Grade;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class GradeController extends Controller
 {
     public function index(Request $request)
     {
-        $grade = Grade::all();
-        return view('/superadmin/master/grade/index',compact('grade'));
+        $grades = Grade::all();
+        $educationLevels = EducationLevel::all();
+        return view('superadmin.grades.index',compact('grades','educationLevels'));
     }
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name'=>'required',
+            'number'=>'required',
+            'roman'=>'required',
+            'education_level_id'=>'required',
             'school_year'=>'required',
         ]);
         if ($validator->fails()) {

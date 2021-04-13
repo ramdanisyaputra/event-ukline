@@ -20,6 +20,7 @@ class CreateExamsTable extends Migration
             $table->datetime('started_at');
             $table->datetime('expired_at');
             $table->integer('duration');
+            $table->string('access_code');
             $table->foreignId('regency_id')->references('id')->on('regencies')->onDelete('cascade');
             $table->foreignId('school_id')->references('id')->on('schools')->onDelete('cascade');
             $table->enum('status',['drafted','published'])->default('drafted');

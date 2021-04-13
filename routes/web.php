@@ -86,6 +86,11 @@ Route::namespace('admins')->group(function(){
         Route::post('store', [ClassesController::class,'store'])->name('store');
         Route::post('update', [ClassesController::class,'update'])->name('update');
     });
+    Route::prefix('students')->name('students.')->group(function(){
+        Route::get('', [ClassesController::class,'index'])->name('index');
+        Route::post('store', [ClassesController::class,'store'])->name('store');
+        Route::post('update', [ClassesController::class,'update'])->name('update');
+    });
 });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

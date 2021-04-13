@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Classes;
 use App\Models\Grade;
-use App\Models\Subject;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Auth;
 class ClassesController extends Controller

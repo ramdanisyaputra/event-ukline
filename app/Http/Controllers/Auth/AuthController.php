@@ -12,7 +12,7 @@ class AuthController extends Controller
     public function loginForm()
     {
         if (Auth::guard(session()->get('role'))->user() != null) {
-            return redirect()->route('home');
+            return redirect()->route(session()->get('role').'.index');
         }
 
         return view('auth.login');

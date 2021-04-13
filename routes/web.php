@@ -70,7 +70,10 @@ Route::prefix('superadmin')->name('superadmin.')->group(function() {
 
 });
 
-Route::namespace('admins')->group(function(){
+Route::namespace('admins')->prefix('school_admin')->name('school_admin.')->group(function(){
+    Route::get('/', function() {
+        return 'tes';
+    })->name('index');
     Route::prefix('subjects')->name('subjects.')->group(function(){
         Route::get('', [AdminSubjectController::class,'index'])->name('index');
         Route::post('store', [AdminSubjectController::class,'store'])->name('store');

@@ -14,7 +14,7 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'superadmin',
+        'guard' => 'web',
         'passwords' => 'users',
     ],
 
@@ -38,9 +38,9 @@ return [
     'guards' => [
         'web' => [
             'driver' => 'session',
+            'provider' => 'users',
         ],
-        'superadmin' => [
-            'guard' => 'web',
+        'user' => [
             'driver' => 'session',
             'provider' => 'users',
         ],

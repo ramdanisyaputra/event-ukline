@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             Province::class,
+            Superadmin::class,
             Regency::class,
             EducationLevel::class,
             School::class,

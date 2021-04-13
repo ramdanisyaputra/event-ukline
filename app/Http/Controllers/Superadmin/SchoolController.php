@@ -3,16 +3,20 @@
 namespace App\Http\Controllers\Superadmin;
 
 use App\Http\Controllers\Controller;
+use App\Models\EducationLevel;
+use App\Models\Regency;
 use App\Models\School;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class SchoolController extends Controller
 {
     public function index(Request $request)
     {
-        $school = School::all();
-        return view('/superadmin/school/index',compact('school'));
+        $schools = School::all();
+        $educationLevels = EducationLevel::all();
+        $regencies = Regency::all();
+        return view('superadmin.school.index',compact('schools','regencies','educationLevels'));
     }
     public function store(Request $request)
     {
@@ -30,11 +34,11 @@ class SchoolController extends Controller
         }
 
         School::create($request->all());
-        return redirect()->back()->with('success','Kelas berhasil ditambahkan');
+        return redirect()->back()->with('success','Sekolah berhasil ditambahkan');
     }
     public function update(Request $request)
     {
         School::find($request->id)->update($request->all());
-        return redirect()->back()->with('success','Kelas berhasil diubah');
+        return redirect()->back()->with('success','Sekolah berhasil diubah');
     }
 }

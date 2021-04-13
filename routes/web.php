@@ -66,8 +66,10 @@ Route::prefix('superadmin')->name('superadmin.')->group(function() {
     });
     Route::prefix('question-writers')->name('question-writers.')->group(function(){
         Route::get('', [QuestionWriterController::class,'index'])->name('index');
-        Route::post('store', [QuestionWriterController::class,'store'])->name('store');
-        Route::put('update', [QuestionWriterController::class,'update'])->name('update');
+        Route::get('{regenyId}', [QuestionWriterController::class,'indexWriter'])->name('indexWriter');
+        Route::post('store/{regencyId}', [QuestionWriterController::class,'store'])->name('store');
+        Route::put('update/{regencyId}', [QuestionWriterController::class,'update'])->name('update');
+        Route::get('reset/{regencyId}/{questionWriterId}', [QuestionWriterController::class,'resetPasswordWriter'])->name('resetPasswordWriter');
     });
     Route::prefix('school-admins')->name('school-admins.')->group(function(){
         Route::get('', [SchoolAdminController::class,'index'])->name('index');

@@ -4,24 +4,30 @@ namespace App\Http\Controllers\Superadmin;
 
 use App\Http\Controllers\Controller;
 use App\Models\QuestionWriter;
-use Illuminate\Support\Facades\Request;
+use App\Models\Regency;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class QuestionWriterController extends Controller
 {
     public function index(Request $request)
     {
-        $questionWriter = QuestionWriter::all();
-        return view('/superadmin/school/question-writer/index',compact('questionWriter'));
+        $regencies = Regency::all();
+        return view('superadmin.question-writers.index',compact('regencies'));
     }
-    public function store(Request $request)
+    public function indexWriter($regencyId)
+    {
+        $questionWriters = QuestionWriter::where('regency_id',$regencyId)->get();
+        $regency=Regency::find($regencyId);
+        return view('superadmin.question-writers.index-writer',compact('questionWriters','regency'));
+    }
+    public function store(Request $request , $regencyId)
     {
         $validator = Validator::make($request->all(), [
             'name'=>'required',
             'username'=>'required',
             'password'=>'required',
-            'regency_id'=>'required',
-            'username'=>'unique:question-writers',
+            'username'=>'unique:question_writers',
         ]);
         if ($validator->fails()) {
             return redirect()->back()->with('alert','Gagal menginput data')->withInput();
@@ -29,11 +35,11 @@ class QuestionWriterController extends Controller
         $data['name'] = $request->name;
         $data['username'] = $request->username;
         $data['password'] = bcrypt($request->password);
-        $data['regency_id'] = $request->regency_id;
+        $data['regency_id'] = $regencyId;
         QuestionWriter::create($data);
         return redirect()->back()->with('success','Penulis Soal berhasil ditambahkan');
     }
-    public function update(Request $request)
+    public function update(Request $request, $regencyId)
     {
         $validator = Validator::make($request->all(), [
             'username'=>'unique:school_admins,username,'. $request->id,
@@ -41,7 +47,17 @@ class QuestionWriterController extends Controller
         if ($validator->fails()) {
             return redirect()->back()->with('alert','Gagal mengubah data')->withInput();
         }
-        QuestionWriter::find($request->id)->update($request->all());
+        $questionWriter = QuestionWriter::find($request->id);
+        $questionWriter->name = $request->name;
+        $questionWriter->username = $request->username;
+        $questionWriter->regency_id = $regencyId;
+        $questionWriter->save();
+
         return redirect()->back()->with('success','Admin sekolah berhasil diubah');
+    }
+
+    public function resetPasswordWriter($regencyId,$questionWriterId)
+    {
+        dd($questionWriterId);
     }
 }

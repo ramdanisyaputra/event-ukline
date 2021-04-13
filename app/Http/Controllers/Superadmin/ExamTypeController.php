@@ -4,15 +4,15 @@ namespace App\Http\Controllers\Superadmin;
 
 use App\Http\Controllers\Controller;
 use App\Models\ExamType;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class ExamTypeController extends Controller
 {
     public function index(Request $request)
     {
-        $examType = ExamType::all();
-        return view('/superadmin/master/exam-type/index',compact('examType'));
+        $examTypes = ExamType::all();
+        return view('superadmin.exam-types.index',compact('examTypes'));
     }
     public function store(Request $request)
     {

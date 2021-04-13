@@ -14,7 +14,7 @@ class SchoolAdminController extends Controller
     {
         $schoolAdmins = SchoolAdmin::all();
         $schools = School::all();
-        return view('superadmin.school_admin.index',compact('schoolAdmins','schools'));
+        return view('superadmin.school_admins.index',compact('schoolAdmins','schools'));
     }
     public function store(Request $request)
     {

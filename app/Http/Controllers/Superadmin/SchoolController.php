@@ -16,7 +16,7 @@ class SchoolController extends Controller
         $schools = School::all();
         $educationLevels = EducationLevel::all();
         $regencies = Regency::all();
-        return view('superadmin.school.index',compact('schools','regencies','educationLevels'));
+        return view('superadmin.schools.index',compact('schools','regencies','educationLevels'));
     }
     public function store(Request $request)
     {

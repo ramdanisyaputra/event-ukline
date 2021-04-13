@@ -58,6 +58,10 @@ class QuestionWriterController extends Controller
 
     public function resetPasswordWriter($regencyId,$questionWriterId)
     {
-        dd($questionWriterId);
+        $questionWriter = QuestionWriter::find($questionWriterId);
+        $questionWriter->password = bcrypt($questionWriter->username);
+        $questionWriter->save();
+
+        return redirect()->back()->with('success','Berhasil Reset Password Penulis Soal');
     }
 }

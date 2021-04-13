@@ -193,7 +193,12 @@
                     <div class="sidebar-brand sidebar-brand-sm">
                         <a href="index.html">{{ config('app.abbr', 'UK') }}</a>
                     </div>
-                    @include('components._sidebar_superadmin');
+                    @if(session()->get('role') == 'user')
+                        @include('components._sidebar_superadmin');
+                    @elseif(session()->get('role') == 'school_admin')
+                        @include('components._sidebar_school_admin');
+                    @endif
+
 
                     <div class="mt-4 mb-4 p-3 hide-sidebar-mini">
                         <a href="{{ route('logout') }}" class="btn btn-primary btn-lg btn-block btn-icon-split">

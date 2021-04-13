@@ -92,7 +92,7 @@ Route::prefix('superadmin')->name('superadmin.')->group(function() {
 
 });
 
-Route::namespace('admins')->group(function(){
+Route::prefix('school_admins')->name('school_admins.')->group(function(){
     Route::prefix('subjects')->name('subjects.')->group(function(){
         Route::get('', [AdminSubjectController::class,'index'])->name('index');
         Route::post('store', [AdminSubjectController::class,'store'])->name('store');
@@ -109,5 +109,6 @@ Route::namespace('admins')->group(function(){
         Route::post('update', [ClassesController::class,'update'])->name('update');
     });
 });
+
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -72,7 +72,7 @@ Route::prefix('superadmin')->name('superadmin.')->group(function() {
     Route::prefix('schools')->name('schools.')->group(function(){
         Route::get('', [SchoolController::class,'index'])->name('index');
         Route::post('store', [SchoolController::class,'store'])->name('store');
-        Route::post('update', [SchoolController::class,'update'])->name('update');
+        Route::put('update', [SchoolController::class,'update'])->name('update');
     });
 
 
@@ -80,6 +80,7 @@ Route::prefix('superadmin')->name('superadmin.')->group(function() {
         Route::get('', [SchoolAdminController::class,'index'])->name('index');
         Route::post('store', [SchoolAdminController::class,'store'])->name('store');
         Route::put('update', [SchoolAdminController::class,'update'])->name('update');
+        Route::put('reset-password', [SchoolAdminController::class,'resetPassword'])->name('resetPassword');
     });
     Route::prefix('faqs')->name('faqs.')->group(function(){
         Route::get('', [FaqController::class,'index'])->name('index');

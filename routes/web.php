@@ -11,6 +11,7 @@ use App\Http\Controllers\Superadmin\RegencyController;
 use App\Http\Controllers\Superadmin\SchoolAdminController;
 use App\Http\Controllers\Superadmin\SchoolController;
 use App\Http\Controllers\Superadmin\SubjectController;
+use App\Http\Controllers\Superadmin\SuperadminController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -34,7 +35,8 @@ Route::get('/login',[AuthController::class,'loginForm'])->name('loginForm');
 Route::post('/login',[AuthController::class,'login'])->name('login');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::namespace('superadmin')->group(function(){
+Route::prefix('superadmin')->name('superadmin.')->group(function() {
+    Route::get('/', [SuperadminController::class, 'index'])->name('index');
     Route::prefix('provinces')->name('provinces.')->group(function(){
         Route::get('', [ProvinceController::class,'index'])->name('index');
         Route::post('store', [ProvinceController::class,'store'])->name('store');

@@ -12,7 +12,7 @@ class ProvinceController extends Controller
     public function index(Request $request)
     {
         $province = Province::all();
-        return view('/superadmin/master/province/index',compact('province'));
+        return view('superadmin.provinces.index',compact('province'));
     }
     public function store(Request $request)
     {

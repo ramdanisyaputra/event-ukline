@@ -52,6 +52,10 @@ return [
             'driver' => 'session',
             'provider' => 'school_admins',
         ],
+        'student' => [
+            'driver' => 'session',
+            'provider' => 'students',
+        ],
 
         'api' => [
             'driver' => 'token',
@@ -89,6 +93,10 @@ return [
         'school_admins' => [
             'driver' => 'eloquent',
             'model' => App\Models\SchoolAdmin::class,
+        ],
+        'students' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Student::class,
         ],
         
         

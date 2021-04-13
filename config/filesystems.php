@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'default' => env('FILESYSTEM_DRIVER', 'local'),
+    'default' => 'oss',
 
     /*
     |--------------------------------------------------------------------------
@@ -27,9 +27,22 @@ return [
     | Supported Drivers: "local", "ftp", "sftp", "s3"
     |
     */
+    'cloud' => env('FILESYSTEM_CLOUD', 'oss'),
 
     'disks' => [
 
+        'oss' => [
+            'driver'        => 'oss',
+            'access_id'     => env('access_id'),
+            'access_key'    => env('access_key'),
+            'bucket'        => env('bucket'),
+            'endpoint'      => env('endpoint'),
+            // 'endpoint_internal' => 'ukline.oss-ap-southeast-5-internal.aliyuncs.com',
+            'ssl'           => true,
+            'isCName'       => false,
+            'debug'         => false
+        ],
+        
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app'),

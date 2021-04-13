@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\ClassesController;
+use App\Http\Controllers\Admin\SubjectController as AdminSubjectController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Superadmin\EducationLevelController;
 use App\Http\Controllers\Superadmin\FaqController;
@@ -7,6 +9,8 @@ use App\Http\Controllers\Superadmin\GradeController;
 use App\Http\Controllers\Superadmin\ProvinceController;
 use App\Http\Controllers\Superadmin\RegencyController;
 use App\Http\Controllers\Superadmin\SchoolAdminController;
+use App\Http\Controllers\Superadmin\SchoolController;
+use App\Http\Controllers\Superadmin\SubjectController;
 use App\Http\Controllers\Superadmin\SuperadminController;
 use Illuminate\Support\Facades\Route;
 
@@ -26,6 +30,7 @@ Route::get('/', function () {
 });
 
 // Auth::routes();
+
 Route::get('/login',[AuthController::class,'loginForm'])->name('loginForm');
 Route::post('/login',[AuthController::class,'login'])->name('login');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
@@ -57,12 +62,25 @@ Route::prefix('superadmin')->name('superadmin.')->group(function() {
         Route::post('store', [SchoolAdminController::class,'store'])->name('store');
         Route::post('update', [SchoolAdminController::class,'update'])->name('update');
     });
-    Route::prefix('tags')->name('tags.')->group(function(){
+    Route::prefix('faqs')->name('faqs.')->group(function(){
         Route::get('', [FaqController::class,'index'])->name('index');
         Route::post('store', [FaqController::class,'store'])->name('store');
         Route::post('update', [FaqController::class,'update'])->name('update');
     });
+
 });
 
+Route::namespace('admins')->group(function(){
+    Route::prefix('subjects')->name('subjects.')->group(function(){
+        Route::get('', [AdminSubjectController::class,'index'])->name('index');
+        Route::post('store', [AdminSubjectController::class,'store'])->name('store');
+        Route::post('update', [AdminSubjectController::class,'update'])->name('update');
+    });
+    Route::prefix('classes')->name('classes.')->group(function(){
+        Route::get('', [ClassesController::class,'index'])->name('index');
+        Route::post('store', [ClassesController::class,'store'])->name('store');
+        Route::post('update', [ClassesController::class,'update'])->name('update');
+    });
+});
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

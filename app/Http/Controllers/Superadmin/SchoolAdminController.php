@@ -17,6 +17,10 @@ class SchoolAdminController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
+            'name'=>'required',
+            'username'=>'required',
+            'password'=>'required',
+            'school_id'=>'required',
             'username'=>'unique:school_admins',
         ]);
         if ($validator->fails()) {

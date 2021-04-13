@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Subject;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+
 class SubjectController extends Controller
 {
     public function adminGuard()
@@ -20,6 +22,13 @@ class SubjectController extends Controller
     }
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'name'=>'required',
+            'school_id'=>'required',
+        ]);
+        if ($validator->fails()) {
+            return redirect()->back()->with('alert','Gagal menginput data')->withInput();
+        }
         Subject::create($request->all());
         return redirect()->back()->with('success','Kelas berhasil ditambahkan');
     }

@@ -8,6 +8,8 @@ use App\Models\Grade;
 use App\Models\Subject;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+
 class ClassesController extends Controller
 {
     public function adminGuard()
@@ -23,6 +25,15 @@ class ClassesController extends Controller
     }
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'name'=>'required',
+            'school_id'=>'required',
+            'grade_id'=>'required',
+        ]);
+        if ($validator->fails()) {
+            return redirect()->back()->with('alert','Gagal menginput data')->withInput();
+        }
+
         Classes::create($request->all());
         return redirect()->back()->with('success','Kelas berhasil ditambahkan');
     }

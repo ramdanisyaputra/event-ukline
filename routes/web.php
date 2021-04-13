@@ -45,7 +45,7 @@ Route::prefix('superadmin')->name('superadmin.')->group(function() {
     Route::prefix('regencies')->name('regencies.')->group(function(){
         Route::get('', [RegencyController::class,'index'])->name('index');
         Route::post('store', [RegencyController::class,'store'])->name('store');
-        Route::post('update', [RegencyController::class,'update'])->name('update');
+        Route::put('update', [RegencyController::class,'update'])->name('update');
     });
     Route::prefix('education-levels')->name('education-levels.')->group(function(){
         Route::get('', [EducationLevelController::class,'index'])->name('index');

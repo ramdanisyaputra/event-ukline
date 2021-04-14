@@ -28,6 +28,7 @@
                                 <th>No</th>
                                 <th>Kelas</th>
                                 <th>Sekolah</th>
+                                <th>Tingkat Kelas</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -35,7 +36,6 @@
                             @forelse ($classes as $key => $class)
                             <tr>
                                 <td>{{ ++$key }}</td>
-                                <td>{{ $class->id }}</td>
                                 <td>{{ $class->name }}</td>
                                 <td>{{ $class->school->name }}</td>
                                 <td>{{ $class->grade->number }}</td>

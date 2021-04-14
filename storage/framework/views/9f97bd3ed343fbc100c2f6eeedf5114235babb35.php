@@ -1,6 +1,6 @@
-@extends('layouts.main')
 
-@section('content')
+
+<?php $__env->startSection('content'); ?>
 <section class="section">
     <div class="section-header">
         <h1>Ujian</h1>
@@ -19,8 +19,8 @@
                 <h4>Tambah Ujian</h4>
             </div>
             <div class="card-body">
-                <form action="{{route('question_writer.exams.store')}}" method="post">
-                    @csrf
+                <form action="<?php echo e(route('question_writer.exams.store')); ?>" method="post">
+                    <?php echo csrf_field(); ?>
                     <div class="form-group">
                         <label for="name">Nama Ujian</label>
                         <input type="text" class="form-control" name="name" id="name">
@@ -45,9 +45,9 @@
                         <label for="exam_type_id">Jenis Ujian</label>
                         <select name="exam_type_id" id="exam_type_id" class="form-control" required>
                             <option value=""> ~ Pilih ~</option>
-                            @foreach($examTypes as $exam)
-                                <option value="{{$exam->id}}">{{$exam->name}}</option>
-                            @endforeach
+                            <?php $__currentLoopData = $examTypes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $exam): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($exam->id); ?>"><?php echo e($exam->name); ?></option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>
                     </div>
                 <button class="btn btn-primary" type="submit">Simpan</button>
@@ -58,4 +58,5 @@
     </div>
 </section>
 
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.main', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\event-ukline\resources\views/question_writer/exams/create.blade.php ENDPATH**/ ?>

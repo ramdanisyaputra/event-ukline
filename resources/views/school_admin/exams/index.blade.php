@@ -14,7 +14,7 @@
             <div class="card-header">
                 <h4>Daftar Ujian</h4>
                 <div class="card-header-action">
-                    <button class="btn btn-primary" data-toggle="modal" data-target="#examType">Tambah</button>
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#examType"><i class="fa fa-plus"></i> Tambah Ujian</button>
                 </div>
             </div>
             <div class="card-body">
@@ -24,8 +24,7 @@
                             <tr>
                                 <th>No</th>
                                 <th>Judul</th>
-                                <th>Dimulai Pada</th>
-                                <th>Berakhir Pada</th>
+                                <th>Tanggal</th>
                                 <th>Durasi</th>
                                 <th>Status</th>
                                 <th>Mata Pelajaran</th>
@@ -36,14 +35,16 @@
                             @forelse ($exams as $key => $exam)
                             <tr>
                                 <td>{{ ++$key }}</td>
-                                <td>{{ $exam->name }}</td>
-                                <td>{{ \Carbon\Carbon::parse($exam->started_at)->format('H:i') }}</td>
-                                <td>{{ \Carbon\Carbon::parse($exam->expired_at)->format('H:i') }}</td>
-                                <td>{{ $exam->duration }} menit</td>
-                                <td><span class="badge badge-primary">{{ ucwords($exam->status) }}</span></td>
-                                <td>{{ $exam->examClass->subject->name }}</td>
+                                @php
+                                    \Carbon\Carbon::setLocale('id')
+                                @endphp
+                                <td>{{ $exam->exam->name }} <span class="badge badge-light p-1">{{ ucwords($exam->exam->shared ? 'Serentak' : 'Mandiri') }}</span></td>
+                                <td>{{ \Carbon\Carbon::parse($exam->exam->started_at)->isoFormat('dddd, DD MMMM Y') }}</td>
+                                <td>{{ $exam->exam->duration }} menit</td>
+                                <td><span class="badge badge-{{ $exam->exam->status == 'published' ? 'primary' : 'light' }}">{{ ucwords($exam->exam->status == 'published' ? 'dipublikasi' : 'didraf') }}</span></td>
+                                <td>{{ $exam->subject->name }}</td>
                                 <td>
-                                    <button class="btn btn-primary"><i class="fa fa-eye"></i></button>
+                                    <a href="{{ route('school_admin.exams.questions.index', $exam->id) }}" class="btn btn-primary"><i class="fa fa-eye"></i></a>
                                 </td>
                             </tr>
                             @empty

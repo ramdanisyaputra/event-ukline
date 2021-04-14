@@ -14,12 +14,12 @@
                 <h4>Tambah Ujian Serentak</h4>
             </div>
             <div class="card-body">
-                <form action="" method="POST">
+                <form action="<?php echo e(route('school_admin.exams.store_public')); ?>" method="POST">
                     <?php echo csrf_field(); ?>
                     <div class="form-group row mb-4">
                         <label class="col-form-label text-md-right my-auto col-12 col-md-3 col-lg-3">Pilih Ujian</label>
                         <div class="col-sm-12 col-md-7">
-                            <select name="" id="" class="custom-select js-example-basic-multiple">
+                            <select name="exam_id" id="exam_id" class="custom-select" required>
                                 <option value=""></option>
                                 <?php $__currentLoopData = $exams; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $exam): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <option value="<?php echo e($exam->id); ?>"><?php echo e($exam->name); ?></option>
@@ -30,7 +30,7 @@
                     <div class="form-group row mb-4">
                         <label class="col-form-label text-md-right my-auto col-12 col-md-3 col-lg-3">Mata Pelajaran</label>
                         <div class="col-sm-12 col-md-7">
-                            <select name="" id="" class="custom-select">
+                            <select name="subject_id" id="subject_id" class="custom-select" required>
                                 <option value=""></option>
                                 <?php $__currentLoopData = $subjects; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $subject): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <option value="<?php echo e($subject->id); ?>"><?php echo e($subject->name); ?></option>
@@ -41,7 +41,7 @@
                     <div class="form-group row mb-4">
                         <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Kelas yang diizinkan</label>
                         <div class="col-sm-12 col-md-7">
-                            <select name="class_ids[]" id="class_ids" class="js-example-basic-multiple border-0" multiple>
+                            <select name="class_ids[]" id="class_ids" class="js-example-basic-multiple border-0" multiple required>
                                 <?php $__currentLoopData = $classess; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $class): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <option value="<?php echo e($class->id); ?>"><?php echo e($class->name); ?></option>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -51,7 +51,7 @@
                     <div class="form-group row mb-4">
                         <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3"></label>
                         <div class="col-sm-12 col-md-7">
-                            <button class="btn btn-primary">Tambah</button>
+                            <button type="submit" class="btn btn-primary">Tambah</button>
                         </div>
                     </div>
                 </form>

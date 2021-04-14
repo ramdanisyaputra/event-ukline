@@ -24,6 +24,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        setlocale(LC_TIME, 'id_ID');
         View::share('user', auth()->guard(session()->get('role'))->user());
     }
 }

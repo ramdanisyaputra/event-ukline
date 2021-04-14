@@ -7,6 +7,7 @@ use App\Http\Controllers\Student\ExamController;
 use App\Http\Controllers\Student\StudentController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\ExamController as AdminExamController;
+use App\Http\Controllers\Admin\ExamQuestionController;
 use App\Http\Controllers\QuestionWriter\ExamController as QuestionWriterExamController;
 use App\Http\Controllers\QuestionWriter\QuestionDashboardController;
 use App\Http\Controllers\Superadmin\EducationLevelController;
@@ -128,7 +129,13 @@ Route::prefix('school_admin')->name('school_admin.')->group(function(){
     Route::prefix('exams')->name('exams.')->group(function() {
         Route::get('/', [AdminExamController::class, 'index'])->name('index');
         Route::get('/create_public', [AdminExamController::class, 'createPublic'])->name('create_public');
+        Route::post('/store_public', [AdminExamController::class, 'storePublic'])->name('store_public');
         Route::get('/create_private', [AdminExamController::class, 'createPrivate'])->name('create_private');
+        Route::post('/store_private', [AdminExamController::class, 'storePrivate'])->name('store_private');
+
+        Route::prefix('{exam}/questions')->name('questions.')->group(function() {
+            Route::get('', [ExamQuestionController::class, 'index'])->name('index');
+        });
     });
 });
 

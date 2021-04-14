@@ -1,29 +1,29 @@
 <!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="<?php echo e(str_replace('_', '-', app()->getLocale())); ?>">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title><?php echo e(config('app.name', 'Laravel')); ?></title>
 
     <!-- General CSS Files -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
     <!-- CSS Libraries -->
-    <link rel="stylesheet" href="{{ asset('main/plugins/jqvmap/dist/jqvmap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('main/plugins/summernote/dist/summernote-bs4.css') }}">
-    <link rel="stylesheet" href="{{ asset('main/plugins/izitoast/dist/css/iziToast.min.css') }}">
+    <link rel="stylesheet" href="<?php echo e(asset('main/plugins/jqvmap/dist/jqvmap.min.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(asset('main/plugins/summernote/dist/summernote-bs4.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(asset('main/plugins/izitoast/dist/css/iziToast.min.css')); ?>">
 
     <!-- Template CSS -->
-    <link rel="stylesheet" href="{{ asset('main/css/style.css')}}">
-    <link rel="stylesheet" href="{{ asset('main/css/components.css')}}">
+    <link rel="stylesheet" href="<?php echo e(asset('main/css/style.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(asset('main/css/components.css')); ?>">
     <!-- Faq CSS -->
-    <link href="{{url('main/select2/dist/css/select2.min.css')}}" rel="stylesheet"/>
+    <link href="<?php echo e(url('main/select2/dist/css/select2.min.css')); ?>" rel="stylesheet"/>
 </head>
 
 <body>
@@ -40,7 +40,7 @@
                 <ul class="navbar-nav navbar-right">
                     <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
                             <img alt="image" src="../main/img/avatar/avatar-1.png" class="rounded-circle mr-1">
-                            <div class="d-sm-none d-lg-inline-block">Hi, {{ auth()->guard(session()->get('role'))->user()->name }}</div>
+                            <div class="d-sm-none d-lg-inline-block">Hi, <?php echo e(auth()->guard(session()->get('role'))->user()->name); ?></div>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
                             <a href="" class="dropdown-item has-icon">
@@ -58,23 +58,23 @@
             <div class="main-sidebar">
                 <aside id="sidebar-wrapper">
                     <div class="sidebar-brand">
-                        <a href="index.html">{{ config('app.name', 'LARAVEL') }}</a>
+                        <a href="index.html"><?php echo e(config('app.name', 'LARAVEL')); ?></a>
                     </div>
                     <div class="sidebar-brand sidebar-brand-sm">
-                        <a href="index.html">{{ config('app.abbr', 'UK') }}</a>
+                        <a href="index.html"><?php echo e(config('app.abbr', 'UK')); ?></a>
                     </div>
-                    @if(session()->get('role') == 'user')
-                        @include('components._sidebar_superadmin');
-                    @elseif(session()->get('role') == 'school_admin')
-                        @include('components._sidebar_school_admin');
-                    @elseif(session()->get('role') == 'question_writer')
-                        @include('components._sidebar_question_writer');
-                    @endif
+                    <?php if(session()->get('role') == 'user'): ?>
+                        <?php echo $__env->make('components._sidebar_superadmin', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>;
+                    <?php elseif(session()->get('role') == 'school_admin'): ?>
+                        <?php echo $__env->make('components._sidebar_school_admin', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>;
+                    <?php elseif(session()->get('role') == 'question_writer'): ?>
+                        <?php echo $__env->make('components._sidebar_question_writer', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>;
+                    <?php endif; ?>
 
 
                     <div class="mt-4 mb-4 p-3 hide-sidebar-mini">
-                        <form action="{{ route('logout') }}" method="POST" id="logoutForm">
-                            @csrf
+                        <form action="<?php echo e(route('logout')); ?>" method="POST" id="logoutForm">
+                            <?php echo csrf_field(); ?>
                             <button type="submit" class="btn btn-primary btn-lg btn-block btn-icon-split">
                                 <i class="fas fa-rocket"></i> Keluar
                             </button>
@@ -85,12 +85,13 @@
 
             <!-- Main Content -->
             <div class="main-content">
-            @yield('content')
+            <?php echo $__env->yieldContent('content'); ?>
             </div>
 
             <footer class="main-footer">
                 <div class="footer-left">
-                    Copyright &copy; {{ date('Y') }}
+                    Copyright &copy; <?php echo e(date('Y')); ?>
+
                     <div class="bullet"></div> Design By <a href="https://nauval.in/">Muhamad Nauval
                         Azhar</a>
                 </div>
@@ -107,45 +108,45 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.6/jquery.nicescroll.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-<script src="{{ asset('main/js/stisla.js') }}"></script>
+<script src="<?php echo e(asset('main/js/stisla.js')); ?>"></script>
 
 <!-- JS Libraies -->
-<script src="{{ asset('main/plugins/chart.js/dist/Chart.min.js') }}"></script>
-<script src="{{ asset('main/plugins/jqvmap/dist/jquery.vmap.min.js') }}"></script>
-<script src="{{ asset('main/plugins/jqvmap/dist/maps/jquery.vmap.world.js') }}"></script>
-<script src="{{ asset('main/plugins/summernote/dist/summernote-bs4.js') }}"></script>
-<script src="{{ asset('main/plugins/chocolat/dist/js/jquery.chocolat.min.js') }}"></script>
-<script src="{{ asset('main/plugins/izitoast/dist/js/iziToast.min.js') }}"></script>
+<script src="<?php echo e(asset('main/plugins/chart.js/dist/Chart.min.js')); ?>"></script>
+<script src="<?php echo e(asset('main/plugins/jqvmap/dist/jquery.vmap.min.js')); ?>"></script>
+<script src="<?php echo e(asset('main/plugins/jqvmap/dist/maps/jquery.vmap.world.js')); ?>"></script>
+<script src="<?php echo e(asset('main/plugins/summernote/dist/summernote-bs4.js')); ?>"></script>
+<script src="<?php echo e(asset('main/plugins/chocolat/dist/js/jquery.chocolat.min.js')); ?>"></script>
+<script src="<?php echo e(asset('main/plugins/izitoast/dist/js/iziToast.min.js')); ?>"></script>
 
 <!-- Template JS File -->
-<script src="{{ asset('main/js/scripts.js') }}"></script>
-<script src="{{ asset('main/js/custom.js') }}"></script>
+<script src="<?php echo e(asset('main/js/scripts.js')); ?>"></script>
+<script src="<?php echo e(asset('main/js/custom.js')); ?>"></script>
 
 <!-- Page Specific JS File -->
-<script src="{{ asset('main/js/page/index-0.js') }}"></script>
+<script src="<?php echo e(asset('main/js/page/index-0.js')); ?>"></script>
 
-<script src="{{url('main/select2/dist/js/select2.min.js')}}"></script>
+<script src="<?php echo e(url('main/select2/dist/js/select2.min.js')); ?>"></script>
 
-@if (session()->has('alert'))
+<?php if(session()->has('alert')): ?>
 <script>
     iziToast.error({
         title: 'Peringatan!',
-        message: "{{ session()->get('alert') }}",
+        message: "<?php echo e(session()->get('alert')); ?>",
         position: 'topCenter'
     });
 </script>
-@endif
+<?php endif; ?>
 
-@if (session()->has('success'))
+<?php if(session()->has('success')): ?>
 <script>
     iziToast.success({
         title: 'Berhasil!',
-        message: "{{ session()->get('success') }}",
+        message: "<?php echo e(session()->get('success')); ?>",
         position: 'topCenter'
     });
 </script>
-@endif
+<?php endif; ?>
 
-@stack('script')
+<?php echo $__env->yieldPushContent('script'); ?>
 
-</html>
+</html><?php /**PATH D:\xampp\htdocs\event-ukline\resources\views/layouts/main.blade.php ENDPATH**/ ?>

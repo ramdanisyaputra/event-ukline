@@ -3,8 +3,13 @@
 namespace App\Http\Controllers\QuestionWriter;
 
 use App\Http\Controllers\Controller;
+use App\Models\School;
+use App\Models\SchoolAdmin;
+use App\Models\Student;
+use App\Models\User;
+use Illuminate\Http\Request;
 
-class AdminController extends Controller
+class QuestionDashboardController extends Controller
 {
     public function index()
     {

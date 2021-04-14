@@ -6,6 +6,8 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Student\ExamController;
 use App\Http\Controllers\Student\StudentController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\QuestionWriter\ExamController as QuestionWriterExamController;
+use App\Http\Controllers\QuestionWriter\QuestionDashboardController;
 use App\Http\Controllers\Superadmin\EducationLevelController;
 use App\Http\Controllers\Superadmin\ExamTypeController;
 use App\Http\Controllers\Superadmin\FaqController;
@@ -28,8 +30,8 @@ use Illuminate\Support\Facades\Route;
 | Here is where you can register web routes for your application. These
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
-|
-*/
+    |
+    */
 
 Route::get('/', function () {
     return view('welcome');
@@ -131,6 +133,15 @@ Route::namespace('student')->prefix('student')->name('student.')->group(function
 
     Route::prefix('exam')->name('exam.')->group(function() {
         Route::get('/{exam}/boarding', [ExamController::class, 'boarding'])->name('boarding');
+    });
+});
+Route::prefix('question_writer')->name('question_writer.')->group(function(){
+    Route::get('/', [QuestionDashboardController::class, 'index'])->name('index');
+    Route::prefix('exams')->name('exams.')->group(function() {
+        Route::get('', [QuestionWriterExamController::class, 'index'])->name('index');
+        Route::get('create', [QuestionWriterExamController::class, 'create'])->name('create');
+        Route::post('store', [QuestionWriterExamController::class, 'store'])->name('store');
+        Route::put('update', [QuestionWriterExamController::class, 'update'])->name('update');
     });
 });
 

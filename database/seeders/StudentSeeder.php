@@ -14,13 +14,14 @@ class StudentSeeder extends Seeder
      */
     public function run()
     {
-        Student::create([
-            'nisn' => '120345',
-            'nis' => '120345',
-            'name' => 'Muhamad Maulana Lukma Sukma Eka Dharma Bhakti Chandra Restori Ilm Wiguna Satya',
-            'dob' => 'Jakarta, 14 Juli 2006',
-            'gender' => 'Laki-Laki',
-            'class_id' => 1,
-        ]);
+        // Student::create([
+        //     'nisn' => '120345',
+        //     'nis' => '120345',
+        //     'name' => 'Muhamad Maulana Lukma Sukma Eka Dharma Bhakti Chandra Restori Ilm Wiguna Satya',
+        //     'pob' => 'Jakarta',
+        //     'dob' => '14 Juli 2006',
+        //     'gender' => 'Laki-Laki',
+        //     'class_id' => 1,
+        // ]);
     }
 }

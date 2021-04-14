@@ -3,11 +3,11 @@
 @section('content')
 <section class="section">
     <div class="section-header">
-        <h1>Matapelajaran</h1>
+        <h1>Mata pelajaran</h1>
 
         <div class="section-header-breadcrumb">
             <div class="breadcrumb-item active"><a href="#">Beranda</a></div>
-            <div class="breadcrumb-item">Matapelajaran</div>
+            <div class="breadcrumb-item">Mata Pelajaran</div>
         </div>
     </div>
 
@@ -15,9 +15,9 @@
     <div class="section-body">
         <div class="card">
             <div class="card-header">
-                <h4>Daftar Matapelajaran</h4>
+                <h4>Daftar Mata Pelajaran</h4>
                 <div class="card-header-action">
-                    <button class="btn btn-primary" data-toggle="modal" data-target="#kelolaMatapelajaran"><i class="fa fa-plus"></i> Tambah Matapelajaran</button>
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#kelolaMatapelajaran"><i class="fa fa-plus"></i> Tambah Mata Pelajaran</button>
                 </div>
             </div>
             <div class="card-body">
@@ -27,7 +27,7 @@
                             <tr>
                                 <th>No</th>
                                 <th>ID</th>
-                                <th>Matapelajaran</th>
+                                <th>Mata Pelajaran</th>
                                 <th>Sekolah</th>
                                 <th></th>
                             </tr>
@@ -62,14 +62,14 @@
             <form action="{{ route('school_admin.subjects.store') }}" method="POST" id="formKelolaProvince">
                 @csrf
                 <div class="modal-header">
-                    <h5 class="modal-title"><span>Tambah</span> Matapelajaran</h5>
+                    <h5 class="modal-title"><span>Tambah</span> Mata Pelajaran</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="name">Nama Matapelajaran</label>
+                        <label for="name">Nama Mata Pelajaran</label>
                         <input type="name" class="form-control" id="name" name="name" required>
                     </div>
                 </div>
@@ -90,14 +90,14 @@
                 @method('PUT')
                 <input type="hidden" name="id">
                 <div class="modal-header">
-                    <h5 class="modal-title"><span>Edit</span> Matapelajaran</h5>
+                    <h5 class="modal-title"><span>Edit</span> Mata Pelajaran</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="name">Nama Matapelajaran</label>
+                        <label for="name">Nama Mata Pelajaran</label>
                         <input type="name" class="form-control" id="name" name="name" required>
                     </div>
                 </div>

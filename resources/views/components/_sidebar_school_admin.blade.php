@@ -8,7 +8,7 @@
         <a href="{{route('school_admin.subjects.index')}}" class="nav-link"><i class="fas fa-book"></i><span>Matapelajaran</span></a>
     </li>
     <li class="nav-item {{ request()->is('school_admin/regencies*') ? 'active' : '' }}">
-        <a href="" class="nav-link"><i class="fas fa-university"></i><span>Data Kelas</span></a>
+        <a href="{{route('school_admin.classes.index')}}" class="nav-link"><i class="fas fa-university"></i><span>Data Kelas</span></a>
     </li>
     <li class="menu-header">Data Lainnya</li>
     <li class="nav-item {{ request()->is('school_admin/education-levels*') ? 'active' : '' }}">

@@ -22,6 +22,8 @@
     <!-- Template CSS -->
     <link rel="stylesheet" href="{{ asset('main/css/style.css')}}">
     <link rel="stylesheet" href="{{ asset('main/css/components.css')}}">
+    <!-- Faq CSS -->
+    <link href="{{url('main/select2/dist/css/select2.min.css')}}" rel="stylesheet"/>
 </head>
 
 <body>
@@ -65,6 +67,8 @@
                         @include('components._sidebar_superadmin');
                     @elseif(session()->get('role') == 'school_admin')
                         @include('components._sidebar_school_admin');
+                    @elseif(session()->get('role') == 'question_writer')
+                        @include('components._sidebar_question_writer');
                     @endif
 
 
@@ -119,6 +123,8 @@
 
 <!-- Page Specific JS File -->
 <script src="{{ asset('main/js/page/index-0.js') }}"></script>
+
+<script src="{{url('main/select2/dist/js/select2.min.js')}}"></script>
 
 @if (session()->has('alert'))
 <script>

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\QuestionWriter;
 
 use App\Http\Controllers\Controller;
 
@@ -8,6 +8,6 @@ class AdminController extends Controller
 {
     public function index()
     {
-        return view('school_admin.dashboard.index');
+        return view('question_writer.dashboard.index');
     }
 }

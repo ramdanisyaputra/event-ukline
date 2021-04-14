@@ -7,6 +7,8 @@ use App\Http\Controllers\Student\ExamController;
 use App\Http\Controllers\Student\StudentController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\ExamController as AdminExamController;
+use App\Http\Controllers\QuestionWriter\ExamController as QuestionWriterExamController;
+use App\Http\Controllers\QuestionWriter\QuestionDashboardController;
 use App\Http\Controllers\Superadmin\EducationLevelController;
 use App\Http\Controllers\Superadmin\ExamTypeController;
 use App\Http\Controllers\Superadmin\FaqController;
@@ -18,6 +20,7 @@ use App\Http\Controllers\Superadmin\SchoolAdminController;
 use App\Http\Controllers\Superadmin\SchoolController;
 use App\Http\Controllers\Superadmin\SubjectController;
 use App\Http\Controllers\Superadmin\SuperadminController;
+use App\Http\Controllers\Superadmin\TagController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,8 +31,8 @@ use Illuminate\Support\Facades\Route;
 | Here is where you can register web routes for your application. These
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
-|
-*/
+    |
+    */
 
 Route::get('/', function () {
     return view('welcome');
@@ -47,6 +50,11 @@ Route::prefix('superadmin')->name('superadmin.')->group(function() {
         Route::get('', [ProvinceController::class,'index'])->name('index');
         Route::post('store', [ProvinceController::class,'store'])->name('store');
         Route::put('update', [ProvinceController::class,'update'])->name('update');
+    });
+    Route::prefix('tags')->name('tags.')->group(function(){
+        Route::get('', [TagController::class,'index'])->name('index');
+        Route::post('store', [TagController::class,'store'])->name('store');
+        Route::put('update', [TagController::class,'update'])->name('update');
     });
     Route::prefix('regencies')->name('regencies.')->group(function(){
         Route::get('', [RegencyController::class,'index'])->name('index');
@@ -90,6 +98,7 @@ Route::prefix('superadmin')->name('superadmin.')->group(function() {
     });
     Route::prefix('faqs')->name('faqs.')->group(function(){
         Route::get('', [FaqController::class,'index'])->name('index');
+        Route::get('{id}', [FaqController::class,'edit'])->name('edit');
         Route::post('store', [FaqController::class,'store'])->name('store');
         Route::put('update', [FaqController::class,'update'])->name('update');
     });
@@ -132,6 +141,15 @@ Route::namespace('student')->prefix('student')->name('student.')->group(function
 
     Route::prefix('exam')->name('exam.')->group(function() {
         Route::get('/{exam}/boarding', [ExamController::class, 'boarding'])->name('boarding');
+    });
+});
+Route::prefix('question_writer')->name('question_writer.')->group(function(){
+    Route::get('/', [QuestionDashboardController::class, 'index'])->name('index');
+    Route::prefix('exams')->name('exams.')->group(function() {
+        Route::get('', [QuestionWriterExamController::class, 'index'])->name('index');
+        Route::get('create', [QuestionWriterExamController::class, 'create'])->name('create');
+        Route::post('store', [QuestionWriterExamController::class, 'store'])->name('store');
+        Route::put('update', [QuestionWriterExamController::class, 'update'])->name('update');
     });
 });
 

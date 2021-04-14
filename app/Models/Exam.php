@@ -30,7 +30,7 @@ class Exam extends Model
     {
         return $this->hasMany(ExamScore::class);
     }
-    public function examClassess()
+    public function examClass()
     {
         return $this->hasMany(ExamClass::class, 'exam_id');
     }

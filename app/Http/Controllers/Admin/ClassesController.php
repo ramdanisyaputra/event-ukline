@@ -11,16 +11,12 @@ use Illuminate\Support\Facades\Validator;
 
 class ClassesController extends Controller
 {
-    public function adminGuard()
-    {
-        $adminGuard = Auth::guard(session()->get('role'))->user();
-        return $adminGuard;
-    }
+    
     public function index(Request $request)
     {
         $classes = Classes::where('school_id', $this->adminGuard()->school_id)->get();
         $grade = Grade::all();
-        return view('/superadmin/classes/index',compact('classes','grade'));
+        return view('school_admin.classes.index',compact('classes','grade'));
     }
     public function store(Request $request)
     {

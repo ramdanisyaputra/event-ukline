@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Student\ExamController;
 use App\Http\Controllers\Student\StudentController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\AdminStudentController;
 use App\Http\Controllers\Superadmin\EducationLevelController;
 use App\Http\Controllers\Superadmin\ExamTypeController;
 use App\Http\Controllers\Superadmin\FaqController;
@@ -111,8 +112,9 @@ Route::prefix('school_admin')->name('school_admin.')->group(function(){
     Route::prefix('students')->name('students.')->group(function(){
         Route::get('', [AdminStudentController::class,'index'])->name('index');
         Route::get('{classId}', [AdminStudentController::class,'indexStudent'])->name('indexStudent');
-        Route::post('store', [AdminStudentController::class,'store'])->name('store');
-        Route::post('update', [AdminStudentController::class,'update'])->name('update');
+        Route::post('store/{classId}', [AdminStudentController::class,'store'])->name('store');
+        Route::put('update/{classId}', [AdminStudentController::class,'update'])->name('update');
+        Route::get('reset/{classId}/{studentId}', [AdminStudentController::class,'resetPasswordStudent'])->name('resetPasswordStudent');
     });
 });
 

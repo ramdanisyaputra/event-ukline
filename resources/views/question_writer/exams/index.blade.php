@@ -30,6 +30,7 @@
                                 <th>Mulai Pada</th>
                                 <th>Berakhir Pada</th>
                                 <th>Kode Akses</th>
+                                <th>Jenis Ujian</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -41,8 +42,11 @@
                                 <td>{{ $exam->started_at }}</td>
                                 <td>{{ $exam->expired_at }}</td>
                                 <td>{{ $exam->access_code }}</td>
+                                <td>{{ $exam->examType->name }}</td>
                                 <td class="text-center">
-                                    <a href="{{route('superadmin.faqs.edit', $exam->id)}}" class="btn btn-success btn-sm"> <i class="fas fa-edit"></i> </a>
+                                    <a href="{{route('question_writer.exams.edit', $exam->id)}}" class="btn btn-warning btn-sm"> <i class="fas fa-edit"></i> </a>
+                                    <a href="{{route('question_writer.exams.show', $exam->id)}}" class="btn btn-success btn-sm"> <i class="fas fa-eye"></i> </a>
+                                    <a href="{{route('question_writer.exams.questions.index', $exam->id)}}" class="btn btn-primary btn-sm"> <i class="fas fa-plus"></i> </a>
                                 </td>
                             </tr>
                             @empty

@@ -16,7 +16,7 @@
     <div class="section-body">
         <div class="card">
             <div class="card-header">
-                <h4>Ubah Ujian</h4>
+                <h4>Tambah Ujian</h4>
             </div>
             <div class="card-body">
                 <form action="{{route('question_writer.exams.store')}}" method="post">
@@ -59,25 +59,3 @@
 </section>
 
 @endsection
-
-@push('script')
-<script>
-    $(document).ready(function() {
-        $('.js-example-basic-multiple').select2();
-    });
-
-    $('#editFaq').on('show.bs.modal', (e) => {
-        var id = $(e.relatedTarget).data('id');
-        var name = $(e.relatedTarget).data('name');
-        var tags = $(e.relatedTarget).data('tags');
-        var question= $(e.relatedTarget).data('question');
-        var answer= $(e.relatedTarget).data('answer');
-
-        $('#editFaq').find('input[name="id"]').val(id);
-        $('#editFaq').find('input[name="tags"]').val(tags);
-        $('#editFaq').find('input[name="name"]').val(name);
-        $('#editFaq').find('input[name="question"]').val(question);
-        $('#editFaq').find('input[name="answer"]').val(answer);
-    });
-</script>
-@endpush    

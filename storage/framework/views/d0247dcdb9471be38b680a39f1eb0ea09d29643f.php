@@ -24,6 +24,17 @@
     <link rel="stylesheet" href="<?php echo e(asset('main/css/components.css')); ?>">
     <!-- Faq CSS -->
     <link href="<?php echo e(url('main/select2/dist/css/select2.min.css')); ?>" rel="stylesheet"/>
+
+    <style>
+        .select2-selection.select2-selection--multiple {
+            min-height: 42px;
+            border-color: #e4e6fc;
+        }
+
+        .select2-container--default.select2-container--focus .select2-selection--multiple {
+            border-color: #95a0f4;
+        }
+    </style>
 </head>
 
 <body>
@@ -126,6 +137,14 @@
 <script src="<?php echo e(asset('main/js/page/index-0.js')); ?>"></script>
 
 <script src="<?php echo e(url('main/select2/dist/js/select2.min.js')); ?>"></script>
+
+<script>
+    $(document).ready(function() {
+        if ($(document).find('.js-example-basic-multiple').length > 0) {
+            $('.js-example-basic-multiple').select2();
+        }
+    });
+</script>
 
 <?php if(session()->has('alert')): ?>
 <script>

@@ -1,5 +1,7 @@
 @extends('layouts.student')
 
+@section('title', 'Beranda')
+
 @section('content')
 <section class="section">
 
@@ -7,10 +9,10 @@
         <div class="row">
             @forelse ($exams as $exam)
             <div class="col-md-4 my-2">
-                <div class="card">
+                <div class="card exam-card">
                     <div class="card-body">
-                        <div class="py-2 mb-3 text-center">
-                            <h4 class="m-0 bg-light text-primary p-3 rounded shadow-sm">{{ $exam->name }}</h4>
+                        <div class="bg-light mb-3 text-center shadow-sm rounded exam-card-title">
+                            <h4 class="m-0 text-primary">{{ $exam->name }}</h4>
                         </div>
                         <div>
                             <table class="w-100">
@@ -63,7 +65,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Ujian Akhir Matematika Dasar</h5>
+                <h5 class="modal-title">Detail Ujian</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>

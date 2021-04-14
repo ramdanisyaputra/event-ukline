@@ -20,7 +20,7 @@ class CreateStudentsTable extends Migration
             $table->string('name');
             $table->string('pob');
             $table->string('dob');
-            $table->string('number_student');
+            $table->string('student_number');
             $table->string('gender');
             $table->string('username');
             $table->string('password');

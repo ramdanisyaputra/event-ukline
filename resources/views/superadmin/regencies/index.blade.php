@@ -3,11 +3,11 @@
 @section('content')
 <section class="section">
     <div class="section-header">
-        <h1>Regen</h1>
+        <h1>Regensi</h1>
 
         <div class="section-header-breadcrumb">
             <div class="breadcrumb-item active"><a href="#">Beranda</a></div>
-            <div class="breadcrumb-item">Regen</div>
+            <div class="breadcrumb-item">Regensi</div>
         </div>
     </div>
 
@@ -15,9 +15,9 @@
     <div class="section-body">
         <div class="card">
             <div class="card-header">
-                <h4>Daftar Regen</h4>
+                <h4>Daftar Regensi</h4>
                 <div class="card-header-action">
-                    <button class="btn btn-primary" data-toggle="modal" data-target="#kelolaRegen"><i class="fa fa-plus"></i> Tambah Regen</button>
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#kelolaRegen"><i class="fa fa-plus"></i> Tambah Regensi</button>
                 </div>
             </div>
             <div class="card-body">
@@ -64,18 +64,18 @@
             <form action="{{ route('superadmin.regencies.store') }}" method="POST" id="formKelolaRegen">
                 @csrf
                 <div class="modal-header">
-                    <h5 class="modal-title"><span>Tambah</span> Regen</h5>
+                    <h5 class="modal-title"><span>Tambah</span> Regensi</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="name">Nama Regen</label>
+                        <label for="name">Nama Regensi</label>
                         <input type="text" class="form-control" id="name" name="name" required placeholder="Contoh: Kota Bekasi atau Kabupaten Bekasi">
                     </div>
                     <div class="form-group">
-                        <label for="regency_code">Kode Regen</label>
+                        <label for="regency_code">Kode Regensi</label>
                         <input type="text" class="form-control" id="regency_code" name="regency_code" required>
                     </div>
                     <div class="form-group">
@@ -105,18 +105,18 @@
                 @method('PUT')
                 <input type="hidden" name="id">
                 <div class="modal-header">
-                    <h5 class="modal-title"><span>Edit</span> Regen</h5>
+                    <h5 class="modal-title"><span>Edit</span> Regensi</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="name">Nama Regen</label>
+                        <label for="name">Nama Regensi</label>
                         <input type="text" class="form-control" id="name" name="name" required placeholder="Contoh: Kota Bekasi atau Kabupaten Bekasi">
                     </div>
                     <div class="form-group">
-                        <label for="regency_code">Kode Regen</label>
+                        <label for="regency_code">Kode Regensi</label>
                         <input type="text" class="form-control" id="regency_code" name="regency_code" required>
                     </div>
                     <div class="form-group">

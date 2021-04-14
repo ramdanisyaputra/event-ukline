@@ -30,4 +30,8 @@ class Exam extends Model
     {
         return $this->hasMany(ExamScore::class);
     }
+    public function examClassess()
+    {
+        return $this->hasMany(ExamClass::class, 'exam_id');
+    }
 }

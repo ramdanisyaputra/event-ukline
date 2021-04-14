@@ -16,7 +16,6 @@
                         <h4>Total Superadmin</h4>
                     </div>
                     <div class="card-body">
-                        {{ $total_superadmin }}
                     </div>
                 </div>
             </div>
@@ -31,7 +30,6 @@
                         <h4>Total Sekolah</h4>
                     </div>
                     <div class="card-body">
-                        {{ $total_school }}
                     </div>
                 </div>
             </div>
@@ -46,7 +44,6 @@
                         <h4>Total Siswa</h4>
                     </div>
                     <div class="card-body">
-                        {{ $total_student }}
                     </div>
                 </div>
             </div>
@@ -61,7 +58,6 @@
                         <h4>Total Admin Sekolah</h4>
                     </div>
                     <div class="card-body">
-                        {{ $total_school_admin }}
                     </div>
                 </div>
             </div>

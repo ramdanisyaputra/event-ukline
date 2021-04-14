@@ -4,15 +4,15 @@ namespace App\Http\Controllers\Superadmin;
 
 use App\Http\Controllers\Controller;
 use App\Models\EducationLevel;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class EducationLevelController extends Controller
 {
     public function index(Request $request)
     {
-        $educationLevel = EducationLevel::all();
-        return view('/superadmin/master/education-level/index',compact('educationLevel'));
+        $educationLevels = EducationLevel::all();
+        return view('superadmin.education-levels.index',compact('educationLevels'));
     }
     public function store(Request $request)
     {

@@ -110,9 +110,10 @@ Route::prefix('school_admin')->name('school_admin.')->group(function(){
         Route::put('update', [ClassesController::class,'update'])->name('update');
     });
     Route::prefix('students')->name('students.')->group(function(){
-        Route::get('', [ClassesController::class,'index'])->name('index');
-        Route::post('store', [ClassesController::class,'store'])->name('store');
-        Route::post('update', [ClassesController::class,'update'])->name('update');
+        Route::get('', [AdminStudentController::class,'index'])->name('index');
+        Route::get('{classId}', [AdminStudentController::class,'indexStudent'])->name('indexStudent');
+        Route::post('store', [AdminStudentController::class,'store'])->name('store');
+        Route::post('update', [AdminStudentController::class,'update'])->name('update');
     });
     // Exam
     Route::prefix('exams')->name('exams.')->group(function() {

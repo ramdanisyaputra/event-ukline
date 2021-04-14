@@ -14,6 +14,7 @@ use App\Http\Controllers\Superadmin\SchoolAdminController;
 use App\Http\Controllers\Superadmin\SchoolController;
 use App\Http\Controllers\Superadmin\SubjectController;
 use App\Http\Controllers\Superadmin\SuperadminController;
+use App\Http\Controllers\Superadmin\TagController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -43,6 +44,11 @@ Route::prefix('superadmin')->name('superadmin.')->group(function() {
         Route::get('', [ProvinceController::class,'index'])->name('index');
         Route::post('store', [ProvinceController::class,'store'])->name('store');
         Route::put('update', [ProvinceController::class,'update'])->name('update');
+    });
+    Route::prefix('tags')->name('tags.')->group(function(){
+        Route::get('', [TagController::class,'index'])->name('index');
+        Route::post('store', [TagController::class,'store'])->name('store');
+        Route::put('update', [TagController::class,'update'])->name('update');
     });
     Route::prefix('regencies')->name('regencies.')->group(function(){
         Route::get('', [RegencyController::class,'index'])->name('index');
@@ -84,6 +90,7 @@ Route::prefix('superadmin')->name('superadmin.')->group(function() {
     });
     Route::prefix('faqs')->name('faqs.')->group(function(){
         Route::get('', [FaqController::class,'index'])->name('index');
+        Route::get('{id}', [FaqController::class,'edit'])->name('edit');
         Route::post('store', [FaqController::class,'store'])->name('store');
         Route::put('update', [FaqController::class,'update'])->name('update');
     });

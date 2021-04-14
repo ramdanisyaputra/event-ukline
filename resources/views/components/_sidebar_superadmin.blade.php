@@ -25,7 +25,10 @@
         <a href="{{ route('superadmin.school-admins.index') }}" class="nav-link"><i class="fas fa-users"></i><span>Admin Sekolah</span></a>
     </li>
     <li class="menu-header">Fitur Lainnya</li>
+    <li class="nav-item {{ request()->is('superadmin/tags*') ? 'active' : '' }}">
+        <a href="{{ route('superadmin.tags.index') }}" class="nav-link"><i class="fas fa-tags"></i><span>Kategori</span></a>
+    </li>
     <li class="nav-item {{ request()->is('superadmin/faqs*') ? 'active' : '' }}">
-        <a href="{{ route('superadmin.index') }}" class="nav-link"><i class="fas fa-question-circle"></i><span>FAQ</span></a>
+        <a href="{{ route('superadmin.faqs.index') }}" class="nav-link"><i class="fas fa-question-circle"></i><span>FAQ</span></a>
     </li>
 </ul>

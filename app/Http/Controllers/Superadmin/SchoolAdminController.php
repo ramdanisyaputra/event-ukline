@@ -13,7 +13,11 @@ class SchoolAdminController extends Controller
     public function index(Request $request)
     {
         $schoolAdmins = SchoolAdmin::all();
-        $schools = School::all();
+        $schoolId = [];
+        foreach($schoolAdmins as $admin){
+            $schoolId[] = $admin->school_id;
+        }
+        $schools = School::whereNotIn('id',$schoolId)->get();
         return view('superadmin.school_admin.index',compact('schoolAdmins','schools'));
     }
     public function store(Request $request)

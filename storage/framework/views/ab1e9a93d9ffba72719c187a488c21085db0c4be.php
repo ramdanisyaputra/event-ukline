@@ -1,13 +1,13 @@
-@extends('layouts.main')
 
-@section('content')
+
+<?php $__env->startSection('content'); ?>
 <section class="section">
     <div class="section-header">
-        <h1>Siswa {{$class->name}}</h1>
+        <h1>Siswa <?php echo e($class->name); ?></h1>
 
         <div class="section-header-breadcrumb">
             <div class="breadcrumb-item active"><a href="#">Beranda</a></div>
-            <div class="breadcrumb-item">Siswa {{$class->name}}</div>
+            <div class="breadcrumb-item">Siswa <?php echo e($class->name); ?></div>
         </div>
     </div>
 
@@ -15,10 +15,10 @@
     <div class="section-body">
         <div class="card">
             <div class="card-header">
-                <h4>Daftar Siswa {{$class->name}}</h4>
+                <h4>Daftar Siswa <?php echo e($class->name); ?></h4>
                 <div class="card-header-action">
-                    <button class="btn btn-primary" data-toggle="modal" data-target="#kelolaStudent"><i class="fa fa-plus"></i> Tambah Siswa {{$class->name}}</button>
-                    <button class="btn btn-success" data-toggle="modal" data-target="#import"><i class="fa fa-plus"></i> Import Siswa {{$class->name}}</button>
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#kelolaStudent"><i class="fa fa-plus"></i> Tambah Siswa <?php echo e($class->name); ?></button>
+                    <button class="btn btn-success" data-toggle="modal" data-target="#import"><i class="fa fa-plus"></i> Import Siswa <?php echo e($class->name); ?></button>
                 </div>
             </div>
             <div class="card-body">
@@ -37,27 +37,27 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($students as $key => $student)
+                            <?php $__empty_1 = true; $__currentLoopData = $students; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $student): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                             <tr>
-                                <td>{{ ++$key }}</td>
-                                <td>{{ $student->nisn }}</td>
-                                <td>{{ $student->name }}</td>
-                                <td>{{ $student->pob }}</td>
-                                <td>{{ $student->dob }}</td>
-                                <td>{{ $student->gender }}</td>
-                                <td>{{ $student->student_number }}</td>
+                                <td><?php echo e(++$key); ?></td>
+                                <td><?php echo e($student->nisn); ?></td>
+                                <td><?php echo e($student->name); ?></td>
+                                <td><?php echo e($student->pob); ?></td>
+                                <td><?php echo e($student->dob); ?></td>
+                                <td><?php echo e($student->gender); ?></td>
+                                <td><?php echo e($student->student_number); ?></td>
                                 <td class="text-center">
-                                    <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#editStudent" data-id="{{ $student->id }}" data-nisn="{{ $student->nisn }}" data-nis="{{ $student->nis }}" data-name="{{ $student->name }}" data-pob="{{ $student->pob }}" data-dob="{{ $student->dob }}" data-gender="{{ $student->gender }}" data-student-number="{{ $student->student_number }}" data-username="{{ $student->username }}"><i class="fas fa-pencil-alt"></i></button>
+                                    <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#editStudent" data-id="<?php echo e($student->id); ?>" data-nisn="<?php echo e($student->nisn); ?>" data-nis="<?php echo e($student->nis); ?>" data-name="<?php echo e($student->name); ?>" data-pob="<?php echo e($student->pob); ?>" data-dob="<?php echo e($student->dob); ?>" data-gender="<?php echo e($student->gender); ?>" data-student-number="<?php echo e($student->student_number); ?>" data-username="<?php echo e($student->username); ?>"><i class="fas fa-pencil-alt"></i></button>
 
-                                    <a href="{{route('school_admin.students.resetPasswordStudent', [$student->class_id , $student->id])}}" class="btn btn-sm btn-warning" onclick="return confirm('Apakah anda yakin? ')">Reset Password</a>
+                                    <a href="<?php echo e(route('school_admin.students.resetPasswordStudent', [$student->class_id , $student->id])); ?>" class="btn btn-sm btn-warning" onclick="return confirm('Apakah anda yakin? ')">Reset Password</a>
                                     
                                 </td>
                             </tr>
-                            @empty
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                             <tr>
                                 <td colspan="10" class="text-center">Tidak ada data</td>
                             </tr>
-                            @endforelse
+                            <?php endif; ?>
                         </tbody>
                     </table>
                 </div>
@@ -69,8 +69,8 @@
 <div class="modal fade" id="kelolaStudent" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form action="{{ route('school_admin.students.store',$class->id) }}" method="POST" id="formkelolaStudents">
-                @csrf
+            <form action="<?php echo e(route('school_admin.students.store',$class->id)); ?>" method="POST" id="formkelolaStudents">
+                <?php echo csrf_field(); ?>
                 <div class="modal-header">
                     <h5 class="modal-title"><span>Tambah</span> Siswa</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -128,9 +128,9 @@
 <div class="modal fade" id="editStudent" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form action="{{ route('school_admin.students.update',$class->id) }}" method="POST" id="formkelolaStudents">
-                @csrf
-                @method('PUT')
+            <form action="<?php echo e(route('school_admin.students.update',$class->id)); ?>" method="POST" id="formkelolaStudents">
+                <?php echo csrf_field(); ?>
+                <?php echo method_field('PUT'); ?>
                 <input type="hidden" name="id">
                 <div class="modal-header">
                     <h5 class="modal-title"><span>Edit</span> Siswa</h5>
@@ -184,8 +184,8 @@
 <div class="modal fade" id="import" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form action="{{ route('school_admin.students.import',$class->id) }}" method="POST" id="formkelolaStudents" enctype="multipart/form-data">
-                @csrf
+            <form action="<?php echo e(route('school_admin.students.import',$class->id)); ?>" method="POST" id="formkelolaStudents" enctype="multipart/form-data">
+                <?php echo csrf_field(); ?>
                 <div class="modal-header">
                     <h5 class="modal-title"><span>Import</span> Siswa</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -195,7 +195,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <h6 for="file">Download Panduan</h6>
-                        <a href="{{asset('panduan')}}" class="nav-link">Download Panduan Import Siswa Berikut</a>
+                        <a href="<?php echo e(asset('panduan')); ?>" class="nav-link">Download Panduan Import Siswa Berikut</a>
                     </div>
                     <div class="form-group">
                         <label for="file">Data Excel</label>
@@ -210,10 +210,10 @@
         </div>
     </div>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
 
-@push('script')
+<?php $__env->startPush('script'); ?>
 <script>
     $('#editStudent').on('show.bs.modal', (e) => {
         var id = $(e.relatedTarget).data('id');
@@ -235,4 +235,5 @@
         $('#editStudent').find('select[name="gender"]').val(gender);
     });
 </script>
-@endpush
+<?php $__env->stopPush(); ?>
+<?php echo $__env->make('layouts.main', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\event-ukline\resources\views/school_admin/students/index-student.blade.php ENDPATH**/ ?>

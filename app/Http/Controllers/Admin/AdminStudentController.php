@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Imports\StudentImport;
 use App\Models\Classes;
 use App\Models\Grade;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Excel;
 
 class AdminStudentController extends Controller
 {
@@ -32,7 +34,7 @@ class AdminStudentController extends Controller
             'name'=>'required',
             'pob'=>'required',
             'dob'=>'required',
-            'student_number'=>'required|unique:students',
+            'student_number'=>'required',
             'gender'=>'required',
             'password'=>'required',
         ]);
@@ -60,7 +62,6 @@ class AdminStudentController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'nisn'=>'unique:students,nisn,'. $request->id,
-            'student_number'=>'unique:students,student_number,'. $request->id,
         ]);
         if ($validator->fails()) {
             return redirect()->back()->with('alert','Gagal mengubah data')->withInput();
@@ -88,5 +89,23 @@ class AdminStudentController extends Controller
         $student->save();
 
         return redirect()->back()->with('success','Berhasil Reset Password Penulis Soal');
+    }
+
+    public function import(Request $request , $classId)
+    {
+		try {
+            Excel::import(new StudentImport($classId,$this->authUser()->school_id),$request->file('file'));
+		} catch (\Exception $ex) {
+            $errorMsg = json_decode($ex->getMessage());
+            $msg = 'Kolom ';
+            foreach ($errorMsg as $key => $value) {
+                $msg .= "$key, ";
+            }
+            $msg = rtrim($msg, ", ");
+            $msg .= ' tidak sesuai!';
+
+            return back()->with('alert',$msg);
+		}
+        return back()->with('success','Berhasil Import Data Siswa');
     }
 }

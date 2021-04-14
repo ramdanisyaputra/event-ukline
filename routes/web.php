@@ -126,6 +126,8 @@ Route::prefix('school_admin')->name('school_admin.')->group(function(){
         Route::post('store/{classId}', [AdminStudentController::class,'store'])->name('store');
         Route::put('update/{classId}', [AdminStudentController::class,'update'])->name('update');
         Route::get('reset/{classId}/{studentId}', [AdminStudentController::class,'resetPasswordStudent'])->name('resetPasswordStudent');
+        Route::post('import/{classId}', [AdminStudentController::class,'import'])->name('import');
+
     });
     // Exam
     Route::prefix('exams')->name('exams.')->group(function() {

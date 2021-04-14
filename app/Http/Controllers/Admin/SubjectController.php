@@ -18,7 +18,7 @@ class SubjectController extends Controller
     public function index(Request $request)
     {
         $subject = Subject::where('school_id', $this->adminGuard()->school_id)->get();
-        return view('/superadmin/subject/index',compact('subject'));
+        return view('school_admin.subject.index',compact('subject'));
     }
     public function store(Request $request)
     {
@@ -30,11 +30,11 @@ class SubjectController extends Controller
             return redirect()->back()->with('alert','Gagal menginput data')->withInput();
         }
         Subject::create($request->all());
-        return redirect()->back()->with('success','Kelas berhasil ditambahkan');
+        return redirect()->back()->with('success','Matapelajaran berhasil ditambahkan');
     }
     public function update(Request $request)
     {
         Subject::find($request->id)->update($request->all());
-        return redirect()->back()->with('success','Kelas berhasil diubah');
+        return redirect()->back()->with('success','Matapelajaran berhasil diubah');
     }
 }

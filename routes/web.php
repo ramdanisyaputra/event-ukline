@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\SubjectController as AdminSubjectController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Student\ExamController;
 use App\Http\Controllers\Student\StudentController;
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Superadmin\EducationLevelController;
 use App\Http\Controllers\Superadmin\ExamTypeController;
 use App\Http\Controllers\Superadmin\FaqController;
@@ -94,10 +95,9 @@ Route::prefix('superadmin')->name('superadmin.')->group(function() {
 
 });
 
-Route::prefix('school_admins')->name('school_admins.')->group(function(){
-    Route::get('/', function() {
-        return 'tes';
-    })->name('index');
+Route::prefix('school_admin')->name('school_admin.')->group(function(){
+    Route::get('/', [AdminController::class, 'index'])->name('index');
+
     Route::prefix('subjects')->name('subjects.')->group(function(){
         Route::get('', [AdminSubjectController::class,'index'])->name('index');
         Route::post('store', [AdminSubjectController::class,'store'])->name('store');

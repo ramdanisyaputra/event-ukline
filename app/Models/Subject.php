@@ -14,4 +14,9 @@ class Subject extends Model
     {
         return $this->belongsTo(School::class);
     }
+
+    public function examClassess()
+    {
+        return $this->hasMany(ExamClass::class, 'subject_id');
+    }
 }

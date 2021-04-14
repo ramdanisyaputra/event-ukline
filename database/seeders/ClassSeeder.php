@@ -17,7 +17,7 @@ class ClassSeeder extends Seeder
         Classes::create([
             'name' => '11',
             'school_id' => 1,
-            'grade_id' => 11,
+            'grade_id' => 1,
         ]);
     }
 }

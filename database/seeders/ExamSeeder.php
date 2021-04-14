@@ -21,7 +21,8 @@ class ExamSeeder extends Seeder
             'expired_at' => '2021-04-13 23:00:00',
             'duration' => 60,
             'regency_id' => 1,
-            'school_id' => 1,
+            'access_code' => '123456',
+            'shared' => true,
             'status' => 'published',
         ]);
     }

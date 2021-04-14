@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             QuestionWriter::class,
             SchoolAdmin::class,
             GradeSeeder::class,
+            ClassSeeder::class
         ]);
     }
 }

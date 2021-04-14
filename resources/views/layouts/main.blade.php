@@ -22,6 +22,19 @@
     <!-- Template CSS -->
     <link rel="stylesheet" href="{{ asset('main/css/style.css')}}">
     <link rel="stylesheet" href="{{ asset('main/css/components.css')}}">
+    <!-- Faq CSS -->
+    <link href="{{url('main/select2/dist/css/select2.min.css')}}" rel="stylesheet"/>
+
+    <style>
+        .select2-selection.select2-selection--multiple {
+            min-height: 42px;
+            border-color: #e4e6fc;
+        }
+
+        .select2-container--default.select2-container--focus .select2-selection--multiple {
+            border-color: #95a0f4;
+        }
+    </style>
 </head>
 
 <body>
@@ -65,6 +78,8 @@
                         @include('components._sidebar_superadmin');
                     @elseif(session()->get('role') == 'school_admin')
                         @include('components._sidebar_school_admin');
+                    @elseif(session()->get('role') == 'question_writer')
+                        @include('components._sidebar_question_writer');
                     @endif
 
 
@@ -119,6 +134,16 @@
 
 <!-- Page Specific JS File -->
 <script src="{{ asset('main/js/page/index-0.js') }}"></script>
+
+<script src="{{url('main/select2/dist/js/select2.min.js')}}"></script>
+
+<script>
+    $(document).ready(function() {
+        if ($(document).find('.js-example-basic-multiple').length > 0) {
+            $('.js-example-basic-multiple').select2();
+        }
+    });
+</script>
 
 @if (session()->has('alert'))
 <script>

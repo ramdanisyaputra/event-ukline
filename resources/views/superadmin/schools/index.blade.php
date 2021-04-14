@@ -72,7 +72,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                <div class="form-group">
+                    <div class="form-group">
                         <label for="name">Nama Sekolah</label>
                         <input type="text" class="form-control" id="name" name="name" value="{{old('name')}}" required placeholder="Contoh: SMP 1">
                     </div>

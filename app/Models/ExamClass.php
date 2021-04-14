@@ -13,4 +13,14 @@ class ExamClass extends Model
     {
         return $this->belongsTo(Exam::class, 'exam_id');
     }
+
+    public function subject()
+    {
+        return $this->belongsTo(Subject::class, 'subject_id');
+    }
+
+    public function school()
+    {
+        return $this->belongsTo(School::class, 'school_id');
+    }
 }

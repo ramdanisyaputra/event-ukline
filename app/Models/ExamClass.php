@@ -18,4 +18,9 @@ class ExamClass extends Model
     {
         return $this->belongsTo(Subject::class, 'subject_id');
     }
+
+    public function school()
+    {
+        return $this->belongsTo(School::class, 'school_id');
+    }
 }

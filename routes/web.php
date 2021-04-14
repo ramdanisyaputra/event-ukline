@@ -118,6 +118,8 @@ Route::prefix('school_admin')->name('school_admin.')->group(function(){
     // Exam
     Route::prefix('exams')->name('exams.')->group(function() {
         Route::get('/', [AdminExamController::class, 'index'])->name('index');
+        Route::get('/create_public', [AdminExamController::class, 'createPublic'])->name('create_public');
+        Route::get('/create_private', [AdminExamController::class, 'createPrivate'])->name('create_private');
     });
 });
 

@@ -51,6 +51,7 @@
                         </select>
                     </div>
                 <button class="btn btn-primary" type="submit">Simpan</button>
+                    <a href="<?php echo e(route('question_writer.exams.index')); ?>" class="btn btn-warning">Kembali</a>
                 </form>
             </div>
         </div>

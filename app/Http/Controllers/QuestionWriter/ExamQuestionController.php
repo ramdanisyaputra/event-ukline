@@ -4,22 +4,23 @@ namespace App\Http\Controllers\QuestionWriter;
 
 use App\Http\Controllers\Controller;
 use App\Models\Exam;
+use App\Models\ExamQuestion;
 use App\Models\ExamType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class ExamController extends Controller
+class ExamQuestionController extends Controller
 {
-    public function index(Request $request)
+    public function index($id)
     {
-        $exams = Exam::where('regency_id', $this->authUser()->regency_id)->get();
-        return view('question_writer.exams.index',compact('exams'));
+        $examQuestions = ExamQuestion::where('exam_id',$id)->get();
+        return view('question_writer.question_exams.index',compact('examQuestions'));
     }
     public function create(Request $request)
     {
         $examTypes = ExamType::all();
         
-        return view('question_writer.exams.create', compact('examTypes'));
+        return view('question_writer.question_exams.create', compact('examTypes'));
     }
     public function store(Request $request)
     {
@@ -50,12 +51,6 @@ class ExamController extends Controller
         $exam = Exam::find($id);
         $examTypes = ExamType::all();
         return view('question_writer.exams.edit', compact('exam','examTypes'));
-    }
-    public function show($id)
-    {
-        $exam = Exam::find($id);
-        $examTypes = ExamType::all();
-        return view('question_writer.exams.show', compact('exam','examTypes'));
     }
     public function update(Request $request)
     {

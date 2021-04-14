@@ -3,12 +3,12 @@
 <?php $__env->startSection('content'); ?>
 <section class="section">
     <div class="section-header">
-        <h1>FAQ</h1>
+        <h1>Ujian</h1>
 
         <div class="section-header-breadcrumb">
             <div class="breadcrumb-item active"><a href="#">Beranda</a></div>
-            <div class="breadcrumb-item">FAQ </div>
-            <div class="breadcrumb-item">Edit</div>
+            <div class="breadcrumb-item">Ujian </div>
+            <div class="breadcrumb-item">Tambah</div>
         </div>
     </div>
 
@@ -16,19 +16,39 @@
     <div class="section-body">
         <div class="card">
             <div class="card-header">
-                <h4>Ubah FAQ</h4>
+                <h4>Tambah Ujian</h4>
             </div>
             <div class="card-body">
                 <form action="<?php echo e(route('question_writer.exams.store')); ?>" method="post">
                     <?php echo csrf_field(); ?>
-                    <?php echo method_field('PUT'); ?>
                     <div class="form-group">
-                        <label for="question">Pertanyaan</label>
-                        <textarea class="form-control" name="question" id="question" cols="30" rows="10"></textarea>
+                        <label for="name">Nama Ujian</label>
+                        <input type="text" class="form-control" name="name" id="name">
                     </div>
                     <div class="form-group">
-                        <label for="answer">Jawaban</label>
-                        <textarea class="form-control" name="answer" id="answer" cols="30" rows="10"></textarea>
+                        <label for="started_at">Dimulai Pada</label>
+                        <input type="datetime-local" class="form-control" name="started_at" id="started_at">
+                    </div>
+                    <div class="form-group">
+                        <label for="expired_at">Berakhir Pada</label>
+                        <input type="datetime-local" class="form-control" name="expired_at" id="expired_at">
+                    </div>
+                    <div class="form-group">
+                        <label for="duration">Durasi</label>
+                        <input type="number" class="form-control" name="duration" id="duration">
+                    </div>
+                    <div class="form-group">
+                        <label for="access_code">Kode Akses</label>
+                        <input type="text" class="form-control" name="access_code" id="access_code">
+                    </div>
+                    <div class="form-group">
+                        <label for="exam_type_id">Jenis Ujian</label>
+                        <select name="exam_type_id" id="exam_type_id" class="form-control" required>
+                            <option value=""> ~ Pilih ~</option>
+                            <?php $__currentLoopData = $examTypes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $exam): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($exam->id); ?>"><?php echo e($exam->name); ?></option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        </select>
                     </div>
                 <button class="btn btn-primary" type="submit">Simpan</button>
                 </form>
@@ -39,26 +59,4 @@
 </section>
 
 <?php $__env->stopSection(); ?>
-
-<?php $__env->startPush('script'); ?>
-<script>
-    $(document).ready(function() {
-        $('.js-example-basic-multiple').select2();
-    });
-
-    $('#editFaq').on('show.bs.modal', (e) => {
-        var id = $(e.relatedTarget).data('id');
-        var name = $(e.relatedTarget).data('name');
-        var tags = $(e.relatedTarget).data('tags');
-        var question= $(e.relatedTarget).data('question');
-        var answer= $(e.relatedTarget).data('answer');
-
-        $('#editFaq').find('input[name="id"]').val(id);
-        $('#editFaq').find('input[name="tags"]').val(tags);
-        $('#editFaq').find('input[name="name"]').val(name);
-        $('#editFaq').find('input[name="question"]').val(question);
-        $('#editFaq').find('input[name="answer"]').val(answer);
-    });
-</script>
-<?php $__env->stopPush(); ?>    
 <?php echo $__env->make('layouts.main', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\event-ukline\resources\views/question_writer/exams/create.blade.php ENDPATH**/ ?>

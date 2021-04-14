@@ -3,11 +3,11 @@
 @section('content')
 <section class="section">
     <div class="section-header">
-        <h1>Ujian</h1>
+        <h1>Soal Ujian</h1>
 
         <div class="section-header-breadcrumb">
             <div class="breadcrumb-item active"><a href="#">Beranda</a></div>
-            <div class="breadcrumb-item">Ujian </div>
+            <div class="breadcrumb-item">Soal Ujian </div>
             <div class="breadcrumb-item">Tambah</div>
         </div>
     </div>
@@ -16,7 +16,7 @@
     <div class="section-body">
         <div class="card">
             <div class="card-header">
-                <h4>Tambah Ujian</h4>
+                <h4>Tambah Soal Ujian</h4>
             </div>
             <div class="card-body">
                 <form action="{{route('question_writer.exams.store')}}" method="post">

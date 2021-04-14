@@ -18,7 +18,7 @@ class SchoolAdminController extends Controller
             $schoolId[] = $admin->school_id;
         }
         $schools = School::whereNotIn('id',$schoolId)->get();
-        return view('superadmin.school_admin.index',compact('schoolAdmins','schools'));
+        return view('superadmin.school_admins.index',compact('schoolAdmins','schools'));
     }
     public function store(Request $request)
     {

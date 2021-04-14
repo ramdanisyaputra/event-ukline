@@ -17,7 +17,7 @@
             <div class="card-header">
                 <h4>Kelola Ujian</h4>
                 <div class="card-header-action">
-                    <a class="btn btn-primary" href="{{ route('question_writer.exams.create') }}" ><i class="fa fa-plus"></i> Tambah Ujian</a>
+                    <a class="btn btn-primary" href="{{ route('question_writer.exams.questions.create') }}" ><i class="fa fa-plus"></i> Tambah Ujian</a>
                 </div>
             </div>
             <div class="card-body">
@@ -26,27 +26,21 @@
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Nama</th>
-                                <th>Mulai Pada</th>
-                                <th>Berakhir Pada</th>
-                                <th>Kode Akses</th>
-                                <th>Jenis Ujian</th>
+                                <th>Pertanyaan</th>
+                                <th>Poin</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($exams as $key => $exam)
+                            @forelse ($examQuestions as $key => $question)
                             <tr>
                                 <td>{{ ++$key }}</td>
-                                <td>{{ $exam->name }}</td>
-                                <td>{{ $exam->started_at }}</td>
-                                <td>{{ $exam->expired_at }}</td>
-                                <td>{{ $exam->access_code }}</td>
-                                <td>{{ $exam->examType->name }}</td>
+                                <td>{{ $question->question }}</td>
+                                <td>{{ $question->poin }}</td>
                                 <td class="text-center">
-                                    <a href="{{route('question_writer.exams.edit', $exam->id)}}" class="btn btn-warning btn-sm"> <i class="fas fa-edit"></i> </a>
-                                    <a href="{{route('question_writer.exams.show', $exam->id)}}" class="btn btn-success btn-sm"> <i class="fas fa-eye"></i> </a>
-                                    <a href="{{route('question_writer.exams.questions.index', $exam->id)}}" class="btn btn-primary btn-sm"> <i class="fas fa-plus"></i> </a>
+                                    <a href="{{route('question_writer.exams.edit', $question->id)}}" class="btn btn-warning btn-sm"> <i class="fas fa-edit"></i> </a>
+                                    <a href="{{route('question_writer.exams.show', $question->id)}}" class="btn btn-success btn-sm"> <i class="fas fa-eye"></i> </a>
+                                    <a href="{{route('question_writer.exams.questions.index', $question->id)}}" class="btn btn-primary btn-sm"> <i class="fas fa-plus"></i> </a>
                                 </td>
                             </tr>
                             @empty

@@ -22,7 +22,10 @@
                         <label class="col-form-label text-md-right my-auto col-12 col-md-3 col-lg-3">Pilih Ujian</label>
                         <div class="col-sm-12 col-md-7">
                             <select name="" id="" class="custom-select">
-
+                                <option value=""></option>
+                                @foreach ($exams as $exam)
+                                    <option value="{{$exam->id}}">{{ $exam->name }}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
@@ -30,15 +33,20 @@
                         <label class="col-form-label text-md-right my-auto col-12 col-md-3 col-lg-3">Mata Pelajaran</label>
                         <div class="col-sm-12 col-md-7">
                             <select name="" id="" class="custom-select">
-
+                                <option value=""></option>
+                                @foreach ($subjects as $subject)
+                                    <option value="{{$subject->id}}">{{ $subject->name }}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
                     <div class="form-group row mb-4">
-                        <label class="col-form-label text-md-right my-auto col-12 col-md-3 col-lg-3">Kelas yang diizinkan</label>
+                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Kelas yang diizinkan</label>
                         <div class="col-sm-12 col-md-7">
-                            <select name="" id="" class="custom-select">
-
+                            <select name="class_ids[]" id="class_ids" class="js-example-basic-multiple border-0" multiple>
+                                @foreach ($classess as $class)
+                                    <option value="{{ $class->id }}">{{ $class->name }}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>

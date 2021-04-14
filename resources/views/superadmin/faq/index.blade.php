@@ -106,10 +106,6 @@
 
 @push('script')
 <script>
-    $(document).ready(function() {
-        $('.js-example-basic-multiple').select2();
-    });
-
     $('#editFaq').on('show.bs.modal', (e) => {
         var id = $(e.relatedTarget).data('id');
         var name = $(e.relatedTarget).data('name');

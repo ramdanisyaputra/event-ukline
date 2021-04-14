@@ -38,10 +38,6 @@ class School extends Model
     {
         return $this->hasMany(Student::class);
     }
-    public function exams()
-    {
-        return $this->hasMany(Exam::class);
-    }
     public function examScores()
     {
         return $this->hasMany(ExamScore::class);
@@ -49,5 +45,9 @@ class School extends Model
     public function questionWriters()
     {
         return $this->hasMany(QuestionWriter::class);
+    }
+    public function examClass()
+    {
+        return $this->hasMany(ExamClass::class);
     }
 }

@@ -7,6 +7,7 @@ use App\Http\Controllers\Student\ExamController;
 use App\Http\Controllers\Student\StudentController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AdminStudentController;
+use App\Http\Controllers\Admin\ExamController as AdminExamController;
 use App\Http\Controllers\QuestionWriter\ExamController as QuestionWriterExamController;
 use App\Http\Controllers\QuestionWriter\ExamQuestionController;
 use App\Http\Controllers\QuestionWriter\QuestionDashboardController;
@@ -122,8 +123,15 @@ Route::prefix('school_admin')->name('school_admin.')->group(function(){
     Route::prefix('students')->name('students.')->group(function(){
         Route::get('', [AdminStudentController::class,'index'])->name('index');
         Route::get('{classId}', [AdminStudentController::class,'indexStudent'])->name('indexStudent');
-        Route::post('store', [AdminStudentController::class,'store'])->name('store');
-        Route::post('update', [AdminStudentController::class,'update'])->name('update');
+        Route::post('store/{classId}', [AdminStudentController::class,'store'])->name('store');
+        Route::put('update/{classId}', [AdminStudentController::class,'update'])->name('update');
+        Route::get('reset/{classId}/{studentId}', [AdminStudentController::class,'resetPasswordStudent'])->name('resetPasswordStudent');
+    });
+    // Exam
+    Route::prefix('exams')->name('exams.')->group(function() {
+        Route::get('/', [AdminExamController::class, 'index'])->name('index');
+        Route::get('/create_public', [AdminExamController::class, 'createPublic'])->name('create_public');
+        Route::get('/create_private', [AdminExamController::class, 'createPrivate'])->name('create_private');
     });
 });
 

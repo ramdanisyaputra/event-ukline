@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\Classes;
+use App\Models\Subject;
 use Illuminate\Database\Seeder;
 
-class ClassSeeder extends Seeder
+class SubjectSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,10 +14,9 @@ class ClassSeeder extends Seeder
      */
     public function run()
     {
-        Classes::create([
-            'name' => '11',
+        Subject::create([
+            'name' => 'Ilmu Pengetahuan Sosial',
             'school_id' => 1,
-            'grade_id' => 1,
         ]);
     }
 }

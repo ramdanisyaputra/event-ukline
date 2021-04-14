@@ -18,10 +18,6 @@ class Exam extends Model
     {
         return $this->belongsTo(Regency::class);
     }
-    public function school()
-    {
-        return $this->belongsTo(School::class);
-    }
     public function examQuestions()
     {
         return $this->hasMany(ExamQuestion::class);
@@ -30,7 +26,7 @@ class Exam extends Model
     {
         return $this->hasMany(ExamScore::class);
     }
-    public function examClassess()
+    public function examClass()
     {
         return $this->hasMany(ExamClass::class, 'exam_id');
     }

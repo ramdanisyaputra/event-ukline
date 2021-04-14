@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-    <title>Layout &rsaquo; Top Navigation &mdash; Stisla</title>
+    <title>@yield('title') - Event UKLINE</title>
 
     <!-- General CSS Files -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -20,12 +20,32 @@
         .btn-transparent {
             color: #6C757D;
         }
+
+        .exam-card .exam-card-title {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            height: 88px;
+            padding: 10px 20px;
+        }
+
+        .exam-card .exam-card-title h4 {
+            text-overflow: ellipsis;
+            overflow: hidden;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+            display: -webkit-box;
+        }
     </style>
 </head>
 
 <body class="layout-3">
     <div id="app">
         <div class="main-wrapper container">
+            @if (request()->is('student/exam*'))
+                
+            @else
             <div class="navbar-bg"></div>
             <nav class="navbar navbar-expand-lg main-navbar">
                 <a href="index.html" class="navbar-brand sidebar-gone-hide">{{ config('app.name', 'Laravel') }}</a>
@@ -64,6 +84,7 @@
                     </ul>
                 </div>
             </nav>
+            @endif
 
             <!-- Main Content -->
             <div class="main-content">

@@ -1,5 +1,20 @@
 @extends('layouts.student')
 
 @section('content')
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias, praesentium. Suscipit accusantium nesciunt dolore, architecto illo est pariatur labore asperiores saepe ad totam rerum natus, debitis numquam beatae! Voluptas, vel?
+    <section class="section">
+        <div class="section-body">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Sebelum memulai</h4>
+                        </div>
+                        <div class="card-body">
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 @endsection

@@ -1,6 +1,4 @@
-@extends('layouts.main')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 <section class="section">
     <div class="section-header">
         <h1>Mata Pelajaran</h1>
@@ -31,19 +29,19 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($subjects as $key => $subject)
+                            <?php $__empty_1 = true; $__currentLoopData = $subjects; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $subject): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                             <tr>
-                                <td>{{ ++$key }}</td>
-                                <td>{{ $subject->name }}</td>
+                                <td><?php echo e(++$key); ?></td>
+                                <td><?php echo e($subject->name); ?></td>
                                 <td class="text-center">
-                                    <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#editSubject" data-id="{{ $subject->id }}" data-name="{{ $subject->name }}" data-school-id="{{ $subject->school_id }}"><i class="fas fa-pencil-alt"></i></button>
+                                    <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#editSubject" data-id="<?php echo e($subject->id); ?>" data-name="<?php echo e($subject->name); ?>" data-school-id="<?php echo e($subject->school_id); ?>"><i class="fas fa-pencil-alt"></i></button>
                                 </td>
                             </tr>
-                            @empty
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                             <tr>
                                 <td colspan="3" class="text-center">Tidak ada data</td>
                             </tr>
-                            @endforelse
+                            <?php endif; ?>
                         </tbody>
                     </table>
                 </div>
@@ -55,8 +53,8 @@
 <div class="modal fade" id="kelolaMatapelajaran" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form action="{{ route('school_admin.subjects.store') }}" method="POST" id="formKelolaProvince">
-                @csrf
+            <form action="<?php echo e(route('school_admin.subjects.store')); ?>" method="POST" id="formKelolaProvince">
+                <?php echo csrf_field(); ?>
                 <div class="modal-header">
                     <h5 class="modal-title"><span>Tambah</span> Mata Pelajaran</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -81,9 +79,9 @@
 <div class="modal fade" id="editSubject" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form action="{{ route('school_admin.subjects.update') }}" method="POST" id="formKelolaProvince">
-                @csrf
-                @method('PUT')
+            <form action="<?php echo e(route('school_admin.subjects.update')); ?>" method="POST" id="formKelolaProvince">
+                <?php echo csrf_field(); ?>
+                <?php echo method_field('PUT'); ?>
                 <input type="hidden" name="id">
                 <div class="modal-header">
                     <h5 class="modal-title"><span>Edit</span> Mata Pelajaran</h5>
@@ -105,10 +103,10 @@
         </div>
     </div>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
 
-@push('script')
+<?php $__env->startPush('script'); ?>
 <script>
     $('#editSubject').on('show.bs.modal', (e) => {
         var id = $(e.relatedTarget).data('id');
@@ -118,4 +116,5 @@
         $('#editSubject').find('input[name="name"]').val(name);
     });
 </script>
-@endpush
+<?php $__env->stopPush(); ?>
+<?php echo $__env->make('layouts.main', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /opt/lampp/htdocs/ukline/event-ukline/resources/views/school_admin/subjects/index.blade.php ENDPATH**/ ?>

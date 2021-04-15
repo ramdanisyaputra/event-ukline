@@ -8,6 +8,7 @@ use App\Http\Controllers\Student\StudentController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AdminStudentController;
 use App\Http\Controllers\Admin\ExamController as AdminExamController;
+use App\Http\Controllers\QuestionWriter\AdminController as QuestionWriterAdminController;
 use App\Http\Controllers\QuestionWriter\ExamController as QuestionWriterExamController;
 use App\Http\Controllers\QuestionWriter\ExamQuestionController;
 use App\Http\Controllers\QuestionWriter\QuestionDashboardController;

@@ -13,14 +13,10 @@ class ExamController extends Controller
     public function index(Request $request)
     {
         $exams = Exam::where('regency_id', $this->authUser()->regency_id)->get();
-        return view('question_writer.exams.index',compact('exams'));
-    }
-    public function create(Request $request)
-    {
         $examTypes = ExamType::all();
-        
-        return view('question_writer.exams.create', compact('examTypes'));
+        return view('question_writer.exams.index',compact('exams','examTypes'));
     }
+   
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -44,18 +40,6 @@ class ExamController extends Controller
         $data['regency_id'] = $this->authUser()->regency_id;
         Exam::create($data);
         return redirect(route('question_writer.exams.index'))->with('success','Ujian berhasil ditambahkan');
-    }
-    public function edit($id)
-    {
-        $exam = Exam::find($id);
-        $examTypes = ExamType::all();
-        return view('question_writer.exams.edit', compact('exam','examTypes'));
-    }
-    public function show($id)
-    {
-        $exam = Exam::find($id);
-        $examTypes = ExamType::all();
-        return view('question_writer.exams.show', compact('exam','examTypes'));
     }
     public function update(Request $request)
     {

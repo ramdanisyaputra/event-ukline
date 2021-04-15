@@ -18,10 +18,9 @@ class CreateExamQuestionsTable extends Migration
             $table->foreignId('exam_id')->references('id')->on('exams')->onDelete('cascade');
             $table->string('question_type');
             $table->text('question');
-            $table->string('question_file');
             $table->text('option');
             $table->text('answer');
-            $table->decimal('poin', 18,0)->default(0);
+            $table->float('poin')->nullable();
             $table->timestamps();
         });
     }

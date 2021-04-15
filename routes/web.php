@@ -8,9 +8,9 @@ use App\Http\Controllers\Student\StudentController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AdminStudentController;
 use App\Http\Controllers\Admin\ExamController as AdminExamController;
-use App\Http\Controllers\Admin\ExamQuestionController;
+use App\Http\Controllers\Admin\ExamQuestionController as AdminExamQuestionController;
 use App\Http\Controllers\QuestionWriter\ExamController as QuestionWriterExamController;
-use App\Http\Controllers\QuestionWriter\ExamQuestionController as AdminExamQuestionController;
+use App\Http\Controllers\QuestionWriter\ExamQuestionController as QuestionWriterExamQuestionController;
 use App\Http\Controllers\QuestionWriter\QuestionDashboardController;
 use App\Http\Controllers\Superadmin\EducationLevelController;
 use App\Http\Controllers\Superadmin\ExamTypeController;
@@ -163,8 +163,8 @@ Route::prefix('question_writer')->name('question_writer.')->group(function(){
     Route::get('/', [QuestionDashboardController::class, 'index'])->name('index');
     Route::prefix('exams')->name('exams.')->group(function() {
         Route::prefix('questions')->name('questions.')->group(function() {
-            Route::get('{id}', [ExamQuestionController::class, 'index'])->name('index');
-            Route::get('', [ExamQuestionController::class, 'create'])->name('create');
+            Route::get('{id}', [QuestionWriterExamQuestionController::class, 'index'])->name('index');
+            Route::get('', [QuestionWriterExamQuestionController::class, 'create'])->name('create');
         });
         Route::get('', [QuestionWriterExamController::class, 'index'])->name('index');
         Route::get('create', [QuestionWriterExamController::class, 'create'])->name('create');

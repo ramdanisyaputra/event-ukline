@@ -5,7 +5,7 @@
     </li>
     <li class="menu-header">Data Utama</li>
     <li class="nav-item {{ request()->is('school_admin/subjects*') ? 'active' : '' }}">
-        <a href="{{route('school_admin.subjects.index')}}" class="nav-link"><i class="fas fa-book"></i><span>Matapelajaran</span></a>
+        <a href="{{route('school_admin.subjects.index')}}" class="nav-link"><i class="fas fa-book"></i><span>Mata Pelajaran</span></a>
     </li>
     <li class="nav-item {{ request()->is('school_admin/classes*') ? 'active' : '' }}">
         <a href="{{route('school_admin.classes.index')}}" class="nav-link"><i class="fas fa-university"></i><span>Data Kelas</span></a>

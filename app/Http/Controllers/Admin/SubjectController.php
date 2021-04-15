@@ -34,7 +34,7 @@ class SubjectController extends Controller
         $subject->school_id=$this->adminGuard()->school_id;
         $subject->save();
 
-        return redirect()->back()->with('success','Matapelajaran berhasil ditambahkan');
+        return redirect()->back()->with('success','Mata pelajaran berhasil ditambahkan');
     }
     public function update(Request $request)
     {
@@ -43,6 +43,6 @@ class SubjectController extends Controller
         $subject->school_id=$this->adminGuard()->school_id;
         $subject->save();
 
-        return redirect()->back()->with('success','Matapelajaran berhasil diubah');
+        return redirect()->back()->with('success','Mata pelajaran berhasil diubah');
     }
 }

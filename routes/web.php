@@ -8,10 +8,9 @@ use App\Http\Controllers\Student\StudentController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AdminStudentController;
 use App\Http\Controllers\Admin\ExamController as AdminExamController;
-use App\Http\Controllers\QuestionWriter\AdminController as QuestionWriterAdminController;
-use App\Http\Controllers\Admin\ExamQuestionController;
+use App\Http\Controllers\Admin\ExamQuestionController as AdminExamQuestionController;
 use App\Http\Controllers\QuestionWriter\ExamController as QuestionWriterExamController;
-use App\Http\Controllers\QuestionWriter\ExamQuestionController as AdminExamQuestionController;
+use App\Http\Controllers\QuestionWriter\ExamQuestionController as QuestionWriterExamQuestionController;
 use App\Http\Controllers\QuestionWriter\QuestionDashboardController;
 use App\Http\Controllers\Superadmin\EducationLevelController;
 use App\Http\Controllers\Superadmin\ExamTypeController;
@@ -139,9 +138,12 @@ Route::prefix('school_admin')->name('school_admin.')->middleware(['middleware' =
         Route::post('/store_public', [AdminExamController::class, 'storePublic'])->name('store_public');
         Route::get('/create_private', [AdminExamController::class, 'createPrivate'])->name('create_private');
         Route::post('/store_private', [AdminExamController::class, 'storePrivate'])->name('store_private');
+        Route::patch('/update', [AdminExamController::class, 'update'])->name('update');
+        Route::put('/update_status', [AdminExamController::class, 'updateStatus'])->name('update_status');
 
         Route::prefix('{exam}/questions')->name('questions.')->group(function() {
             Route::get('', [AdminExamQuestionController::class, 'index'])->name('index');
+            Route::get('/create', [AdminExamQuestionController::class, 'create'])->name('create');
         });
     });
 });
@@ -161,8 +163,8 @@ Route::prefix('question_writer')->name('question_writer.')->middleware(['middlew
     Route::get('/', [QuestionDashboardController::class, 'index'])->name('index');
     Route::prefix('exams')->name('exams.')->group(function() {
         Route::prefix('questions')->name('questions.')->group(function() {
-            Route::get('{id}', [ExamQuestionController::class, 'index'])->name('index');
-            Route::get('', [ExamQuestionController::class, 'create'])->name('create');
+            Route::get('{id}', [QuestionWriterExamQuestionController::class, 'index'])->name('index');
+            Route::get('', [QuestionWriterExamQuestionController::class, 'create'])->name('create');
         });
         Route::get('', [QuestionWriterExamController::class, 'index'])->name('index');
         Route::get('create', [QuestionWriterExamController::class, 'create'])->name('create');

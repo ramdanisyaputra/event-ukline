@@ -117,4 +117,69 @@ class ExamController extends Controller
 
         return redirect()->route('school_admin.exams.index')->with('success', 'Berhasil menambahkan ujian mandiri!');
     }
+
+    public function updateStatus(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'id' => 'required',
+            'status' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->with('alert', 'Gagal mengubah status! Silahkan ulangi kembali.');
+        }
+
+        Exam::find($request->id)->update($request->all());
+
+        return redirect()->back()->with('success', "Berhasil mengubah status!");
+    }
+
+    public function update(Request $request)
+    {
+        if (!$request->shared) {
+            $validator1 = Validator::make($request->all(), [
+                'name' => 'required',
+                'exam_type_id' => 'required',
+                'started_at' => 'required',
+                'expired_at' => 'required',
+                'duration' => 'required',
+                'access_code' => 'required'
+            ]);
+        }
+
+        $validator2 = Validator::make($request->all(), [
+            'id' => 'required',
+            'shared' => 'required',
+            'subject_id' => 'required',
+            'class_ids' => 'required'
+        ]);
+
+        if ((isset($validator1) ? $validator1->fails() : false) || 
+            $validator2->fails()) {
+            return redirect()->back()->with('alert', 'Gagal mengubah ujian');
+        }
+
+        $examClass = ExamClass::where('exam_id', $request->id)
+                ->where('school_id', $this->authUser()->school_id)
+                ->first();
+
+        $examClass->update([
+            'subject_id' => $request->subject_id,
+            'class_ids' => json_encode($request->class_ids)
+        ]);
+
+        if (!$request->shared) {
+            $exam  = Exam::find($request->id)->update([
+                'name' => $request->name,
+                'exam_type_id' => $request->exam_type_id,
+                'started_at' => $request->started_at,
+                'expired_at' => $request->expired_at,
+                'duration' => $request->duration,
+                'access_code' => $request->access_code,
+            ]);
+        }
+
+        return redirect()->back()->with('success', 'Berhasil mengubah ujian!');
+
+    }
 }

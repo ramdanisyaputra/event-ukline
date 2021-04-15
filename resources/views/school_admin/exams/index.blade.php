@@ -38,13 +38,13 @@
                                 @php
                                     \Carbon\Carbon::setLocale('id')
                                 @endphp
-                                <td>{{ $exam->exam->name }} <span class="badge badge-light p-1">{{ ucwords($exam->exam->shared ? 'Serentak' : 'Mandiri') }}</span></td>
+                                <td><span class="font-weight-bold">{{ $exam->exam->name }}</span> <span class="badge badge-light p-1 ml-1">{{ ucwords($exam->exam->shared ? 'Serentak' : 'Mandiri') }}</span></td>
                                 <td>{{ \Carbon\Carbon::parse($exam->exam->started_at)->isoFormat('dddd, DD MMMM Y') }}</td>
                                 <td>{{ $exam->exam->duration }} menit</td>
-                                <td><span class="badge badge-{{ $exam->exam->status == 'published' ? 'primary' : 'light' }}">{{ ucwords($exam->exam->status == 'published' ? 'dipublikasi' : 'didraf') }}</span></td>
+                                <td><span class="badge badge-{{ $exam->exam->status == 'published' ? 'primary' : 'light' }}">{{ ucwords($exam->exam->status == 'published' ? 'dipublikasi' : 'diarsipkan') }}</span></td>
                                 <td>{{ $exam->subject->name }}</td>
                                 <td>
-                                    <a href="{{ route('school_admin.exams.questions.index', $exam->id) }}" class="btn btn-primary"><i class="fa fa-eye"></i></a>
+                                    <a href="{{ route('school_admin.exams.questions.index', $exam->exam->id) }}" class="btn btn-primary"><i class="fa fa-eye"></i></a>
                                 </td>
                             </tr>
                             @empty

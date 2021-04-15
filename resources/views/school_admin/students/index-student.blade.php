@@ -1,6 +1,14 @@
 @extends('layouts.main')
 
 @section('content')
+<style>
+.set-button{
+    font-size: 14px;
+    letter-spacing: normal;
+    padding: 10px 20px;
+    color: #6c757d;
+}
+</style>
 <section class="section">
     <div class="section-header">
         <h1>Siswa {{$class->name}}</h1>
@@ -15,10 +23,21 @@
     <div class="section-body">
         <div class="card">
             <div class="card-header">
-                <h4>Daftar Siswa {{$class->name}}</h4>
-                <div class="card-header-action">
-                    <button class="btn btn-primary" data-toggle="modal" data-target="#kelolaStudent"><i class="fa fa-plus"></i> Tambah Siswa {{$class->name}}</button>
-                    <button class="btn btn-success" data-toggle="modal" data-target="#import"><i class="fa fa-plus"></i> Import Siswa {{$class->name}}</button>
+                <h4>Daftar Soal</h4>
+                <div class="card-header-action dropdown">
+                    <a href="#" data-toggle="dropdown" class="btn btn-primary dropdown-toggle"><i class="fa fa-cog"></i> Pengaturan</a>
+                    <ul class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
+                        <li class="dropdown-title">Pengaturan</li>
+                        <li><a data-toggle="modal" data-target="#kelolaStudent" class="dropdown-item">Tambah Siswa</a></li>
+                        <li><a data-toggle="modal" data-target="#import" class="dropdown-item">Import Siswa (.xlsx)</a></li>
+                        <li>
+                            <form action="{{ route('school_admin.students.export') }}" method="POST">
+                                @csrf
+                                <input type="hidden" value="{{$class->id}}" name="id">
+                                <button class="dropdown-item set-button">Export Siswa</button>
+                            </form>
+                        </li>
+                    </ul>
                 </div>
             </div>
             <div class="card-body">

@@ -14,7 +14,7 @@
             <div class="card-header">
                 <h4>Daftar Ujian</h4>
                 <div class="card-header-action">
-                    <button class="btn btn-primary" data-toggle="modal" data-target="#examType">Tambah</button>
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#examType"><i class="fa fa-plus"></i> Tambah Ujian</button>
                 </div>
             </div>
             <div class="card-body">
@@ -24,8 +24,7 @@
                             <tr>
                                 <th>No</th>
                                 <th>Judul</th>
-                                <th>Dimulai Pada</th>
-                                <th>Berakhir Pada</th>
+                                <th>Tanggal</th>
                                 <th>Durasi</th>
                                 <th>Status</th>
                                 <th>Mata Pelajaran</th>
@@ -36,14 +35,16 @@
                             <?php $__empty_1 = true; $__currentLoopData = $exams; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $exam): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                             <tr>
                                 <td><?php echo e(++$key); ?></td>
-                                <td><?php echo e($exam->name); ?></td>
-                                <td><?php echo e(\Carbon\Carbon::parse($exam->started_at)->format('H:i')); ?></td>
-                                <td><?php echo e(\Carbon\Carbon::parse($exam->expired_at)->format('H:i')); ?></td>
-                                <td><?php echo e($exam->duration); ?> menit</td>
-                                <td><span class="badge badge-primary"><?php echo e(ucwords($exam->status)); ?></span></td>
-                                <td><?php echo e($exam->examClass->subject->name); ?></td>
+                                <?php
+                                    \Carbon\Carbon::setLocale('id')
+                                ?>
+                                <td><?php echo e($exam->exam->name); ?> <span class="badge badge-light p-1"><?php echo e(ucwords($exam->exam->shared ? 'Serentak' : 'Mandiri')); ?></span></td>
+                                <td><?php echo e(\Carbon\Carbon::parse($exam->exam->started_at)->isoFormat('dddd, DD MMMM Y')); ?></td>
+                                <td><?php echo e($exam->exam->duration); ?> menit</td>
+                                <td><span class="badge badge-<?php echo e($exam->exam->status == 'published' ? 'primary' : 'light'); ?>"><?php echo e(ucwords($exam->exam->status == 'published' ? 'dipublikasi' : 'didraf')); ?></span></td>
+                                <td><?php echo e($exam->subject->name); ?></td>
                                 <td>
-                                    <button class="btn btn-primary"><i class="fa fa-eye"></i></button>
+                                    <a href="<?php echo e(route('school_admin.exams.questions.index', $exam->id)); ?>" class="btn btn-primary"><i class="fa fa-eye"></i></a>
                                 </td>
                             </tr>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>

@@ -18,6 +18,9 @@
     <link rel="stylesheet" href="{{ asset('main/plugins/jqvmap/dist/jqvmap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('main/plugins/summernote/dist/summernote-bs4.css') }}">
     <link rel="stylesheet" href="{{ asset('main/plugins/izitoast/dist/css/iziToast.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('main/plugins/datatables.net-bs4/css/dataTables.bootstrap4.min.css')}}">
+    <link rel="stylesheet" href="{{ asset('main/plugins/datatables.net-select-bs4/css/select.bootstrap4.min.css')}}">
+
 
     <!-- Template CSS -->
     <link rel="stylesheet" href="{{ asset('main/css/style.css')}}">
@@ -127,10 +130,13 @@
 <script src="{{ asset('main/plugins/summernote/dist/summernote-bs4.js') }}"></script>
 <script src="{{ asset('main/plugins/chocolat/dist/js/jquery.chocolat.min.js') }}"></script>
 <script src="{{ asset('main/plugins/izitoast/dist/js/iziToast.min.js') }}"></script>
-
+<script src="{{ asset('main/plugins/datatables/media/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('main/plugins/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('main/plugins/datatables.net-select-bs4/js/select.bootstrap4.min.js') }}"></script>
 <!-- Template JS File -->
 <script src="{{ asset('main/js/scripts.js') }}"></script>
 <script src="{{ asset('main/js/custom.js') }}"></script>
+
 
 <!-- Page Specific JS File -->
 <script src="{{ asset('main/js/page/index-0.js') }}"></script>
@@ -143,6 +149,10 @@
             $('.js-example-basic-multiple').select2();
         }
     });
+
+    $(document).ready(function() {
+        $('#table-1').DataTable();
+    } );
 </script>
 
 @if (session()->has('alert'))

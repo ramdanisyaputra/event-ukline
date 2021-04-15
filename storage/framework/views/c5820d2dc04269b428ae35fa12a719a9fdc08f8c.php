@@ -1,11 +1,11 @@
-@extends('layouts.main')
 
-@section('content')
+
+<?php $__env->startSection('content'); ?>
 <section class="section">
     <div class="section-header">
         <h1>Kumpulan Ujian</h1>
         <div class="section-header-breadcrumb">
-            <div class="breadcrumb-item active"><a href="{{ route('school_admin.index') }}">Beranda</a></div>
+            <div class="breadcrumb-item active"><a href="<?php echo e(route('school_admin.index')); ?>">Beranda</a></div>
             <div class="breadcrumb-item">Kumpulan Ujian</div>
         </div>
     </div>
@@ -32,26 +32,26 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($exams as $key => $exam)
+                            <?php $__empty_1 = true; $__currentLoopData = $exams; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $exam): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                             <tr>
-                                <td>{{ ++$key }}</td>
-                                @php
+                                <td><?php echo e(++$key); ?></td>
+                                <?php
                                     \Carbon\Carbon::setLocale('id')
-                                @endphp
-                                <td>{{ $exam->exam->name }} <span class="badge badge-light p-1">{{ ucwords($exam->exam->shared ? 'Serentak' : 'Mandiri') }}</span></td>
-                                <td>{{ \Carbon\Carbon::parse($exam->exam->started_at)->isoFormat('dddd, DD MMMM Y') }}</td>
-                                <td>{{ $exam->exam->duration }} menit</td>
-                                <td><span class="badge badge-{{ $exam->exam->status == 'published' ? 'primary' : 'light' }}">{{ ucwords($exam->exam->status == 'published' ? 'dipublikasi' : 'didraf') }}</span></td>
-                                <td>{{ $exam->subject->name }}</td>
+                                ?>
+                                <td><?php echo e($exam->exam->name); ?> <span class="badge badge-light p-1"><?php echo e(ucwords($exam->exam->shared ? 'Serentak' : 'Mandiri')); ?></span></td>
+                                <td><?php echo e(\Carbon\Carbon::parse($exam->exam->started_at)->isoFormat('dddd, DD MMMM Y')); ?></td>
+                                <td><?php echo e($exam->exam->duration); ?> menit</td>
+                                <td><span class="badge badge-<?php echo e($exam->exam->status == 'published' ? 'primary' : 'light'); ?>"><?php echo e(ucwords($exam->exam->status == 'published' ? 'dipublikasi' : 'didraf')); ?></span></td>
+                                <td><?php echo e($exam->subject->name); ?></td>
                                 <td>
-                                    <a href="{{ route('school_admin.exams.questions.index', $exam->id) }}" class="btn btn-primary"><i class="fa fa-eye"></i></a>
+                                    <a href="<?php echo e(route('school_admin.exams.questions.index', $exam->id)); ?>" class="btn btn-primary"><i class="fa fa-eye"></i></a>
                                 </td>
                             </tr>
-                            @empty
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                             <tr>
                                 <td colspan="8" class="text-center">Tidak ada data</td>
                             </tr>
-                            @endforelse
+                            <?php endif; ?>
                         </tbody>
                     </table>
                 </div>
@@ -73,10 +73,10 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-6">
-                        <a href="{{ route('school_admin.exams.create_private') }}" class="py-5 font-weight-bold bg-light text-primary d-block text-center text-decoration-none rounded shadow-sm">Mandiri</a>
+                        <a href="<?php echo e(route('school_admin.exams.create_private')); ?>" class="py-5 font-weight-bold bg-light text-primary d-block text-center text-decoration-none rounded shadow-sm">Mandiri</a>
                     </div>
                     <div class="col-md-6">
-                        <a href="{{ route('school_admin.exams.create_public') }}" class="py-5 font-weight-bold bg-light text-primary d-block text-center text-decoration-none rounded shadow-sm">Serentak</a>
+                        <a href="<?php echo e(route('school_admin.exams.create_public')); ?>" class="py-5 font-weight-bold bg-light text-primary d-block text-center text-decoration-none rounded shadow-sm">Serentak</a>
                     </div>
                 </div>
             </div>
@@ -87,4 +87,5 @@
         </div>
     </div>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.main', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\event-ukline\resources\views/school_admin/exams/index.blade.php ENDPATH**/ ?>

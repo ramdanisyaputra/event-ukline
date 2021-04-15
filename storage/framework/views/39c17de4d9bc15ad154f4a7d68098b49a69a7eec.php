@@ -1,13 +1,13 @@
-@extends('layouts.main')
 
-@section('content')
+
+<?php $__env->startSection('content'); ?>
 <section class="section">
     <div class="section-header">
-        <h1>Kelas</h1>
+        <h1>Mata pelajaran</h1>
 
         <div class="section-header-breadcrumb">
             <div class="breadcrumb-item active"><a href="#">Beranda</a></div>
-            <div class="breadcrumb-item">Kelas</div>
+            <div class="breadcrumb-item">Mata Pelajaran</div>
         </div>
     </div>
 
@@ -15,9 +15,9 @@
     <div class="section-body">
         <div class="card">
             <div class="card-header">
-                <h4>Daftar Kelas</h4>
+                <h4>Daftar Mata Pelajaran</h4>
                 <div class="card-header-action">
-                    <button class="btn btn-primary" data-toggle="modal" data-target="#kelolaKelas"><i class="fa fa-plus"></i> Tambah Kelas</button>
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#kelolaMatapelajaran"><i class="fa fa-plus"></i> Tambah Mata Pelajaran</button>
                 </div>
             </div>
             <div class="card-body">
@@ -26,28 +26,26 @@
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Kelas</th>
+                                <th>Mata Pelajaran</th>
                                 <th>Sekolah</th>
-                                <th>Tingkat Kelas</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($classes as $key => $class)
+                            <?php $__empty_1 = true; $__currentLoopData = $subjects; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $subject): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                             <tr>
-                                <td>{{ ++$key }}</td>
-                                <td>{{ $class->name }}</td>
-                                <td>{{ $class->school->name }}</td>
-                                <td>{{ $class->grade->number }}</td>
+                                <td><?php echo e(++$key); ?></td>
+                                <td><?php echo e($subject->name); ?></td>
+                                <td><?php echo e($subject->school->name); ?></td>
                                 <td class="text-center">
-                                    <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#editClass" data-id="{{ $class->id }}" data-name="{{ $class->name }}" data-grade-id="{{ $class->grade_id }}"><i class="fas fa-pencil-alt"></i></button>
+                                    <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#editSubject" data-id="<?php echo e($subject->id); ?>" data-name="<?php echo e($subject->name); ?>" data-school-id="<?php echo e($subject->school_id); ?>"><i class="fas fa-pencil-alt"></i></button>
                                 </td>
                             </tr>
-                            @empty
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                             <tr>
                                 <td colspan="5" class="text-center">Tidak ada data</td>
                             </tr>
-                            @endforelse
+                            <?php endif; ?>
                         </tbody>
                     </table>
                 </div>
@@ -56,30 +54,21 @@
     </div>
 </section>
 
-<div class="modal fade" id="kelolaKelas" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+<div class="modal fade" id="kelolaMatapelajaran" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form action="{{ route('school_admin.classes.store') }}" method="POST" id="formKelolaProvince">
-                @csrf
+            <form action="<?php echo e(route('school_admin.subjects.store')); ?>" method="POST" id="formKelolaProvince">
+                <?php echo csrf_field(); ?>
                 <div class="modal-header">
-                    <h5 class="modal-title"><span>Tambah</span> Kelas</h5>
+                    <h5 class="modal-title"><span>Tambah</span> Mata Pelajaran</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="name">Nama Kelas</label>
+                        <label for="name">Nama Mata Pelajaran</label>
                         <input type="name" class="form-control" id="name" name="name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="name">Tingkat Kelas</label>
-                        <select name="grade_id" id="grade_id" class="custom-select" required>
-                            <option value="" disabled selected></option>
-                            @foreach($grades as $grade)
-                            <option value="{{$grade->id}}">{{$grade->number}}</option>
-                            @endforeach
-                        </select>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -91,32 +80,23 @@
     </div>
 </div>
 
-<div class="modal fade" id="editClass" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+<div class="modal fade" id="editSubject" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form action="{{ route('school_admin.classes.update') }}" method="POST" id="formKelolaProvince">
-                @csrf
-                @method('PUT')
+            <form action="<?php echo e(route('school_admin.subjects.update')); ?>" method="POST" id="formKelolaProvince">
+                <?php echo csrf_field(); ?>
+                <?php echo method_field('PUT'); ?>
                 <input type="hidden" name="id">
                 <div class="modal-header">
-                    <h5 class="modal-title"><span>Edit</span> Kelas</h5>
+                    <h5 class="modal-title"><span>Edit</span> Mata Pelajaran</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="name">Nama Kelas</label>
+                        <label for="name">Nama Mata Pelajaran</label>
                         <input type="name" class="form-control" id="name" name="name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="name">Tingkat Kelas</label>
-                        <select name="grade_id" id="grade_id" class="custom-select" required>
-                            <option value="" disabled selected></option>
-                            @foreach($grades as $grade)
-                            <option value="{{$grade->id}}">{{$grade->number}}</option>
-                            @endforeach
-                        </select>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -127,19 +107,18 @@
         </div>
     </div>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
 
-@push('script')
+<?php $__env->startPush('script'); ?>
 <script>
-    $('#editClass').on('show.bs.modal', (e) => {
+    $('#editSubject').on('show.bs.modal', (e) => {
         var id = $(e.relatedTarget).data('id');
         var name = $(e.relatedTarget).data('name');
-        var gradeId = $(e.relatedTarget).data('grade-id');
 
-        $('#editClass').find('input[name="id"]').val(id);
-        $('#editClass').find('input[name="name"]').val(name);
-        $('#editClass').find('select[name="grade_id"]').val(gradeId);
+        $('#editSubject').find('input[name="id"]').val(id);
+        $('#editSubject').find('input[name="name"]').val(name);
     });
 </script>
-@endpush
+<?php $__env->stopPush(); ?>
+<?php echo $__env->make('layouts.main', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\event-ukline\resources\views/school_admin/subjects/index.blade.php ENDPATH**/ ?>

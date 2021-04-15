@@ -1,6 +1,6 @@
-@extends('layouts.main')
 
-@section('content')
+
+<?php $__env->startSection('content'); ?>
 <section class="section">
     <div class="section-header">
         <h1>Kelas</h1>
@@ -33,21 +33,21 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($classes as $key => $class)
+                            <?php $__empty_1 = true; $__currentLoopData = $classes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $class): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                             <tr>
-                                <td>{{ ++$key }}</td>
-                                <td>{{ $class->name }}</td>
-                                <td>{{ $class->school->name }}</td>
-                                <td>{{ $class->grade->number }}</td>
+                                <td><?php echo e(++$key); ?></td>
+                                <td><?php echo e($class->name); ?></td>
+                                <td><?php echo e($class->school->name); ?></td>
+                                <td><?php echo e($class->grade->number); ?></td>
                                 <td class="text-center">
-                                    <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#editClass" data-id="{{ $class->id }}" data-name="{{ $class->name }}" data-grade-id="{{ $class->grade_id }}"><i class="fas fa-pencil-alt"></i></button>
+                                    <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#editClass" data-id="<?php echo e($class->id); ?>" data-name="<?php echo e($class->name); ?>" data-grade-id="<?php echo e($class->grade_id); ?>"><i class="fas fa-pencil-alt"></i></button>
                                 </td>
                             </tr>
-                            @empty
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                             <tr>
                                 <td colspan="5" class="text-center">Tidak ada data</td>
                             </tr>
-                            @endforelse
+                            <?php endif; ?>
                         </tbody>
                     </table>
                 </div>
@@ -59,8 +59,8 @@
 <div class="modal fade" id="kelolaKelas" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form action="{{ route('school_admin.classes.store') }}" method="POST" id="formKelolaProvince">
-                @csrf
+            <form action="<?php echo e(route('school_admin.classes.store')); ?>" method="POST" id="formKelolaProvince">
+                <?php echo csrf_field(); ?>
                 <div class="modal-header">
                     <h5 class="modal-title"><span>Tambah</span> Kelas</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -76,9 +76,9 @@
                         <label for="name">Tingkat Kelas</label>
                         <select name="grade_id" id="grade_id" class="custom-select" required>
                             <option value="" disabled selected></option>
-                            @foreach($grades as $grade)
-                            <option value="{{$grade->id}}">{{$grade->number}}</option>
-                            @endforeach
+                            <?php $__currentLoopData = $grades; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $grade): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <option value="<?php echo e($grade->id); ?>"><?php echo e($grade->number); ?></option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>
                     </div>
                 </div>
@@ -94,9 +94,9 @@
 <div class="modal fade" id="editClass" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form action="{{ route('school_admin.classes.update') }}" method="POST" id="formKelolaProvince">
-                @csrf
-                @method('PUT')
+            <form action="<?php echo e(route('school_admin.classes.update')); ?>" method="POST" id="formKelolaProvince">
+                <?php echo csrf_field(); ?>
+                <?php echo method_field('PUT'); ?>
                 <input type="hidden" name="id">
                 <div class="modal-header">
                     <h5 class="modal-title"><span>Edit</span> Kelas</h5>
@@ -113,9 +113,9 @@
                         <label for="name">Tingkat Kelas</label>
                         <select name="grade_id" id="grade_id" class="custom-select" required>
                             <option value="" disabled selected></option>
-                            @foreach($grades as $grade)
-                            <option value="{{$grade->id}}">{{$grade->number}}</option>
-                            @endforeach
+                            <?php $__currentLoopData = $grades; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $grade): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <option value="<?php echo e($grade->id); ?>"><?php echo e($grade->number); ?></option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>
                     </div>
                 </div>
@@ -127,10 +127,10 @@
         </div>
     </div>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
 
-@push('script')
+<?php $__env->startPush('script'); ?>
 <script>
     $('#editClass').on('show.bs.modal', (e) => {
         var id = $(e.relatedTarget).data('id');
@@ -142,4 +142,5 @@
         $('#editClass').find('select[name="grade_id"]').val(gradeId);
     });
 </script>
-@endpush
+<?php $__env->stopPush(); ?>
+<?php echo $__env->make('layouts.main', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\event-ukline\resources\views/school_admin/classes/index.blade.php ENDPATH**/ ?>

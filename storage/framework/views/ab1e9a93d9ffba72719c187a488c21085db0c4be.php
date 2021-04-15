@@ -23,7 +23,7 @@
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-bordered">
+                    <table class="table table-bordered" id="table-1">
                         <thead>
                             <tr>
                                 <th>No</th>
@@ -47,7 +47,7 @@
                                 <td><?php echo e($student->gender); ?></td>
                                 <td><?php echo e($student->student_number); ?></td>
                                 <td class="text-center">
-                                    <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#editStudent" data-id="<?php echo e($student->id); ?>" data-nisn="<?php echo e($student->nisn); ?>" data-nis="<?php echo e($student->nis); ?>" data-name="<?php echo e($student->name); ?>" data-pob="<?php echo e($student->pob); ?>" data-dob="<?php echo e($student->dob); ?>" data-gender="<?php echo e($student->gender); ?>" data-student-number="<?php echo e($student->student_number); ?>" data-username="<?php echo e($student->username); ?>"><i class="fas fa-pencil-alt"></i></button>
+                                    <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#editStudent" data-id="<?php echo e($student->id); ?>" data-nisn="<?php echo e($student->nisn); ?>" data-nis="<?php echo e($student->nis); ?>" data-name="<?php echo e($student->name); ?>" data-pob="<?php echo e($student->pob); ?>" data-dob="<?php echo e(date('Y-m-d', strtotime($student->dob))); ?>" data-gender="<?php echo e($student->gender); ?>" data-student-number="<?php echo e($student->student_number); ?>" data-username="<?php echo e($student->username); ?>"><i class="fas fa-pencil-alt"></i></button>
 
                                     <a href="<?php echo e(route('school_admin.students.resetPasswordStudent', [$student->class_id , $student->id])); ?>" class="btn btn-sm btn-warning" onclick="return confirm('Apakah anda yakin? ')">Reset Password</a>
                                     

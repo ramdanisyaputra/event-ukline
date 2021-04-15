@@ -11,7 +11,7 @@ use App\Http\Controllers\Admin\ExamController as AdminExamController;
 use App\Http\Controllers\QuestionWriter\AdminController as QuestionWriterAdminController;
 use App\Http\Controllers\Admin\ExamQuestionController;
 use App\Http\Controllers\QuestionWriter\ExamController as QuestionWriterExamController;
-use App\Http\Controllers\QuestionWriter\ExamQuestionController as QuesionWriterQuestion;
+use App\Http\Controllers\QuestionWriter\ExamQuestionController as AdminExamQuestionController;
 use App\Http\Controllers\QuestionWriter\QuestionDashboardController;
 use App\Http\Controllers\Superadmin\EducationLevelController;
 use App\Http\Controllers\Superadmin\ExamTypeController;
@@ -126,6 +126,7 @@ Route::prefix('school_admin')->name('school_admin.')->group(function(){
         Route::get('', [AdminStudentController::class,'index'])->name('index');
         Route::get('{classId}', [AdminStudentController::class,'indexStudent'])->name('indexStudent');
         Route::post('store/{classId}', [AdminStudentController::class,'store'])->name('store');
+        Route::post('export', [AdminStudentController::class,'export'])->name('export');
         Route::put('update/{classId}', [AdminStudentController::class,'update'])->name('update');
         Route::get('reset/{classId}/{studentId}', [AdminStudentController::class,'resetPasswordStudent'])->name('resetPasswordStudent');
         Route::post('import/{classId}', [AdminStudentController::class,'import'])->name('import');
@@ -140,7 +141,7 @@ Route::prefix('school_admin')->name('school_admin.')->group(function(){
         Route::post('/store_private', [AdminExamController::class, 'storePrivate'])->name('store_private');
 
         Route::prefix('{exam}/questions')->name('questions.')->group(function() {
-            Route::get('', [ExamQuestionController::class, 'index'])->name('index');
+            Route::get('', [AdminExamQuestionController::class, 'index'])->name('index');
         });
     });
 });

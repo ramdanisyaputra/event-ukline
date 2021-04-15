@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\StudentExport;
 use App\Http\Controllers\Controller;
 use App\Imports\StudentImport;
 use App\Models\Classes;
-use App\Models\Grade;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Excel;
+
 
 class AdminStudentController extends Controller
 {
@@ -107,5 +108,14 @@ class AdminStudentController extends Controller
             return back()->with('alert',$msg);
 		}
         return back()->with('success','Berhasil Import Data Siswa');
+    }
+    public function export(Request $request)
+    {
+		try {
+            return Excel::download(new StudentExport($request->id), 'Data Siswa.xlsx');
+		} catch (\Exception $ex) {
+            $errorMsg = json_decode($ex->getMessage());
+            return back()->with('alert','Gagal export data');
+		}
     }
 }

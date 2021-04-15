@@ -3,11 +3,11 @@
 <?php $__env->startSection('content'); ?>
 <section class="section">
     <div class="section-header">
-        <h1>Ujian</h1>
+        <h1>Soal Ujian</h1>
 
         <div class="section-header-breadcrumb">
             <div class="breadcrumb-item active"><a href="#">Beranda</a></div>
-            <div class="breadcrumb-item">Ujian</div>
+            <div class="breadcrumb-item">Soal Ujian</div>
         </div>
     </div>
 
@@ -15,9 +15,9 @@
     <div class="section-body">
         <div class="card">
             <div class="card-header">
-                <h4>Kelola Ujian</h4>
+                <h4>Kelola Soal Ujian</h4>
                 <div class="card-header-action">
-                    <a class="btn btn-primary" href="<?php echo e(route('question_writer.exams.questions.create')); ?>" ><i class="fa fa-plus"></i> Tambah Ujian</a>
+                    <a class="btn btn-primary" href="<?php echo e(route('question_writer.exams.questions.create')); ?>" ><i class="fa fa-plus"></i> Tambah Soal Ujian</a>
                 </div>
             </div>
             <div class="card-body">

@@ -22,7 +22,11 @@
             </div>
             <div class="card-body">
                 <div class="table-responsive">
+<<<<<<< HEAD
+                    <table class="table table-bordered">
+=======
                     <table class="table table-bordered" id="table-1">
+>>>>>>> 6f45948f3504f049ac9c3e46ed57dd3bee21f104
                         <thead>
                             <tr>
                                 <th>No</th>

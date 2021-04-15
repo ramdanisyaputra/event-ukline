@@ -42,7 +42,7 @@
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-bordered">
+                    <table class="table table-bordered" id="table-1">
                         <thead>
                             <tr>
                                 <th>No</th>
@@ -66,7 +66,7 @@
                                 <td>{{ $student->gender }}</td>
                                 <td>{{ $student->student_number }}</td>
                                 <td class="text-center">
-                                    <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#editStudent" data-id="{{ $student->id }}" data-nisn="{{ $student->nisn }}" data-nis="{{ $student->nis }}" data-name="{{ $student->name }}" data-pob="{{ $student->pob }}" data-dob="{{ $student->dob }}" data-gender="{{ $student->gender }}" data-student-number="{{ $student->student_number }}" data-username="{{ $student->username }}"><i class="fas fa-pencil-alt"></i></button>
+                                    <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#editStudent" data-id="{{ $student->id }}" data-nisn="{{ $student->nisn }}" data-nis="{{ $student->nis }}" data-name="{{ $student->name }}" data-pob="{{ $student->pob }}" data-dob="{{ date('Y-m-d', strtotime($student->dob)) }}" data-gender="{{ $student->gender }}" data-student-number="{{ $student->student_number }}" data-username="{{ $student->username }}"><i class="fas fa-pencil-alt"></i></button>
 
                                     <a href="{{route('school_admin.students.resetPasswordStudent', [$student->class_id , $student->id])}}" class="btn btn-sm btn-warning" onclick="return confirm('Apakah anda yakin? ')">Reset Password</a>
                                     

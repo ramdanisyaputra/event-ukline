@@ -48,7 +48,7 @@
                             </tr>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                             <tr>
-                                <td colspan="5" class="text-center">Tidak ada data</td>
+                                <td colspan="7" class="text-center">Tidak ada data</td>
                             </tr>
                             <?php endif; ?>
                         </tbody>

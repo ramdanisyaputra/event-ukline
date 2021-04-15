@@ -5,7 +5,7 @@
     </li>
     <li class="menu-header">Data Utama</li>
     <li class="nav-item <?php echo e(request()->is('school_admin/subjects*') ? 'active' : ''); ?>">
-        <a href="<?php echo e(route('school_admin.subjects.index')); ?>" class="nav-link"><i class="fas fa-book"></i><span>Matapelajaran</span></a>
+        <a href="<?php echo e(route('school_admin.subjects.index')); ?>" class="nav-link"><i class="fas fa-book"></i><span>Mata Pelajaran</span></a>
     </li>
     <li class="nav-item <?php echo e(request()->is('school_admin/classes*') ? 'active' : ''); ?>">
         <a href="<?php echo e(route('school_admin.classes.index')); ?>" class="nav-link"><i class="fas fa-university"></i><span>Data Kelas</span></a>

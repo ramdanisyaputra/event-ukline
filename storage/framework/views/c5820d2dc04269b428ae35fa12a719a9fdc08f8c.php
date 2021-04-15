@@ -19,11 +19,7 @@
             </div>
             <div class="card-body">
                 <div class="table table-responsive">
-<<<<<<< HEAD
-                    <table class="table table-bordered">
-=======
                     <table class="table table-bordered" id="table-1">
->>>>>>> 6f45948f3504f049ac9c3e46ed57dd3bee21f104
                         <thead>
                             <tr>
                                 <th>No</th>
@@ -42,13 +38,13 @@
                                 <?php
                                     \Carbon\Carbon::setLocale('id')
                                 ?>
-                                <td><?php echo e($exam->exam->name); ?> <span class="badge badge-light p-1"><?php echo e(ucwords($exam->exam->shared ? 'Serentak' : 'Mandiri')); ?></span></td>
+                                <td><span class="font-weight-bold"><?php echo e($exam->exam->name); ?></span> <span class="badge badge-light p-1 ml-1"><?php echo e(ucwords($exam->exam->shared ? 'Serentak' : 'Mandiri')); ?></span></td>
                                 <td><?php echo e(\Carbon\Carbon::parse($exam->exam->started_at)->isoFormat('dddd, DD MMMM Y')); ?></td>
                                 <td><?php echo e($exam->exam->duration); ?> menit</td>
-                                <td><span class="badge badge-<?php echo e($exam->exam->status == 'published' ? 'primary' : 'light'); ?>"><?php echo e(ucwords($exam->exam->status == 'published' ? 'dipublikasi' : 'didraf')); ?></span></td>
+                                <td><span class="badge badge-<?php echo e($exam->exam->status == 'published' ? 'primary' : 'light'); ?>"><?php echo e(ucwords($exam->exam->status == 'published' ? 'dipublikasi' : 'diarsipkan')); ?></span></td>
                                 <td><?php echo e($exam->subject->name); ?></td>
                                 <td>
-                                    <a href="<?php echo e(route('school_admin.exams.questions.index', $exam->id)); ?>" class="btn btn-primary"><i class="fa fa-eye"></i></a>
+                                    <a href="<?php echo e(route('school_admin.exams.questions.index', $exam->exam->id)); ?>" class="btn btn-primary"><i class="fa fa-eye"></i></a>
                                 </td>
                             </tr>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>

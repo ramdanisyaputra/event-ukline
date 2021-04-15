@@ -64,9 +64,17 @@
                                 <i class="far fa-user"></i> Profile
                             </a>
                             <div class="dropdown-divider"></div>
-                            <a href="#" class="dropdown-item has-icon text-danger">
+                            <a href="#" onclick="document.getElementById('logoutForm').submit()" class="dropdown-item has-icon text-danger">
                                 <i class="fas fa-sign-out-alt"></i> Keluar
                             </a>
+                            <div class="mt-4 mb-4 p-3 hide-sidebar-mini d-none">
+                                <form action="{{ route('logout') }}" method="POST" id="logoutForm">
+                                    @csrf
+                                    <button type="submit" class="btn btn-primary btn-lg btn-block btn-icon-split">
+                                        <i class="fas fa-rocket"></i> Keluar
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                     </li>
                 </ul>

@@ -15,9 +15,9 @@ class ClassSeeder extends Seeder
     public function run()
     {
         Classes::create([
-            'name' => '11',
+            'name' => 'Kelas 7 A',
             'school_id' => 1,
-            'grade_id' => 1,
+            'grade_id' => 7,
         ]);
     }
 }

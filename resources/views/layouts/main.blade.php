@@ -16,7 +16,6 @@
 
     <!-- CSS Libraries -->
     <link rel="stylesheet" href="{{ asset('main/plugins/jqvmap/dist/jqvmap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('main/plugins/summernote/dist/summernote-bs4.css') }}">
     <link rel="stylesheet" href="{{ asset('main/plugins/izitoast/dist/css/iziToast.min.css') }}">
     <link rel="stylesheet" href="{{ asset('main/plugins/datatables.net-bs4/css/dataTables.bootstrap4.min.css')}}">
     <link rel="stylesheet" href="{{ asset('main/plugins/datatables.net-select-bs4/css/select.bootstrap4.min.css')}}">
@@ -127,7 +126,6 @@
 <script src="{{ asset('main/plugins/chart.js/dist/Chart.min.js') }}"></script>
 <script src="{{ asset('main/plugins/jqvmap/dist/jquery.vmap.min.js') }}"></script>
 <script src="{{ asset('main/plugins/jqvmap/dist/maps/jquery.vmap.world.js') }}"></script>
-<script src="{{ asset('main/plugins/summernote/dist/summernote-bs4.js') }}"></script>
 <script src="{{ asset('main/plugins/chocolat/dist/js/jquery.chocolat.min.js') }}"></script>
 <script src="{{ asset('main/plugins/izitoast/dist/js/iziToast.min.js') }}"></script>
 <script src="{{ asset('main/plugins/datatables/media/js/jquery.dataTables.min.js') }}"></script>

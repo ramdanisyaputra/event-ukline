@@ -1,6 +1,13 @@
 @extends('layouts.main')
 
 @section('content')
+<style>
+    .table-questions img {
+        max-width: 200px;
+        height: auto;
+        margin-bottom: 10px;
+    }
+</style>
 <section class="section">
     <div class="section-header">
         <h1>Ujian Matematika</h1>
@@ -161,7 +168,7 @@
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-bordered">
+                    <table class="table table-bordered table-questions">
                         <thead>
                             <tr>
                                 <th>No</th>
@@ -177,22 +184,24 @@
                             @forelse ($exam->examQuestions as $key => $question)
                             <tr>
                                 <td class="align-top py-2">{{ ++$key }}</td>
-                                <td class="align-top py-2">PG</td>
-                                <td class="align-top py-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque provident quod nulla, magnam voluptates vero maxime eveniet animi accusamus mollitia!</td>
+                                <td class="align-top py-2">{{ $question->question_type }}</td>
+                                <td class="align-top py-2">{!! $question->question !!}</td>
                                 <td class="align-top py-2">
+                                    @if ($question->option)
                                     <ol type="a" class="pl-0">
-                                        <li>Lorem</li>
-                                        <li>Ipsum</li>
-                                        <li>Dolor</li>
-                                        <li>Sit</li>
-                                        <li>Amet</li>
+                                        @foreach (json_decode($question->option) as $option)
+                                        <li>{!! $option !!}</li>
+                                        @endforeach
                                     </ol>
+                                    @else
+                                    -
+                                    @endif
                                 </td>
                                 <td class="align-top py-2">
-                                    B
+                                    {!! $question->answer !!}
                                 </td>
                                 <td class="align-top py-2">
-                                    50
+                                    {{ $question->poin ?? 'Belum dipublikasi' }}
                                 </td>
                                 <td class="align-top py-2">
                                     <button class="btn btn-sm btn-light d-block" title="Edit"><i class="fa fa-pencil-alt"></i></button>

@@ -66,7 +66,7 @@ class StudentImport implements ToCollection
                     'student_number' => $student_number,
                     'gender' => $gender,
                     'username' => $username,
-                    'password' => $password,
+                    'password' => bcrypt($password),
                     'class_id' => $class_id,
                     'school_id' => $school_id,
                 ];

@@ -48,7 +48,7 @@ Route::get('/login',[AuthController::class,'loginForm'])->name('loginForm');
 Route::post('/login',[AuthController::class,'login'])->name('login');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::prefix('superadmin')->name('superadmin.')->group(function() {
+Route::prefix('superadmin')->name('superadmin.')->middleware(['middleware' => 'auth:user'])->group(function() {
     Route::get('/', [SuperadminController::class, 'index'])->name('index');
     Route::prefix('provinces')->name('provinces.')->group(function(){
         Route::get('', [ProvinceController::class,'index'])->name('index');
@@ -109,7 +109,7 @@ Route::prefix('superadmin')->name('superadmin.')->group(function() {
 
 });
 
-Route::prefix('school_admin')->name('school_admin.')->group(function(){
+Route::prefix('school_admin')->name('school_admin.')->middleware(['middleware' => 'auth:school_admin'])->group(function(){
     Route::get('/', [AdminController::class, 'index'])->name('index');
 
     Route::prefix('subjects')->name('subjects.')->group(function(){
@@ -146,7 +146,7 @@ Route::prefix('school_admin')->name('school_admin.')->group(function(){
     });
 });
 
-Route::namespace('student')->prefix('student')->name('student.')->group(function() {
+Route::namespace('student')->prefix('student')->name('student.')->middleware(['middleware' => 'auth:student'])->group(function() {
     Route::get('/', [StudentController::class, 'index'])->name('index');
 
     Route::prefix('profile')->name('profile.')->group(function() {
@@ -157,7 +157,7 @@ Route::namespace('student')->prefix('student')->name('student.')->group(function
         Route::get('/{exam}/boarding', [ExamController::class, 'boarding'])->name('boarding');
     });
 });
-Route::prefix('question_writer')->name('question_writer.')->group(function(){
+Route::prefix('question_writer')->name('question_writer.')->middleware(['middleware' => 'auth:question_writer'])->group(function(){
     Route::get('/', [QuestionDashboardController::class, 'index'])->name('index');
     Route::prefix('exams')->name('exams.')->group(function() {
         Route::prefix('questions')->name('questions.')->group(function() {

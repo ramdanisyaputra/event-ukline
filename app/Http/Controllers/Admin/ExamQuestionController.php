@@ -9,6 +9,7 @@ use App\Models\ExamType;
 use App\Models\School;
 use App\Models\Subject;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ExamQuestionController extends Controller
 {
@@ -41,5 +42,34 @@ class ExamQuestionController extends Controller
     public function create(Exam $exam)
     {
         return view('school_admin.exams.questions.create', compact('exam'));
+    }
+
+    public function store(Exam $exam, Request $request)
+    {
+        $validator1 = Validator::make($request->all(), [
+            'question' => 'required',
+            'answer' => 'required',
+        ]);
+
+        if ($request->question_type == 'PG') {
+            $validator2 = Validator::make($request->all(), [
+                'option' => 'required'
+            ]);
+        }
+
+        if ((isset($validator2) ? $validator2->fails() : false) || $validator1->fails()) {
+            return redirect()->back()->with('alert', 'Gagal menambahkan soal!');
+        }
+
+        $exam->examQuestions()->create([
+            'question' => $request->question,
+            'option' => $request->option ? json_encode($request->option) : NULL,
+            'answer' => $request->answer,
+            'question_type' => $request->question_type,
+            'poin' => $request->poin ?? NULL
+        ]);
+
+        return redirect()->route('school_admin.exams.questions.index', $exam->id)
+                        ->with('success', 'Berhasil menambahkan soal!');
     }
 }

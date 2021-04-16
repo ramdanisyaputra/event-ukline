@@ -24,6 +24,7 @@ use App\Http\Controllers\Superadmin\SchoolController;
 use App\Http\Controllers\Superadmin\SubjectController;
 use App\Http\Controllers\Superadmin\SuperadminController;
 use App\Http\Controllers\Superadmin\TagController;
+use App\Http\Controllers\Web\WebController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -144,6 +145,7 @@ Route::prefix('school_admin')->name('school_admin.')->middleware(['middleware' =
         Route::prefix('{exam}/questions')->name('questions.')->group(function() {
             Route::get('', [AdminExamQuestionController::class, 'index'])->name('index');
             Route::get('/create', [AdminExamQuestionController::class, 'create'])->name('create');
+            Route::post('/store', [AdminExamQuestionController::class, 'store'])->name('store');
         });
     });
 });
@@ -176,3 +178,6 @@ Route::prefix('question_writer')->name('question_writer.')->middleware(['middlew
 });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+Route::post('/web/upload_image', [WebController::class, 'uploadImage'])->name('web.upload_image');

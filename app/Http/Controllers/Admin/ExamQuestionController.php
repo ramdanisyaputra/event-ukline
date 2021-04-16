@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Classes;
 use App\Models\Exam;
+use App\Models\ExamQuestion;
 use App\Models\ExamType;
 use App\Models\School;
 use App\Models\Subject;
@@ -71,5 +72,13 @@ class ExamQuestionController extends Controller
 
         return redirect()->route('school_admin.exams.questions.index', $exam->id)
                         ->with('success', 'Berhasil menambahkan soal!');
+    }
+
+    public function pratinjau($examId)
+    {
+        $exam = Exam::find($examId);
+
+        $examQuestions = ExamQuestion::where('exam_id',$examId)->get();
+        return view('school_admin.exams.questions.pratinjau', compact('exam','examQuestions'));
     }
 }

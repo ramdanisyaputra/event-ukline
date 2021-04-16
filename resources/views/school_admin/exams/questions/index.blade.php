@@ -154,7 +154,7 @@
                     <a href="#" data-toggle="dropdown" class="btn btn-primary dropdown-toggle"><i class="fa fa-cog"></i> Pengaturan</a>
                     <ul class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
                         <li class="dropdown-title">Pengaturan</li>
-                        <li><a href="#" class="dropdown-item">Pratinjau</a></li>
+                        <li><a href="{{ route('school_admin.exams.questions.pratinjau', $exam->id) }}" class="dropdown-item">Pratinjau</a></li>
                         @if (!$exam->shared)
                         <li><a href="{{ route('school_admin.exams.questions.create', $exam->id) }}" class="dropdown-item">Buat soal</a></li>
                         <li><a href="#" class="dropdown-item">Impor soal (.xlsx)</a></li>

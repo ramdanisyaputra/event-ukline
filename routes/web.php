@@ -142,8 +142,10 @@ Route::prefix('school_admin')->name('school_admin.')->middleware(['middleware' =
         Route::patch('/update', [AdminExamController::class, 'update'])->name('update');
         Route::put('/update_status', [AdminExamController::class, 'updateStatus'])->name('update_status');
 
+
         Route::prefix('{exam}/questions')->name('questions.')->group(function() {
             Route::get('', [AdminExamQuestionController::class, 'index'])->name('index');
+            Route::get('/pratinjau', [AdminExamQuestionController::class, 'pratinjau'])->name('pratinjau');
             Route::get('/create', [AdminExamQuestionController::class, 'create'])->name('create');
             Route::post('/store', [AdminExamQuestionController::class, 'store'])->name('store');
         });

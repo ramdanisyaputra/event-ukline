@@ -107,6 +107,12 @@
                             <div class="col-md-8 font-weight-bold py-1 text-primary">
                                 {{ $exam->access_code }}
                             </div>
+                            <div class="col-md-4 py-1">
+                                Total Soal
+                            </div>
+                            <div class="col-md-8 font-weight-bold py-1">
+                                {{ count($exam->examQuestions) }}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -146,6 +152,7 @@
                 </div>
             </div>
         </div>
+        @if (!$exam->shared)
         <div class="card">
             <div class="card-header">
                 <h4>Daftar Soal</h4>
@@ -154,19 +161,15 @@
                     <ul class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
                         <li class="dropdown-title">Pengaturan</li>
                         <li><a href="{{ route('school_admin.exams.questions.pratinjau', $exam->id) }}" class="dropdown-item">Pratinjau</a></li>
-                        @if (!$exam->shared)
                             @if($exam->status != 'published')
                             <li><a href="{{ route('school_admin.exams.questions.create', $exam->id) }}" class="dropdown-item">Buat soal</a></li>
                             <li><a data-toggle="modal" data-target="#import" class="dropdown-item">Impor soal (.xlsx)</a></li>
                             @endif
-                        @endif
                         <li><a href="{{ route('school_admin.exams.questions.export', $exam->id) }}" class="dropdown-item">Ekspor soal (.xlsx)</a></li>
                         <li><a href="{{ route('school_admin.exams.questions.pdf', $exam->id) }}" target="_blank" class="dropdown-item">Ekspor soal (.pdf)</a></li>
-                        @if (!$exam->shared)
                             @if($exam->status != 'published')
                             <li><a href="#" data-toggle="modal" data-target="#confirmDeleteAll" class="dropdown-item text-danger">Hapus semua <i class="fa fa-exclamation-circle"></i></a></li>
                             @endif
-                        @endif
                     </ul>
                 </div>
             </div>
@@ -222,9 +225,10 @@
                             </tr>
                             @endforelse
                         </tbody>
-                    </table>
+                    </table>                    
                 </div>
             </div>
+            @endif
         </div>
     </div>
 </section>
@@ -327,7 +331,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <h6 for="file">Download Panduan</h6>
-                        <a href="{{asset('panduan')}}" class="nav-link">Download Panduan Import Siswa Berikut</a>
+                        <a href="{{asset('panduan/Panduan Import Soal.xlsx')}}" class="nav-link">Download Panduan Import Soal Berikut</a>
                     </div>
                     <div class="form-group">
                         <label for="file">Data Excel</label>

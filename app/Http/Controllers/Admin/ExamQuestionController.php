@@ -166,8 +166,9 @@ class ExamQuestionController extends Controller
     }
     public function export(Request $request, $examId)
     {
+        $exam = Exam::find($examId);
 		try {
-            return Excel::download(new AdminExportQuestion($examId), 'Data Soal.xlsx');
+            return Excel::download(new AdminExportQuestion($examId), 'Data Soal '.$exam->name.'.xlsx');
 		} catch (\Exception $ex) {
             $errorMsg = json_decode($ex->getMessage());
             return back()->with('alert','Gagal export data');

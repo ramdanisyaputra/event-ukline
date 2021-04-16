@@ -44,7 +44,7 @@ class ExamController extends Controller
         $school_id = $this->authUser()->school_id;
 
         $validator = Validator::make($request->all(), [
-            'exam_id' => 'required|exist:exams,id',
+            'exam_id' => 'required|exists:exams,id',
             'subject_id' => 'required',
             'class_ids' => 'required'
         ]);

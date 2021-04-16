@@ -28,7 +28,6 @@
                             <ul class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
                                 <!-- <li><a href="#editExam" data-toggle="modal" data-target="#editExam" class="dropdown-item">Ubah</a></li> -->
                                 <li class="dropdown-title">Pengaturan</li>
-                                <li><a href="#" class="dropdown-item">Lihat nilai</a></li>
                                 <li>
                                     <form action="{{ route('question_writer.exams.update_status') }}" method="POST" id="examUpdateStatus">
                                         @csrf
@@ -283,7 +282,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <h6 for="file">Download Panduan</h6>
-                        <a href="{{asset('panduan')}}" class="nav-link">Download Panduan Import Siswa Berikut</a>
+                        <a href="{{asset('panduan/Panduan Import Soal.xlsx')}}" class="nav-link">Download Panduan Import Soal Berikut</a>
                     </div>
                     <div class="form-group">
                         <label for="file">Data Excel</label>

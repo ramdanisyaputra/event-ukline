@@ -157,10 +157,10 @@
                         @if (!$exam->shared)
                             @if($exam->status != 'published')
                             <li><a href="{{ route('school_admin.exams.questions.create', $exam->id) }}" class="dropdown-item">Buat soal</a></li>
-                            <li><a href="#" class="dropdown-item">Impor soal (.xlsx)</a></li>
+                            <li><a data-toggle="modal" data-target="#import" class="dropdown-item">Impor soal (.xlsx)</a></li>
                             @endif
                         @endif
-                        <li><a href="{{ route('school_admin.exams.questions.exportExcel', $exam->id) }}" class="dropdown-item">Ekspor soal (.xlsx)</a></li>
+                        <li><a href="{{ route('school_admin.exams.questions.export', $exam->id) }}" class="dropdown-item">Ekspor soal (.xlsx)</a></li>
                         <li><a href="{{ route('school_admin.exams.questions.pdf', $exam->id) }}" target="_blank" class="dropdown-item">Ekspor soal (.pdf)</a></li>
                         @if (!$exam->shared)
                             @if($exam->status != 'published')
@@ -305,6 +305,37 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="import" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form action="{{ route('school_admin.exams.questions.import',$exam->id) }}" method="POST" id="formkelolaStudents" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-header">
+                    <h5 class="modal-title"><span>Import</span> Siswa</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <h6 for="file">Download Panduan</h6>
+                        <a href="{{asset('panduan')}}" class="nav-link">Download Panduan Import Siswa Berikut</a>
+                    </div>
+                    <div class="form-group">
+                        <label for="file">Data Excel</label>
+                        <input type="file" class="form-control" id="file" name="file" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>
             </form>

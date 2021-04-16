@@ -3,75 +3,40 @@
 <?php $__env->startSection('content'); ?>
 <section class="section">
     <div class="section-header">
-        <h1>Ubah Soal</h1>
+        <h1>Tambah Soal</h1>
         <div class="section-header-breadcrumb">
-            <div class="breadcrumb-item active"><a href="{{ route('school_admin.index') }}">Beranda</a></div>
-            <div class="breadcrumb-item active"><a href="{{ route('school_admin.exams.index') }}">Kumpulan Ujian</a></div>
-            <div class="breadcrumb-item active"><a href="{{ route('school_admin.exams.questions.index', $exam->id) }}">{{ $exam->name }}</a></div>
-            <div class="breadcrumb-item">Ubah Soal</div>
+            <div class="breadcrumb-item active"><a href="<?php echo e(route('school_admin.index')); ?>">Beranda</a></div>
+            <div class="breadcrumb-item active"><a href="<?php echo e(route('school_admin.exams.index')); ?>">Kumpulan Ujian</a></div>
+            <div class="breadcrumb-item active"><a href="<?php echo e(route('school_admin.exams.questions.index', $exam->id)); ?>"><?php echo e($exam->name); ?></a></div>
+            <div class="breadcrumb-item">Buat Soal</div>
         </div>
     </div>
     <div class="section-body">
         <div class="card">
             <div class="card-header">
-                <h4>Ubah soal untuk {{ $exam->name }} </h4>
+                <h4>Buat soal untuk <?php echo e($exam->name); ?> </h4>
             </div>
             <div class="card-body">
-                <form action="{{ route('school_admin.exams.questions.update', [$exam->id, $question->id]) }}" method="POST">
-                    @csrf
-                    @method('PATCH')
+                <form action="<?php echo e(route('school_admin.exams.questions.store', $exam->id)); ?>" method="POST">
+                    <?php echo csrf_field(); ?>
                     <div class="form-group row mb-4">
                         <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Soal</label>
                         <div class="col-sm-12 col-md-7">
-                            <textarea name="question" id="question" cols="30" rows="10" class="ckeditor-2">{!! $question->question !!}</textarea>
+                            <textarea name="question" id="question" cols="30" rows="10" class="ckeditor"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row mb-4">
+                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Jenis Soal</label>
+                        <div class="col-sm-12 col-md-7">
+                            <select name="question_type" id="question_type" class="custom-select">
+                                <option value=""></option>
+                                <option value="PG">PG</option>
+                                <option value="ESAI">Esai</option>
+                            </select>
                         </div>
                     </div>
                     <div class="type_content">
-                        @if ($question->question_type == 'PG')
-                        <div class="opsi_pg">
-                            <div class="form-group row mb-4">
-                                <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Opsi</label>
-                                <div class="col-sm-12 col-md-7">
-                                    <table class="w-100" id="optionpgtable">
-                                        @foreach (json_decode($question->option) as $key => $option)
-                                        <tr>
-                                            <td class="py-2">
-                                                <div class="custom-control custom-radio">
-                                                    <input type="radio" class="custom-control-input" id="opsi{{ $key }}" name="answer" value="{{ $key }}" {{ $question->answer == $key ? 'checked' : '' }}>
-                                                    <label class="custom-control-label" for="opsi{{ $key }}"></label>
-                                                </div>
-                                            </td>
-                                            <td class="py-2">
-                                                <textarea name="option[{{ $key }}]" id="option{{ $key }}" cols="30" rows="10" class="ckeditor-2">{!! $option !!}</textarea>
-                                            </td>
-                                            <td class="align-top py-2">
-                                                <button class="btn btn-light ml-2 removeOption"><i class="fa fa-times"></i></button>
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                    </table>
-                                    <div class="text-right mt-3">
-                                        <button class="btn btn-light" id="addoptionpg">Tambah Opsi</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        @elseif ($question->question_type == 'ESAI')
-                        <div class="opsi_esai">
-                            <div class="form-group row mb-4">
-                                <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Rekomendasi Jawaban</label>
-                                <div class="col-sm-12 col-md-7">
-                                    <textarea name="answer" id="answer" cols="30" rows="10" class="ckeditor-2">{!! $question->answer !!}</textarea>
-                                </div>
-                            </div>
-                            <div class="form-group row mb-4">
-                                <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Maksimal Poin</label>
-                                <div class="col-sm-12 col-md-7">
-                                    <input type="number" name="poin" id="poin" class="form-control" value="{{ $question->poin }}">
-                                </div>
-                            </div>
-                        </div>
-                        @endif
+                        
                     </div>
                     <div class="form-group row mb-4">
                         <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3"></label>
@@ -84,11 +49,85 @@
         </div>
     </div>
 </section>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@push('script')
+<?php $__env->startPush('script'); ?>
 
 <script>
+
+    $(document).on('change', '#question_type', function(e) {
+        e.preventDefault();
+
+        var val = $(this).val();
+
+        var pgHthml = `<div class="opsi_pg">
+            <div class="form-group row mb-4">
+                <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Opsi</label>
+                <div class="col-sm-12 col-md-7">
+                    <table class="w-100" id="optionpgtable">
+                        <tr>
+                            <td class="py-2">
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" class="custom-control-input" id="opsiA" name="answer" value="A">
+                                    <label class="custom-control-label" for="opsiA"></label>
+                                </div>
+                            </td>
+                            <td class="py-2">
+                                <textarea name="option[A]" id="optionA" cols="30" rows="10" class="ckeditor"></textarea>
+                            </td>
+                            <td class="align-top py-2">
+                                
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-2">
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" class="custom-control-input" id="opsiB" name="answer" value="B">
+                                    <label class="custom-control-label" for="opsiB"></label>
+                                </div>
+                            </td>
+                            <td class="py-2">
+                                <textarea name="option[B]" id="optionB" cols="30" rows="10" class="ckeditor"></textarea>
+                            </td>
+                            <td class="align-top py-2">
+                                
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="text-right mt-3">
+                        <button class="btn btn-light" id="addoptionpg">Tambah Opsi</button>
+                    </div>
+                </div>
+            </div>
+        </div>`;
+
+        var esaiHtml = `<div class="opsi_esai">
+            <div class="form-group row mb-4">
+                <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Rekomendasi Jawaban</label>
+                <div class="col-sm-12 col-md-7">
+                    <textarea name="answer" id="answer" cols="30" rows="10" class="ckeditor"></textarea>
+                </div>
+            </div>
+            <div class="form-group row mb-4">
+                <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Maksimal Poin</label>
+                <div class="col-sm-12 col-md-7">
+                    <input type="number" name="poin" id="poin" class="form-control">
+                </div>
+            </div>
+        </div>`;
+
+        if (val == 'PG') {
+            $('.type_content').html(pgHthml);
+        } else if (val == 'ESAI') {
+            $('.type_content').html(esaiHtml);
+        } else {
+            $('.type_content').html('');
+        }
+        
+        $('.type_content').find('.ckeditor').each((ind, el) => {
+            initCkeditor(el);
+        });
+    });
 
     $(document).on('click', '#addoptionpg', function(e) {
         e.preventDefault();
@@ -104,14 +143,14 @@
                     </div>
                 </td>
                 <td class="py-2">
-                    <textarea name="option[${toString(curIndex)}]" id="option${curIndex}" cols="30" rows="10" class="ckeditor-2"></textarea>
+                    <textarea name="option[${toString(curIndex)}]" id="option${curIndex}" cols="30" rows="10" class="ckeditor"></textarea>
                 </td>
                 <td class="align-top py-2">
                     <button class="btn btn-light ml-2 removeOption"><i class="fa fa-times"></i></button>
                 </td>
             </tr>`);
     
-            $('#optionpgtable').find('tr:last-child').find('.ckeditor-2').each((ind, el) => {
+            $('#optionpgtable').find('tr:last-child').find('.ckeditor').each((ind, el) => {
                 initCkeditor(el);
             });
         } else {
@@ -140,9 +179,9 @@
     }
 </script>
 
-<script src="{{url('ckeditor/ckeditor.js')}}"></script>
+<script src="<?php echo e(url('ckeditor/ckeditor.js')); ?>"></script>
 <script>
-    CKEDITOR.plugins.addExternal('ckeditor_wiris', '{{url("ckeditor/node_modules/@wiris/mathtype-ckeditor4/plugin.js")}}');
+    CKEDITOR.plugins.addExternal('ckeditor_wiris', '<?php echo e(url("ckeditor/node_modules/@wiris/mathtype-ckeditor4/plugin.js")); ?>');
 
     function initCkeditor(id) {
         var mathElements = [
@@ -226,10 +265,10 @@
             ],
 
             // Upload images to a CKFinder connector (note that the response type is set to JSON).
-            uploadUrl: "{{ route('web.upload_image') }}",
+            uploadUrl: "<?php echo e(route('web.upload_image')); ?>",
 
-            filebrowserUploadUrl: "{{ route('web.upload_image') }}",
-            filebrowserImageUploadUrl: "{{ route('web.upload_image') }}",
+            filebrowserUploadUrl: "<?php echo e(route('web.upload_image')); ?>",
+            filebrowserImageUploadUrl: "<?php echo e(route('web.upload_image')); ?>",
 
             stylesSet: [{
                     name: 'Narrow image',
@@ -260,7 +299,7 @@
         });
     }
 
-    $('.ckeditor-2').each((id, el) => {
+    $('.ckeditor').each((id, el) => {
         initCkeditor(el);
     });
 </script>

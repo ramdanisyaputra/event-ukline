@@ -1,19 +1,18 @@
-@extends('layouts.main')
 
-@section('content')
+
+<?php $__env->startSection('content'); ?>
 <style>
     .table-questions img {
         max-width: 200px;
         height: auto;
-        margin-bottom: 10px;
     }
 </style>
 <section class="section">
     <div class="section-header">
         <h1>Ujian Matematika</h1>
         <div class="section-header-breadcrumb">
-            <div class="breadcrumb-item active"><a href="{{ route('question_writer.index') }}">Beranda</a></div>
-            <div class="breadcrumb-item active"><a href="{{ route('question_writer.exams.index') }}">Kumpulan Ujian</a></div>
+            <div class="breadcrumb-item active"><a href="<?php echo e(route('school_admin.index')); ?>">Beranda</a></div>
+            <div class="breadcrumb-item active"><a href="<?php echo e(route('school_admin.exams.index')); ?>">Kumpulan Ujian</a></div>
             <div class="breadcrumb-item">Soal</div>
         </div>
     </div>
@@ -26,18 +25,21 @@
                         <div class="card-header-action dropdown">
                             <a href="#" data-toggle="dropdown" class="btn btn-primary dropdown-toggle"><i class="fa fa-cog"></i> Pengaturan</a>
                             <ul class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
-                                <!-- <li><a href="#editExam" data-toggle="modal" data-target="#editExam" class="dropdown-item">Ubah</a></li> -->
                                 <li class="dropdown-title">Pengaturan</li>
+                                <li><a href="#editExam" data-toggle="modal" data-target="#editExam" class="dropdown-item">Ubah</a></li>
+                                <li class="dropdown-title">Aksi</li>
                                 <li><a href="#" class="dropdown-item">Lihat nilai</a></li>
+                                <?php if(!$exam->shared): ?>
                                 <li>
-                                    <form action="{{ route('question_writer.exams.update_status') }}" method="POST" id="examUpdateStatus">
-                                        @csrf
-                                        @method('PUT')
-                                        <input type="hidden" name="id" value="{{ $exam->id }}">
-                                        <input type="hidden" name="status" value="{{ $exam->status == 'published' ? 'drafted' : 'published' }}">
+                                    <form action="<?php echo e(route('school_admin.exams.update_status')); ?>" method="POST" id="examUpdateStatus">
+                                        <?php echo csrf_field(); ?>
+                                        <?php echo method_field('PUT'); ?>
+                                        <input type="hidden" name="id" value="<?php echo e($exam->id); ?>">
+                                        <input type="hidden" name="status" value="<?php echo e($exam->status == 'published' ? 'drafted' : 'published'); ?>">
                                     </form>
-                                    <a href="#" onclick="document.getElementById('examUpdateStatus').submit()" class="dropdown-item">{{ $exam->status == 'published' ? 'Arsipkan' : 'Publikasikan' }}</a>
+                                    <a href="#" onclick="document.getElementById('examUpdateStatus').submit()" class="dropdown-item"><?php echo e($exam->status == 'published' ? 'Arsipkan' : 'Publikasikan'); ?></a>
                                 </li>
+                                <?php endif; ?>
                             </ul>
                         </div>
                     </div>
@@ -47,49 +49,71 @@
                                 Judul
                             </div>
                             <div class="col-md-8 font-weight-bold py-1">
-                                {{ $exam->name }}
+                                <?php echo e($exam->name); ?>
+
+                            </div>
+                            <div class="col-md-4 py-1">
+                                Mata Pel.
+                            </div>
+                            <div class="col-md-8 font-weight-bold py-1">
+                                <?php echo e($exam->examClass->first()->subject->name); ?>
+
                             </div>
                             <div class="col-md-4 py-1">
                                 Jenis Ujian
                             </div>
                             <div class="col-md-8 font-weight-bold py-1">
-                                {{ $exam->examType->name }}
+                                <?php echo e($exam->examType->name); ?>
+
                             </div>
                             <div class="col-md-4 py-1">
                                 Jenis Ujian
                             </div>
                             <div class="col-md-8 font-weight-bold py-1">
-                                {{ $exam->shared == 0 ? 'Serentak' : 'Mandiri' }}
+                                <?php echo e($exam->shared ? 'Serentak' : 'Mandiri'); ?>
+
                             </div>
                             <div class="col-md-4 py-1">
-                                Dilaksanakan
+                                Tanggal
                             </div>
                             <div class="col-md-8 font-weight-bold py-1">
-                                {{ \Carbon\Carbon::parse($exam->started_at)->isoFormat('dddd, DD MMMM YYYY') }}
-                            </div>
-                            <div class="col-md-4 py-1">
-                                Berakhir
-                            </div>
-                            <div class="col-md-8 font-weight-bold py-1">
-                                {{ \Carbon\Carbon::parse($exam->expired_at)->isoFormat('dddd, DD MMMM YYYY') }}
+                                <?php echo e(\Carbon\Carbon::parse($exam->started_at)->isoFormat('dddd, DD MMMM YYYY')); ?>
+
                             </div>
                             <div class="col-md-4 py-1">
                                 Waktu
                             </div>
                             <div class="col-md-8 font-weight-bold py-1">
-                                {{ \Carbon\Carbon::parse($exam->started_at)->isoFormat('HH:mm') }} - {{ \Carbon\Carbon::parse($exam->expired_at)->isoFormat('HH:mm') }}
+                                <?php echo e(\Carbon\Carbon::parse($exam->started_at)->isoFormat('HH:mm')); ?> - <?php echo e(\Carbon\Carbon::parse($exam->expired_at)->isoFormat('HH:mm')); ?>
+
                             </div>
                             <div class="col-md-4 py-1">
                                 Durasi
                             </div>
                             <div class="col-md-8 font-weight-bold py-1">
-                                {{ $exam->duration }} Menit
+                                <?php echo e($exam->duration); ?> Menit
+                            </div>
+                            <div class="col-md-4 py-1">
+                                Peserta Kelas
+                            </div>
+                            <div class="col-md-8 font-weight-bold py-1">
+                                <?php
+                                $strClassess = '';
+                                foreach ($classess as $class) {
+                                    $strClassess .= "$class->name, ";
+                                }
+                                $strClassess = rtrim($strClassess, ', ');
+                                ?>
+
+                                <?php echo e($strClassess ?? '-'); ?>
+
                             </div>
                             <div class="col-md-4 py-1">
                                 Kode Akses
                             </div>
                             <div class="col-md-8 font-weight-bold py-1 text-primary">
-                                {{ $exam->access_code }}
+                                <?php echo e($exam->access_code); ?>
+
                             </div>
                         </div>
                     </div>
@@ -107,7 +131,8 @@
                                     <h4>Total Soal</h4>
                                 </div>
                                 <div class="card-body">
-                                    {{ $exam->examQuestions->count() }}
+                                    <?php echo e($exam->examQuestions->count()); ?>
+
                                 </div>
                             </div>
                         </div>
@@ -122,7 +147,8 @@
                                     <h4>Status</h4>
                                 </div>
                                 <div class="card-body">
-                                    {{ $exam->status == 'published' ? 'Dipublikasi' : 'Diarsipkan' }}
+                                    <?php echo e($exam->status == 'published' ? 'Dipublikasi' : 'Diarsipkan'); ?>
+
                                 </div>
                             </div>
                         </div>
@@ -137,15 +163,15 @@
                     <a href="#" data-toggle="dropdown" class="btn btn-primary dropdown-toggle"><i class="fa fa-cog"></i> Pengaturan</a>
                     <ul class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
                         <li class="dropdown-title">Pengaturan</li>
-                        <li><a href="{{ route('question_writer.exams.questions.pratinjau', $exam->id) }}" class="dropdown-item">Pratinjau</a></li>
-                        @if ($exam->status == 'drafted')
-                        <li><a href="{{ route('question_writer.exams.questions.create', $exam->id) }}" class="dropdown-item">Buat soal</a></li>
+                        <li><a href="<?php echo e(route('school_admin.exams.questions.pratinjau', $exam->id)); ?>" class="dropdown-item">Pratinjau</a></li>
+                        <?php if(!$exam->shared): ?>
+                        <li><a href="<?php echo e(route('school_admin.exams.questions.create', $exam->id)); ?>" class="dropdown-item">Buat soal</a></li>
                         <li><a href="#" class="dropdown-item">Impor soal (.xlsx)</a></li>
-                        @endif
+                        <?php endif; ?>
                         <li><a href="#" class="dropdown-item">Ekspor soal (.xlsx)</a></li>
-                        @if ($exam->status == 'drafted')
+                        <?php if(!$exam->shared): ?>
                         <li><a href="#" data-toggle="modal" data-target="#confirmDeleteAll" class="dropdown-item text-danger">Hapus semua <i class="fa fa-exclamation-circle"></i></a></li>
-                        @endif
+                        <?php endif; ?>
                     </ul>
                 </div>
             </div>
@@ -164,43 +190,40 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($exam->examQuestions as $key => $question)
+                            <?php $__empty_1 = true; $__currentLoopData = $exam->examQuestions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $question): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                             <tr>
-                                <td class="align-top py-2">{{ ++$key }}</td>
-                                <td class="align-top py-2">{{ $question->question_type }}</td>
-                                <td class="align-top py-2">{!! $question->question !!}</td>
+                                <td class="align-top py-2"><?php echo e(++$key); ?></td>
+                                <td class="align-top py-2"><?php echo e($question->question_type); ?></td>
+                                <td class="align-top py-2"><?php echo $question->question; ?></td>
                                 <td class="align-top py-2">
-                                    @if ($question->option)
+                                    <?php if($question->option): ?>
                                     <ol type="a" class="pl-0">
-                                        @foreach (json_decode($question->option) as $option)
-                                        <li>{!! $option !!}</li>
-                                        @endforeach
+                                        <?php $__currentLoopData = json_decode($question->option); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $option): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <li><?php echo $option; ?></li>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </ol>
-                                    @else
+                                    <?php else: ?>
                                     -
-                                    @endif
+                                    <?php endif; ?>
                                 </td>
                                 <td class="align-top py-2">
-                                    {!! $question->answer !!}
-                                </td>
-                                <td class="align-top py-2">
-                                    {{ $question->poin ?? 'Belum dipublikasi' }}
-                                </td>
+                                    <?php echo $question->question_type != 'ESAI' ? ("$question->answer (" . ((array) json_decode($question->option))[$question->answer] . ")") : $question->answer; ?>
 
+                                </td>
                                 <td class="align-top py-2">
-                                    @if($exam->status == 'drafted')
-                                    <a href="{{ route('question_writer.exams.questions.edit', [$exam->id, $question->id]) }}" class="btn btn-sm btn-light d-block" title="Edit"><i class="fa fa-pencil-alt"></i></a>
-                                    <button class="btn btn-sm btn-danger mt-2 d-block" data-toggle="modal" data-target="#confirmDelete" data-url="{{ route('question_writer.exams.questions.delete', [$exam->id, $question->id]) }}" title="Hapus"><i class="fa fa-trash"></i></button>
-                                    @else
-                                        Arsipkan ujian untuk mengubah soal
-                                    @endif
+                                    <?php echo e($question->poin ?? 'Belum dipublikasi'); ?>
+
+                                </td>
+                                <td class="align-top py-2">
+                                    <a href="<?php echo e(route('school_admin.exams.questions.edit', [$exam->id, $question->id])); ?>" class="btn btn-sm btn-light d-block" title="Edit"><i class="fa fa-pencil-alt"></i></a>
+                                    <button class="btn btn-sm btn-danger mt-2 d-block" data-toggle="modal" data-target="#confirmDelete" data-url="<?php echo e(route('school_admin.exams.questions.delete', [$exam->id, $question->id])); ?>" title="Hapus"><i class="fa fa-trash"></i></button>
                                 </td>
                             </tr>
-                            @empty
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                             <tr>
                                 <td class="text-center" colspan="7">Tidak ada data</td>
                             </tr>
-                            @endforelse
+                            <?php endif; ?>
                         </tbody>
                     </table>
                 </div>
@@ -213,7 +236,7 @@
 <div class="modal fade" id="editExam" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form action="{{ route('school_admin.exams.update') }}" method="POST">
+            <form action="<?php echo e(route('school_admin.exams.update')); ?>" method="POST">
                 <div class="modal-header">
                     <h5 class="modal-title">Ubah Ujian</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -221,42 +244,68 @@
                         </button>
                 </div>
                 <div class="modal-body">
-                    @csrf
-                    @method('PATCH')
-                    <input type="hidden" name="id" value="{{ $exam->id }}">
-                    <input type="hidden" name="shared" value="{{ $exam->shared }}">
-                    @if (!$exam->shared)
+                    <?php echo csrf_field(); ?>
+                    <?php echo method_field('PATCH'); ?>
+                    <input type="hidden" name="id" value="<?php echo e($exam->id); ?>">
+                    <input type="hidden" name="shared" value="<?php echo e($exam->shared); ?>">
+                    <?php if(!$exam->shared): ?>
                     <div class="form-group">
                         <label for="name">Judul</label>
-                        <input type="text" name="name" id="name" class="form-control" value="{{ $exam->name }}">
+                        <input type="text" name="name" id="name" class="form-control" value="<?php echo e($exam->name); ?>">
                     </div>
-                    @endif
-                    @if (!$exam->shared)
+                    <?php endif; ?>
+                    <div class="form-group">
+                        <label for="subject_id">Mata Pelajaran</label>
+                        <select name="subject_id" id="subject_id" class="custom-select">
+                            <option value=""></option>
+                            <?php $__currentLoopData = $subjects; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $subject): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <option value="<?php echo e($subject->id); ?>" <?php echo e($subject->id == $exam->examClass->first()->subject_id ? 'selected' : ''); ?>><?php echo e($subject->name); ?></option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        </select>
+                    </div>
+                    <?php if(!$exam->shared): ?>
                     <div class="form-group">
                         <label for="exam_type_id">Jenis Ujian</label>
                         <select name="exam_type_id" id="exam_type_id" class="custom-select">
                             <option value=""></option>
+                            <?php $__currentLoopData = $exam_types; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $exam_type): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($exam_type->id); ?>" <?php echo e($exam_type->id == $exam->exam_type_id ? 'selected' : ''); ?>><?php echo e($exam_type->name); ?></option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="started_at">Dimulai Pada</label>
-                        <input type="datetime-local" name="started_at" id="started_at" class="form-control" value="{{ date('Y-m-d\TH:i', strtotime($exam->started_at)) }}">
+                        <input type="datetime-local" name="started_at" id="started_at" class="form-control" value="<?php echo e(date('Y-m-d\TH:i', strtotime($exam->started_at))); ?>">
                     </div>
                     <div class="form-group">
                         <label for="expired_at">Berakhir Pada</label>
-                        <input type="datetime-local" name="expired_at" id="expired_at" class="form-control" value="{{ date('Y-m-d\TH:i', strtotime($exam->expired_at)) }}">
+                        <input type="datetime-local" name="expired_at" id="expired_at" class="form-control" value="<?php echo e(date('Y-m-d\TH:i', strtotime($exam->expired_at))); ?>">
                     </div>
                     <div class="form-group">
                         <label for="duration">Durasi</label>
-                        <input type="number" name="duration" id="duration" class="form-control" value="{{ $exam->duration }}">
+                        <input type="number" name="duration" id="duration" class="form-control" value="<?php echo e($exam->duration); ?>">
                     </div>
-                    @endif
-                    @if (!$exam->shared)
+                    <?php endif; ?>
+                    <div class="form-group">
+                        <label for="class_ids">Kelas yang Diizinkan</label>
+                        <select name="class_ids[]" id="class_ids" class="js-example-basic-multiple" multiple>
+                            <option value=""></option>
+                            <?php $__currentLoopData = $classess; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $class): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($class->id); ?>"
+                                    <?php $__currentLoopData = json_decode($exam->examClass->first()->class_ids); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $class_id): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <?php echo e($class_id == $class->id ? 'selected' : ''); ?>
+
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    ><?php echo e($class->name); ?></option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        </select>
+                    </div>
+                    <?php if(!$exam->shared): ?>
                     <div class="form-group">
                         <label for="access_code">Kode Akses <i class="fa fa-question-circle"></i></label>
-                        <input type="text" name="access_code" id="access_code" class="form-control" value="{{ $exam->access_code }}">
+                        <input type="text" name="access_code" id="access_code" class="form-control" value="<?php echo e($exam->access_code); ?>">
                     </div>
-                    @endif
+                    <?php endif; ?>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
@@ -267,13 +316,12 @@
     </div>
 </div>
 
-
 <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <form action="" method="post">
-            @csrf
-            @method('DELETE')
+            <?php echo csrf_field(); ?>
+            <?php echo method_field('DELETE'); ?>
                 <div class="modal-header">
                     <h5 class="modal-title">Peringatan</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -295,9 +343,9 @@
 <div class="modal fade" id="confirmDeleteAll" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form action="{{ route('question_writer.exams.questions.delete_all', $exam->id) }}" method="post">
-            @csrf
-            @method('DELETE')
+            <form action="<?php echo e(route('school_admin.exams.questions.delete_all', $exam->id)); ?>" method="post">
+            <?php echo csrf_field(); ?>
+            <?php echo method_field('DELETE'); ?>
                 <div class="modal-header">
                     <h5 class="modal-title">Peringatan</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -315,9 +363,9 @@
         </div>
     </div>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@push('script')
+<?php $__env->startPush('script'); ?>
 <script>
     $('#confirmDelete').on('show.bs.modal', (e) => {
         var url = $(e.relatedTarget).data('url');
@@ -325,4 +373,5 @@
         $(e.currentTarget).find('form').attr('action', url);
     });
 </script>
-@endpush
+<?php $__env->stopPush(); ?>
+<?php echo $__env->make('layouts.main', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\event-ukline\resources\views/school_admin/exams/questions/index.blade.php ENDPATH**/ ?>

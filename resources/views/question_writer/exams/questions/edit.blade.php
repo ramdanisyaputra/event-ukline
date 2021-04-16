@@ -1,13 +1,11 @@
-
-
 <?php $__env->startSection('content'); ?>
 <section class="section">
     <div class="section-header">
         <h1>Ubah Soal</h1>
         <div class="section-header-breadcrumb">
-            <div class="breadcrumb-item active"><a href="{{ route('school_admin.index') }}">Beranda</a></div>
-            <div class="breadcrumb-item active"><a href="{{ route('school_admin.exams.index') }}">Kumpulan Ujian</a></div>
-            <div class="breadcrumb-item active"><a href="{{ route('school_admin.exams.questions.index', $exam->id) }}">{{ $exam->name }}</a></div>
+            <div class="breadcrumb-item active"><a href="{{ route('question_writer.index') }}">Beranda</a></div>
+            <div class="breadcrumb-item active"><a href="{{ route('question_writer.exams.index') }}">Kumpulan Ujian</a></div>
+            <div class="breadcrumb-item active"><a href="{{ route('question_writer.exams.questions.index', $exam->id) }}">{{ $exam->name }}</a></div>
             <div class="breadcrumb-item">Ubah Soal</div>
         </div>
     </div>
@@ -17,7 +15,7 @@
                 <h4>Ubah soal untuk {{ $exam->name }} </h4>
             </div>
             <div class="card-body">
-                <form action="{{ route('school_admin.exams.questions.update', [$exam->id, $question->id]) }}" method="POST">
+                <form action="{{ route('question_writer.exams.questions.update', [$exam->id, $question->id]) }}" method="POST">
                     @csrf
                     @method('PATCH')
                     <div class="form-group row mb-4">

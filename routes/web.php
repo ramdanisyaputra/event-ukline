@@ -176,12 +176,18 @@ Route::prefix('question_writer')->name('question_writer.')->middleware(['middlew
         Route::get('show/{id}', [QuestionWriterExamController::class, 'show'])->name('show');
         Route::post('store', [QuestionWriterExamController::class, 'store'])->name('store');
         Route::put('update', [QuestionWriterExamController::class, 'update'])->name('update');
+        Route::put('/update_status', [QuestionWriterExamController::class, 'updateStatus'])->name('update_status');
 
         // question
         Route::prefix('{exam}/questions')->name('questions.')->group(function() {
             Route::get('', [QuestionWriterExamQuestionController::class, 'index'])->name('index');
             Route::get('/create', [QuestionWriterExamQuestionController::class, 'create'])->name('create');
             Route::post('/store', [QuestionWriterExamQuestionController::class, 'store'])->name('store');
+            Route::get('/pratinjau', [QuestionWriterExamQuestionController::class, 'pratinjau'])->name('pratinjau');
+            Route::get('/{question}/edit', [QuestionWriterExamQuestionController::class, 'edit'])->name('edit');
+            Route::patch('/{question}/update', [QuestionWriterExamQuestionController::class, 'update'])->name('update');
+            Route::delete('/{question}/delete', [QuestionWriterExamQuestionController::class, 'destroy'])->name('delete');
+            Route::delete('/delete_all', [QuestionWriterExamQuestionController::class, 'destroyAll'])->name('delete_all');
         });
     });
 });

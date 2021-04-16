@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\ExamQuestionExport;
 use App\Http\Controllers\Controller;
 use App\Models\Classes;
 use App\Models\Exam;
@@ -11,6 +12,8 @@ use App\Models\School;
 use App\Models\Subject;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use PDF;
+use Excel;
 
 class ExamQuestionController extends Controller
 {
@@ -80,7 +83,32 @@ class ExamQuestionController extends Controller
 
         $examQuestions = ExamQuestion::where('exam_id',$examId)->get();
         return view('school_admin.exams.questions.pratinjau', compact('exam','examQuestions'));
+    }   
+
+    public function pdf($examId)
+    {
+        $exam = Exam::find($examId);
+
+        $examQuestions = ExamQuestion::where('exam_id',$examId)->get();
+
+        $data = compact('exam','examQuestions');
+
+        $pdf = PDF::loadView('school_admin.exams.questions.pdf', $data);
+    
+        return $pdf->stream('Data Soal '.$exam->name.'.pdf');
     }
+
+    public function exportExcel($examId)
+    {
+        $exam = Exam::find($examId);
+
+        try {
+            return Excel::download(new ExamQuestionExport($examId), 'Data Soal '.$exam->name.'.xlsx');
+		} catch (\Exception $ex) {
+            return back()->with('alert','Gagal export data');
+		}
+    }
+
     public function edit(Exam $exam, ExamQuestion $question)
     {
         return view('school_admin.exams.questions.edit', compact('exam', 'question'));

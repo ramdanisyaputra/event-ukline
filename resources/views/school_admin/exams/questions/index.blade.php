@@ -155,12 +155,17 @@
                         <li class="dropdown-title">Pengaturan</li>
                         <li><a href="{{ route('school_admin.exams.questions.pratinjau', $exam->id) }}" class="dropdown-item">Pratinjau</a></li>
                         @if (!$exam->shared)
-                        <li><a href="{{ route('school_admin.exams.questions.create', $exam->id) }}" class="dropdown-item">Buat soal</a></li>
-                        <li><a href="#" class="dropdown-item">Impor soal (.xlsx)</a></li>
+                            @if($exam->status != 'published')
+                            <li><a href="{{ route('school_admin.exams.questions.create', $exam->id) }}" class="dropdown-item">Buat soal</a></li>
+                            <li><a href="#" class="dropdown-item">Impor soal (.xlsx)</a></li>
+                            @endif
                         @endif
-                        <li><a href="#" class="dropdown-item">Ekspor soal (.xlsx)</a></li>
+                        <li><a href="{{ route('school_admin.exams.questions.exportExcel', $exam->id) }}" class="dropdown-item">Ekspor soal (.xlsx)</a></li>
+                        <li><a href="{{ route('school_admin.exams.questions.pdf', $exam->id) }}" target="_blank" class="dropdown-item">Ekspor soal (.pdf)</a></li>
                         @if (!$exam->shared)
-                        <li><a href="#" data-toggle="modal" data-target="#confirmDeleteAll" class="dropdown-item text-danger">Hapus semua <i class="fa fa-exclamation-circle"></i></a></li>
+                            @if($exam->status != 'published')
+                            <li><a href="#" data-toggle="modal" data-target="#confirmDeleteAll" class="dropdown-item text-danger">Hapus semua <i class="fa fa-exclamation-circle"></i></a></li>
+                            @endif
                         @endif
                     </ul>
                 </div>
@@ -197,14 +202,18 @@
                                     @endif
                                 </td>
                                 <td class="align-top py-2">
-                                    {!! $question->question_type != 'ESAI' ? ("$question->answer (" . ((array) json_decode($question->option))[$question->answer] . ")") : $question->answer !!}
+                                    {!! $question->answer !!}
                                 </td>
                                 <td class="align-top py-2">
                                     {{ $question->poin ?? 'Belum dipublikasi' }}
                                 </td>
                                 <td class="align-top py-2">
+                                @if($exam->status != 'published')
                                     <a href="{{ route('school_admin.exams.questions.edit', [$exam->id, $question->id]) }}" class="btn btn-sm btn-light d-block" title="Edit"><i class="fa fa-pencil-alt"></i></a>
                                     <button class="btn btn-sm btn-danger mt-2 d-block" data-toggle="modal" data-target="#confirmDelete" data-url="{{ route('school_admin.exams.questions.delete', [$exam->id, $question->id]) }}" title="Hapus"><i class="fa fa-trash"></i></button>
+                                @else
+                                    Tidak ada aksi
+                                @endif
                                 </td>
                             </tr>
                             @empty

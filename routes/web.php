@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AdminStudentController;
 use App\Http\Controllers\Admin\ExamController as AdminExamController;
 use App\Http\Controllers\Admin\ExamQuestionController as AdminExamQuestionController;
+use App\Http\Controllers\Admin\ExamScoreController;
 use App\Http\Controllers\QuestionWriter\ExamController as QuestionWriterExamController;
 use App\Http\Controllers\QuestionWriter\ExamQuestionController as QuestionWriterExamQuestionController;
 use App\Http\Controllers\QuestionWriter\QuestionDashboardController;
@@ -146,6 +147,8 @@ Route::prefix('school_admin')->name('school_admin.')->middleware(['middleware' =
         Route::prefix('{exam}/questions')->name('questions.')->group(function() {
             Route::get('', [AdminExamQuestionController::class, 'index'])->name('index');
             Route::get('/pratinjau', [AdminExamQuestionController::class, 'pratinjau'])->name('pratinjau');
+            Route::get('/exportExcel', [AdminExamQuestionController::class, 'exportExcel'])->name('exportExcel');
+            Route::get('/pdf', [AdminExamQuestionController::class, 'pdf'])->name('pdf');
             Route::get('/create', [AdminExamQuestionController::class, 'create'])->name('create');
             Route::post('/store', [AdminExamQuestionController::class, 'store'])->name('store');
             Route::get('/{question}/edit', [AdminExamQuestionController::class, 'edit'])->name('edit');
@@ -153,6 +156,16 @@ Route::prefix('school_admin')->name('school_admin.')->middleware(['middleware' =
             Route::delete('/{question}/delete', [AdminExamQuestionController::class, 'destroy'])->name('delete');
             Route::delete('/delete_all', [AdminExamQuestionController::class, 'destroyAll'])->name('delete_all');
         });
+    });
+
+    Route::prefix('exam-scores')->name('exam-scores.')->group(function() {
+        Route::get('/', [ExamScoreController::class, 'index'])->name('index');
+        Route::get('/create_public', [ExamScoreController::class, 'createPublic'])->name('create_public');
+        Route::post('/store_public', [ExamScoreController::class, 'storePublic'])->name('store_public');
+        Route::get('/create_private', [ExamScoreController::class, 'createPrivate'])->name('create_private');
+        Route::post('/store_private', [ExamScoreController::class, 'storePrivate'])->name('store_private');
+        Route::patch('/update', [ExamScoreController::class, 'update'])->name('update');
+        Route::put('/update_status', [ExamScoreController::class, 'updateStatus'])->name('update_status');
     });
 });
 

@@ -18,6 +18,6 @@
         <a href="{{ route('school_admin.exams.index') }}" class="nav-link"><i class="fas fa-laptop"></i><span>Kumpulan Ujian</span></a>
     </li>
     <li class="nav-item {{ request()->is('school_admin/exam-types*') ? 'active' : '' }}">
-        <a href="" class="nav-link"><i class="fas fa-newspaper "></i><span>Nilai Ujian</span></a>
+        <a href="{{ route('school_admin.exam-scores.index') }}" class="nav-link"><i class="fas fa-newspaper "></i><span>Nilai Ujian</span></a>
     </li>
 </ul>

@@ -80,6 +80,8 @@ Route::prefix('superadmin')->name('superadmin.')->middleware(['middleware' => 'a
         Route::post('store', [ExamTypeController::class,'store'])->name('store');
         Route::put('update', [ExamTypeController::class,'update'])->name('update');
     });
+
+
     Route::prefix('question-writers')->name('question-writers.')->group(function(){
         Route::get('', [QuestionWriterController::class,'index'])->name('index');
         Route::get('{regenyId}', [QuestionWriterController::class,'indexWriter'])->name('indexWriter');
@@ -167,6 +169,7 @@ Route::namespace('student')->prefix('student')->name('student.')->middleware(['m
         Route::get('/{exam}/boarding', [ExamController::class, 'boarding'])->name('boarding');
     });
 });
+
 Route::prefix('question_writer')->name('question_writer.')->middleware(['middleware' => 'auth:question_writer'])->group(function(){
     Route::get('/', [QuestionDashboardController::class, 'index'])->name('index');
     Route::prefix('exams')->name('exams.')->group(function() {
@@ -188,6 +191,8 @@ Route::prefix('question_writer')->name('question_writer.')->middleware(['middlew
             Route::patch('/{question}/update', [QuestionWriterExamQuestionController::class, 'update'])->name('update');
             Route::delete('/{question}/delete', [QuestionWriterExamQuestionController::class, 'destroy'])->name('delete');
             Route::delete('/delete_all', [QuestionWriterExamQuestionController::class, 'destroyAll'])->name('delete_all');
+            Route::post('import', [QuestionWriterExamQuestionController::class,'import'])->name('import');
+            Route::get('export', [QuestionWriterExamQuestionController::class,'export'])->name('export');
         });
     });
 });

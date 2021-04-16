@@ -12,17 +12,30 @@
         </div>
     </div>
     @if($errors->any())
-        <div class="alert alert-danger alert-block">
-            <button type="button" class="close" data-dismiss="alert">×</button> 
-            @foreach ($errors->all() as $error)
+    
+    <div class="alert alert-danger alert-dismissible show fade">
+        <div class="alert-body">
+        <button class="close" data-dismiss="alert">
+            <span>&times;</span>
+        </button>
+        @foreach ($errors->all() as $error)
             <ul class="m-0">
                 @php
                 $pesan = explode(' ', $error);
                 @endphp
-                <li>{{$pesan[1] == 'question' ? 'pertanyaan' : 'jawaban'}} harus diisi</li>
+                <li>
+                @if($pesan[1] == 'question')
+                Pertanyaan
+                @elseif($pesan[1] == 'answer')
+                Jawaban
+                @elseif($pesan[1] == 'type')
+                Jenis Soal
+                @endif
+                Harus Diisi
             </ul>
-            @endforeach
+        @endforeach
         </div>
+    </div>
     @endif
     <div class="section-body">
         <div class="card">
@@ -41,7 +54,7 @@
                     <div class="form-group row mb-4">
                         <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Jenis Soal</label>
                         <div class="col-sm-12 col-md-7">
-                            <select name="question_type" id="question_type" class="custom-select">
+                            <select name="type" id="question_type" class="custom-select">
                                 <option value=""></option>
                                 <option value="PG">PG</option>
                                 <option value="ESAI">Esai</option>

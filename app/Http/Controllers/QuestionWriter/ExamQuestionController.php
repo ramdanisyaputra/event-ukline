@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers\QuestionWriter;
 
+use App\Exports\QuestionWriterExportQuestion;
 use App\Http\Controllers\Controller;
-use App\Models\Classes;
+use App\Imports\QuestionWriterImportQuestion;
 use App\Models\Exam;
 use App\Models\ExamQuestion;
-use App\Models\ExamType;
-use App\Models\School;
-use App\Models\Subject;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ExamQuestionController extends Controller
 {
@@ -31,10 +30,10 @@ class ExamQuestionController extends Controller
         $validator1 = Validator::make($request->all(), [
             'question' => 'required',
             'answer' => 'required',
-            'question_type' => 'required',
+            'type' => 'required',
         ]);
 
-        if ($request->question_type == 'PG') {
+        if ($request->type == 'PG') {
             $validator2 = Validator::make($request->all(), [
                 'option' => 'required'
             ]);
@@ -124,4 +123,24 @@ class ExamQuestionController extends Controller
 
         return redirect()->back()->with('success', 'Berhasil menghapus semua soal ujian!');
      }
+     
+
+    public function import(Request $request, $examId)
+    {
+		try {
+            Excel::import(new QuestionWriterImportQuestion($examId),$request->file('file'));
+		} catch (\Exception $ex) {
+            return back()->with('alert','adsf');
+		}
+        return back()->with('success','Berhasil Import Data Siswa');
+    }
+    public function export(Request $request, $examId)
+    {
+		try {
+            return Excel::download(new QuestionWriterExportQuestion($examId), 'Data Soal.xlsx');
+		} catch (\Exception $ex) {
+            $errorMsg = json_decode($ex->getMessage());
+            return back()->with('alert','Gagal export data');
+		}
+    }
 }

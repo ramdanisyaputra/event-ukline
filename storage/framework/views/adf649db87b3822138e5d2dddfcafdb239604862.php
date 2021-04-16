@@ -12,17 +12,30 @@
         </div>
     </div>
     <?php if($errors->any()): ?>
-        <div class="alert alert-danger alert-block">
-            <button type="button" class="close" data-dismiss="alert">×</button> 
-            <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+    
+    <div class="alert alert-danger alert-dismissible show fade">
+        <div class="alert-body">
+        <button class="close" data-dismiss="alert">
+            <span>&times;</span>
+        </button>
+        <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
             <ul class="m-0">
                 <?php
                 $pesan = explode(' ', $error);
                 ?>
-                <li><?php echo e($pesan[1] == 'question' ? 'pertanyaan' : 'jawaban'); ?> harus diisi</li>
+                <li>
+                <?php if($pesan[1] == 'question'): ?>
+                Pertanyaan
+                <?php elseif($pesan[1] == 'answer'): ?>
+                Jawaban
+                <?php elseif($pesan[1] == 'type'): ?>
+                Jenis Soal
+                <?php endif; ?>
+                Harus Diisi
             </ul>
-            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </div>
+    </div>
     <?php endif; ?>
     <div class="section-body">
         <div class="card">
@@ -41,7 +54,7 @@
                     <div class="form-group row mb-4">
                         <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Jenis Soal</label>
                         <div class="col-sm-12 col-md-7">
-                            <select name="question_type" id="question_type" class="custom-select">
+                            <select name="type" id="question_type" class="custom-select">
                                 <option value=""></option>
                                 <option value="PG">PG</option>
                                 <option value="ESAI">Esai</option>

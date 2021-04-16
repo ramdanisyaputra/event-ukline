@@ -140,9 +140,9 @@
                         <li><a href="{{ route('question_writer.exams.questions.pratinjau', $exam->id) }}" class="dropdown-item">Pratinjau</a></li>
                         @if ($exam->status == 'drafted')
                         <li><a href="{{ route('question_writer.exams.questions.create', $exam->id) }}" class="dropdown-item">Buat soal</a></li>
-                        <li><a href="#" class="dropdown-item">Impor soal (.xlsx)</a></li>
+                        <li><a data-toggle="modal" data-target="#import" class="dropdown-item">Impor soal (.xlsx)</a></li>
                         @endif
-                        <li><a href="#" class="dropdown-item">Ekspor soal (.xlsx)</a></li>
+                        <li><a href="{{ route('question_writer.exams.questions.export', $exam->id) }}" class="dropdown-item">Ekspor soal (.xlsx)</a></li>
                         @if ($exam->status == 'drafted')
                         <li><a href="#" data-toggle="modal" data-target="#confirmDeleteAll" class="dropdown-item text-danger">Hapus semua <i class="fa fa-exclamation-circle"></i></a></li>
                         @endif
@@ -268,6 +268,36 @@
 </div>
 
 
+<div class="modal fade" id="import" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form action="{{ route('question_writer.exams.questions.import',$exam->id) }}" method="POST" id="formkelolaStudents" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-header">
+                    <h5 class="modal-title"><span>Import</span> Siswa</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <h6 for="file">Download Panduan</h6>
+                        <a href="{{asset('panduan')}}" class="nav-link">Download Panduan Import Siswa Berikut</a>
+                    </div>
+                    <div class="form-group">
+                        <label for="file">Data Excel</label>
+                        <input type="file" class="form-control" id="file" name="file" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -315,6 +345,7 @@
         </div>
     </div>
 </div>
+
 @endsection
 
 @push('script')

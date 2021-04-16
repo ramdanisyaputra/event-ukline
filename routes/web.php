@@ -157,6 +157,8 @@ Route::prefix('school_admin')->name('school_admin.')->middleware(['middleware' =
             Route::patch('/{question}/update', [AdminExamQuestionController::class, 'update'])->name('update');
             Route::delete('/{question}/delete', [AdminExamQuestionController::class, 'destroy'])->name('delete');
             Route::delete('/delete_all', [AdminExamQuestionController::class, 'destroyAll'])->name('delete_all');
+            Route::post('import', [AdminExamQuestionController::class,'import'])->name('import');
+            Route::get('export', [AdminExamQuestionController::class,'export'])->name('export');
         });
     });
 
@@ -201,6 +203,7 @@ Route::prefix('question_writer')->name('question_writer.')->middleware(['middlew
             Route::delete('/delete_all', [QuestionWriterExamQuestionController::class, 'destroyAll'])->name('delete_all');
             Route::post('import', [QuestionWriterExamQuestionController::class,'import'])->name('import');
             Route::get('export', [QuestionWriterExamQuestionController::class,'export'])->name('export');
+            Route::get('/pdf', [QuestionWriterExamQuestionController::class, 'pdf'])->name('pdf');
         });
     });
 });

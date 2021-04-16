@@ -143,6 +143,7 @@
                         <li><a data-toggle="modal" data-target="#import" class="dropdown-item">Impor soal (.xlsx)</a></li>
                         @endif
                         <li><a href="{{ route('question_writer.exams.questions.export', $exam->id) }}" class="dropdown-item">Ekspor soal (.xlsx)</a></li>
+                        <li><a href="{{ route('question_writer.exams.questions.pdf', $exam->id) }}" target="_blank" class="dropdown-item">Ekspor soal (.pdf)</a></li>
                         @if ($exam->status == 'drafted')
                         <li><a href="#" data-toggle="modal" data-target="#confirmDeleteAll" class="dropdown-item text-danger">Hapus semua <i class="fa fa-exclamation-circle"></i></a></li>
                         @endif

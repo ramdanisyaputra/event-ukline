@@ -10,6 +10,7 @@ use App\Models\ExamQuestion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
+use PDF;
 
 class ExamQuestionController extends Controller
 {
@@ -142,5 +143,18 @@ class ExamQuestionController extends Controller
             $errorMsg = json_decode($ex->getMessage());
             return back()->with('alert','Gagal export data');
 		}
+    }
+    
+    public function pdf($examId)
+    {
+        $exam = Exam::find($examId);
+
+        $examQuestions = ExamQuestion::where('exam_id',$examId)->get();
+
+        $data = compact('exam','examQuestions');
+
+        $pdf = PDF::loadView('question_writer.exams.questions.pdf', $data);
+    
+        return $pdf->stream('Data Soal '.$exam->name.'.pdf');
     }
 }

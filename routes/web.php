@@ -162,12 +162,7 @@ Route::prefix('school_admin')->name('school_admin.')->middleware(['middleware' =
 
     Route::prefix('exam-scores')->name('exam-scores.')->group(function() {
         Route::get('/', [ExamScoreController::class, 'index'])->name('index');
-        Route::get('/create_public', [ExamScoreController::class, 'createPublic'])->name('create_public');
-        Route::post('/store_public', [ExamScoreController::class, 'storePublic'])->name('store_public');
-        Route::get('/create_private', [ExamScoreController::class, 'createPrivate'])->name('create_private');
-        Route::post('/store_private', [ExamScoreController::class, 'storePrivate'])->name('store_private');
-        Route::patch('/update', [ExamScoreController::class, 'update'])->name('update');
-        Route::put('/update_status', [ExamScoreController::class, 'updateStatus'])->name('update_status');
+        Route::get('{examId}', [ExamScoreController::class, 'indexScore'])->name('indexScore');
     });
 });
 

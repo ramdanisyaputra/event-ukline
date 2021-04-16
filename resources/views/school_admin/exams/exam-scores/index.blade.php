@@ -33,7 +33,7 @@
                                 <td>{{ ++$key }}</td>
                                 <td>{{ $examKelas->exam->name }}</td>
                                 <td class="text-center">
-                                    <a href="{{route('school_admin.exams.exam-scores.indexScore', $examKelas->exam_id)}}" class="btn btn-success">Pilih Ujian</a>
+                                    <a href="{{route('school_admin.exam-scores.indexScore', $examKelas->exam_id)}}" class="btn btn-success">Pilih Ujian</a>
                                 </td>
                             </tr>
                             @empty

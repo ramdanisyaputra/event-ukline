@@ -30,11 +30,10 @@ class QuestionWriterImportQuestion implements ToCollection
         {
             if($key != 0){
                 $question = $row[0];
-                $questionFile = $row[1];
-                $poin = $row[2];
-                $questionType = $row[3];
+                $poin = $row[1];
+                $questionType = $row[2];
                 $option = null;
-                $answer = $row[9];
+                $answer = $row[8];
 
                 if (strtoupper($questionType) == "PG") {
                     $option = [];
@@ -59,7 +58,6 @@ class QuestionWriterImportQuestion implements ToCollection
                 $questions[] = [
                     'exam_id' => $this->examId,
                     'question' => $question,
-                    'question_file' => $questionFile,
                     'poin' => $poin,
                     'question_type' => $questionType,
                     'answer' => trim(strtoupper($answer)),

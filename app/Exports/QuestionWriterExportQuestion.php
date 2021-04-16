@@ -25,7 +25,6 @@ class QuestionWriterExportQuestion implements FromCollection, WithHeadings
 		foreach ($question as $key => $question ) {
 		$tempStorage[] = [
 			'question' => $question->question,
-			'question_file' => $question->question_file,
 			'poin' => $question->poin,
 			'question_type' => $question->question_type,
 		];
@@ -60,7 +59,6 @@ class QuestionWriterExportQuestion implements FromCollection, WithHeadings
     {
     	return [
             'Soal',
-    		'Gambar Soal',
     		'Poin',
     		'Tipe Soal',
     		'Opsi A',

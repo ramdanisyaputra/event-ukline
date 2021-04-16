@@ -146,6 +146,10 @@ Route::prefix('school_admin')->name('school_admin.')->middleware(['middleware' =
             Route::get('', [AdminExamQuestionController::class, 'index'])->name('index');
             Route::get('/create', [AdminExamQuestionController::class, 'create'])->name('create');
             Route::post('/store', [AdminExamQuestionController::class, 'store'])->name('store');
+            Route::get('/{question}/edit', [AdminExamQuestionController::class, 'edit'])->name('edit');
+            Route::patch('/{question}/update', [AdminExamQuestionController::class, 'update'])->name('update');
+            Route::delete('/{question}/delete', [AdminExamQuestionController::class, 'destroy'])->name('delete');
+            Route::delete('/delete_all', [AdminExamQuestionController::class, 'destroyAll'])->name('delete_all');
         });
     });
 });

@@ -3,7 +3,6 @@
     .table-questions img {
         max-width: 200px;
         height: auto;
-        margin-bottom: 10px;
     }
 </style>
 <section class="section">
@@ -169,7 +168,7 @@
                         <?php endif; ?>
                         <li><a href="#" class="dropdown-item">Ekspor soal (.xlsx)</a></li>
                         <?php if(!$exam->shared): ?>
-                        <li><a href="#" class="dropdown-item text-danger">Hapus semua <i class="fa fa-exclamation-circle"></i></a></li>
+                        <li><a href="#" data-toggle="modal" data-target="#confirmDeleteAll" class="dropdown-item text-danger">Hapus semua <i class="fa fa-exclamation-circle"></i></a></li>
                         <?php endif; ?>
                     </ul>
                 </div>
@@ -206,7 +205,7 @@
                                     <?php endif; ?>
                                 </td>
                                 <td class="align-top py-2">
-                                    <?php echo $question->answer; ?>
+                                    <?php echo $question->question_type != 'ESAI' ? ("$question->answer (" . ((array) json_decode($question->option))[$question->answer] . ")") : $question->answer; ?>
 
                                 </td>
                                 <td class="align-top py-2">
@@ -214,8 +213,8 @@
 
                                 </td>
                                 <td class="align-top py-2">
-                                    <button class="btn btn-sm btn-light d-block" title="Edit"><i class="fa fa-pencil-alt"></i></button>
-                                    <button class="btn btn-sm btn-danger mt-2 d-block" title="Hapus"><i class="fa fa-trash"></i></button>
+                                    <a href="<?php echo e(route('school_admin.exams.questions.edit', [$exam->id, $question->id])); ?>" class="btn btn-sm btn-light d-block" title="Edit"><i class="fa fa-pencil-alt"></i></a>
+                                    <button class="btn btn-sm btn-danger mt-2 d-block" data-toggle="modal" data-target="#confirmDelete" data-url="<?php echo e(route('school_admin.exams.questions.delete', [$exam->id, $question->id])); ?>" title="Hapus"><i class="fa fa-trash"></i></button>
                                 </td>
                             </tr>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
@@ -314,5 +313,63 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form action="" method="post">
+            <?php echo csrf_field(); ?>
+            <?php echo method_field('DELETE'); ?>
+                <div class="modal-header">
+                    <h5 class="modal-title">Peringatan</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Apakah yakin Anda ingin menghapus soal ini?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-danger">Hapus</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="confirmDeleteAll" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form action="<?php echo e(route('school_admin.exams.questions.delete_all', $exam->id)); ?>" method="post">
+            <?php echo csrf_field(); ?>
+            <?php echo method_field('DELETE'); ?>
+                <div class="modal-header">
+                    <h5 class="modal-title">Peringatan</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Apakah yakin Anda ingin menghapus <strong>semua soal ujian</strong> ini?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-danger">Hapus</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 <?php $__env->stopSection(); ?>
+
+<?php $__env->startPush('script'); ?>
+<script>
+    $('#confirmDelete').on('show.bs.modal', (e) => {
+        var url = $(e.relatedTarget).data('url');
+
+        $(e.currentTarget).find('form').attr('action', url);
+    });
+</script>
+<?php $__env->stopPush(); ?>
 <?php echo $__env->make('layouts.main', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /opt/lampp/htdocs/ukline/event-ukline/resources/views/school_admin/exams/questions/index.blade.php ENDPATH**/ ?>

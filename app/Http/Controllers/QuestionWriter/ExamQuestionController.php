@@ -2,76 +2,145 @@
 
 namespace App\Http\Controllers\QuestionWriter;
 
+use App\Exports\QuestionWriterExportQuestion;
 use App\Http\Controllers\Controller;
+use App\Imports\QuestionWriterImportQuestion;
 use App\Models\Exam;
 use App\Models\ExamQuestion;
-use App\Models\ExamType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ExamQuestionController extends Controller
 {
-    public function index($id)
+    public function index(Exam $exam)
     {
-        $examQuestions = ExamQuestion::where('exam_id',$id)->get();
-        return view('question_writer.question_exams.index',compact('examQuestions'));
+        return view('question_writer.exams.questions.index', compact(
+            'exam', 
+        ));
     }
-    public function create(Request $request)
+
+    public function create(Exam $exam)
     {
-        $examTypes = ExamType::all();
-        
-        return view('question_writer.question_exams.create', compact('examTypes'));
+        return view('question_writer.exams.questions.create', compact('exam'));
     }
-    public function store(Request $request)
+
+    public function store(Exam $exam, Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name'=>'required',
-            'started_at'=>'required',
-            'expired_at'=>'required',
-            'duration'=>'required',
-            'access_code'=>'required',
-            'exam_type_id'=>'required',
+        $validator1 = Validator::make($request->all(), [
+            'question' => 'required',
+            'answer' => 'required',
+            'type' => 'required',
         ]);
-        if ($validator->fails()) {
-            return redirect()->back()->with('alert','Gagal menginput data')->withInput();
+
+        if ($request->type == 'PG') {
+            $validator2 = Validator::make($request->all(), [
+                'option' => 'required'
+            ]);
         }
-        $data['name'] = $request->name;
-        $data['started_at'] = $request->started_at;
-        $data['expired_at'] = $request->expired_at;
-        $data['duration'] = $request->duration;
-        $data['access_code'] = $request->access_code;
-        $data['exam_type_id'] = $request->exam_type_id;
-        $data['shared'] = 1;
-        $data['regency_id'] = $this->authUser()->regency_id;
-        Exam::create($data);
-        return redirect(route('question_writer.exams.index'))->with('success','Ujian berhasil ditambahkan');
-    }
-    public function edit($id)
-    {
-        $exam = Exam::find($id);
-        $examTypes = ExamType::all();
-        return view('question_writer.exams.edit', compact('exam','examTypes'));
-    }
-    public function update(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'name'=>'required',
-            'started_at'=>'required',
-            'expired_at'=>'required',
-            'duration'=>'required',
-            'access_code'=>'required',
-            'exam_type_id'=>'required',
+        if ($request->question_type == 'ESAI') {
+            $validator2 = Validator::make($request->all(), [
+                'poin' => 'required'
+            ]);
+        }
+        if($validator1->fails()){
+            return redirect()->back()->with('alert', 'Gagal menambahkan soal!')->withInput()->withErrors($validator1);
+        }
+        if($validator2->fails()){
+            return redirect()->back()->with('alert', 'Gagal menambahkan soal!')->withInput()->withErrors($validator2);
+        }
+
+        $exam->examQuestions()->create([
+            'question' => $request->question,
+            'option' => $request->option ? json_encode($request->option) : NULL,
+            'answer' => $request->answer,
+            'question_type' => $request->question_type,
+            'poin' => $request->poin ?? NULL
         ]);
-        if ($validator->fails()) {
-            return redirect()->back()->with('alert','Gagal mengubah data')->withInput();
+
+        return redirect()->route('question_writer.exams.questions.index', $exam->id)
+                        ->with('success', 'Berhasil menambahkan soal!');
+    }
+    
+    public function pratinjau($examId)
+    {
+        $exam = Exam::find($examId);
+
+        $examQuestions = ExamQuestion::where('exam_id',$examId)->get();
+        return view('question_writer.exams.questions.pratinjau', compact('exam','examQuestions'));
+    }
+    public function edit(Exam $exam, ExamQuestion $question)
+    {
+        return view('question_writer.exams.questions.edit', compact('exam', 'question'));
+    }
+
+    public function update(Exam $exam, ExamQuestion $question, Request $request)
+    {
+        if ($question->question_type == 'PG') {
+            $valid = [
+                'question' => 'required',
+                'answer' => 'required',
+                'option' => 'required',
+            ];
+        } elseif ($question->question_type == 'ESAI') {
+            $valid = [
+                'question' => 'required',
+                'answer' => 'required',
+                'poin' => 'required'
+            ];
         }
-        $data['name'] = $request->name;
-        $data['started_at'] = $request->started_at;
-        $data['expired_at'] = $request->expired_at;
-        $data['duration'] = $request->duration;
-        $data['access_code'] = $request->access_code;
-        $data['exam_type_id'] = $request->exam_type_id;
-        Exam::find($request->id)->update($data);
-        return redirect(route('question_writer.exams.index'))->with('success','Ujian berhasil diubah');
+
+        $validator = Validator::make($request->all(), $valid);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->with('alert', 'Gagal mengubah soal ujian! Silahkan cek dan ulangi kembali, 
+                        pastikan sudah terisi sesuai dengan format yang sesuai!');
+        }
+
+        $question->update([
+            'question' => $request->question,
+            'answer' => $request->answer,
+            'option' => $question->option ? json_encode($request->option) : NULL,
+            'poin' => $request->poin ?? NULL,
+        ]);
+
+        return redirect()->route('question_writer.exams.questions.index', $exam->id)
+                    ->with('success', 'Berhasil mengubah soal ujian!');
+     }
+
+     public function destroy($exam, ExamQuestion $question)
+     {
+        $exam;
+
+        $question->delete();
+        return redirect()->back()->with('success', 'Berhasil menghapus soal ujian!');
+     }
+
+     public function destroyAll(Exam $exam)
+     {
+        $exam->examQuestions()->delete();
+
+        return redirect()->back()->with('success', 'Berhasil menghapus semua soal ujian!');
+     }
+     
+
+    public function import(Request $request, $examId)
+    {
+		try {
+            Excel::import(new QuestionWriterImportQuestion($examId),$request->file('file'));
+		} catch (\Exception $ex) {
+            return back()->with('alert','adsf');
+		}
+        return back()->with('success','Berhasil Import Data Siswa');
+    }
+    public function export(Request $request, $examId)
+    {
+		try {
+            return Excel::download(new QuestionWriterExportQuestion($examId), 'Data Soal.xlsx');
+		} catch (\Exception $ex) {
+            $errorMsg = json_decode($ex->getMessage());
+            return back()->with('alert','Gagal export data');
+		}
     }
 }

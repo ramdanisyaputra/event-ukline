@@ -81,6 +81,8 @@ Route::prefix('superadmin')->name('superadmin.')->middleware(['middleware' => 'a
         Route::post('store', [ExamTypeController::class,'store'])->name('store');
         Route::put('update', [ExamTypeController::class,'update'])->name('update');
     });
+
+
     Route::prefix('question-writers')->name('question-writers.')->group(function(){
         Route::get('', [QuestionWriterController::class,'index'])->name('index');
         Route::get('{regenyId}', [QuestionWriterController::class,'indexWriter'])->name('indexWriter');
@@ -180,19 +182,31 @@ Route::namespace('student')->prefix('student')->name('student.')->middleware(['m
         Route::get('/{exam}/boarding', [ExamController::class, 'boarding'])->name('boarding');
     });
 });
+
 Route::prefix('question_writer')->name('question_writer.')->middleware(['middleware' => 'auth:question_writer'])->group(function(){
     Route::get('/', [QuestionDashboardController::class, 'index'])->name('index');
     Route::prefix('exams')->name('exams.')->group(function() {
-        Route::prefix('questions')->name('questions.')->group(function() {
-            Route::get('{id}', [QuestionWriterExamQuestionController::class, 'index'])->name('index');
-            Route::get('', [QuestionWriterExamQuestionController::class, 'create'])->name('create');
-        });
         Route::get('', [QuestionWriterExamController::class, 'index'])->name('index');
         Route::get('create', [QuestionWriterExamController::class, 'create'])->name('create');
         Route::get('{id}', [QuestionWriterExamController::class, 'edit'])->name('edit');
         Route::get('show/{id}', [QuestionWriterExamController::class, 'show'])->name('show');
         Route::post('store', [QuestionWriterExamController::class, 'store'])->name('store');
         Route::put('update', [QuestionWriterExamController::class, 'update'])->name('update');
+        Route::put('/update_status', [QuestionWriterExamController::class, 'updateStatus'])->name('update_status');
+
+        // question
+        Route::prefix('{exam}/questions')->name('questions.')->group(function() {
+            Route::get('', [QuestionWriterExamQuestionController::class, 'index'])->name('index');
+            Route::get('/create', [QuestionWriterExamQuestionController::class, 'create'])->name('create');
+            Route::post('/store', [QuestionWriterExamQuestionController::class, 'store'])->name('store');
+            Route::get('/pratinjau', [QuestionWriterExamQuestionController::class, 'pratinjau'])->name('pratinjau');
+            Route::get('/{question}/edit', [QuestionWriterExamQuestionController::class, 'edit'])->name('edit');
+            Route::patch('/{question}/update', [QuestionWriterExamQuestionController::class, 'update'])->name('update');
+            Route::delete('/{question}/delete', [QuestionWriterExamQuestionController::class, 'destroy'])->name('delete');
+            Route::delete('/delete_all', [QuestionWriterExamQuestionController::class, 'destroyAll'])->name('delete_all');
+            Route::post('import', [QuestionWriterExamQuestionController::class,'import'])->name('import');
+            Route::get('export', [QuestionWriterExamQuestionController::class,'export'])->name('export');
+        });
     });
 });
 

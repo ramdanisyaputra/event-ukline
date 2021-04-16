@@ -3,7 +3,7 @@
 <?php $__env->startSection('content'); ?>
 <section class="section">
     <div class="section-header">
-        <h1>Mata pelajaran</h1>
+        <h1>Mata Pelajaran</h1>
 
         <div class="section-header-breadcrumb">
             <div class="breadcrumb-item active"><a href="#">Beranda</a></div>
@@ -27,7 +27,6 @@
                             <tr>
                                 <th>No</th>
                                 <th>Mata Pelajaran</th>
-                                <th>Sekolah</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -36,14 +35,13 @@
                             <tr>
                                 <td><?php echo e(++$key); ?></td>
                                 <td><?php echo e($subject->name); ?></td>
-                                <td><?php echo e($subject->school->name); ?></td>
                                 <td class="text-center">
                                     <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#editSubject" data-id="<?php echo e($subject->id); ?>" data-name="<?php echo e($subject->name); ?>" data-school-id="<?php echo e($subject->school_id); ?>"><i class="fas fa-pencil-alt"></i></button>
                                 </td>
                             </tr>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                             <tr>
-                                <td colspan="5" class="text-center">Tidak ada data</td>
+                                <td colspan="3" class="text-center">Tidak ada data</td>
                             </tr>
                             <?php endif; ?>
                         </tbody>

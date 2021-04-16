@@ -5,6 +5,6 @@
     </li>
     <li class="menu-header">Data Utama</li>
     <li class="nav-item {{ request()->is('question_writer/exam*') ? 'active' : '' }}">
-        <a href="{{route('question_writer.exams.index')}}" class="nav-link"><i class="fas fa-book"></i><span>Ujian</span></a>
+        <a href="{{route('question_writer.exams.index')}}" class="nav-link"><i class="fas fa-book"></i><span>Kumpulan Ujian</span></a>
     </li>
 </ul>

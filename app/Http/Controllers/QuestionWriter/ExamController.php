@@ -12,7 +12,7 @@ class ExamController extends Controller
 {
     public function index(Request $request)
     {
-        $exams = Exam::where('regency_id', $this->authUser()->regency_id)->get();
+        $exams = Exam::where('regency_id', $this->authUser()->regency_id)->where('shared','1')->get();
         $examTypes = ExamType::all();
         return view('question_writer.exams.index',compact('exams','examTypes'));
     }

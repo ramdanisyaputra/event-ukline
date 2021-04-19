@@ -30,6 +30,7 @@
                                 <th>Berakhir Pada</th>
                                 <th>Kode Akses</th>
                                 <th>Jenis Ujian</th>
+                                <th>Soal Diacak</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -42,8 +43,9 @@
                                 <td>{{ $exam->expired_at }}</td>
                                 <td>{{ $exam->access_code }}</td>
                                 <td>{{ $exam->examType->name }}</td>
+                                <td>{{ $exam->randomized == 1 ? 'Diacak' : 'Tidak Diacak' }}</td>
                                 <td class="text-center">
-                                    <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#editExam" data-id="{{ $exam->id }}" data-name="{{ $exam->name }}" data-started-at="{{ date('Y-m-d\TH:i', strtotime($exam->started_at)) }}" data-expired-at="{{ date('Y-m-d\TH:i', strtotime($exam->expired_at)) }}" data-access-code="{{ $exam->access_code }}" data-duration="{{ $exam->duration }}" data-exam-type-id="{{ $exam->exam_type_id }}"><i class="fas fa-pencil-alt"></i></button>
+                                    <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#editExam" data-id="{{ $exam->id }}" data-name="{{ $exam->name }}" data-started-at="{{ date('Y-m-d\TH:i', strtotime($exam->started_at)) }}" data-expired-at="{{ date('Y-m-d\TH:i', strtotime($exam->expired_at)) }}" data-access-code="{{ $exam->access_code }}" data-duration="{{ $exam->duration }}" data-exam-type-id="{{ $exam->exam_type_id }}"  data-randomized="{{ $exam->randomized }}"><i class="fas fa-pencil-alt"></i></button>
                                     <a href="{{ route('question_writer.exams.questions.index', $exam->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i></a>
                                 </td>
                             </tr>
@@ -101,6 +103,14 @@
                             @endforeach
                         </select>
                     </div>
+                    <div class="form-group">
+                        <label for="randomized">Soal Diacak</label>
+                        <select name="randomized" id="randomized" class="form-control" required>
+                            <option value=""> ~ Pilih ~</option>
+                            <option value="1">Tidak Diacak</option>
+                            <option value="0">Diacak</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -155,6 +165,14 @@
                             @endforeach
                         </select>
                     </div>
+                    <div class="form-group">
+                        <label for="randomized">Soal Diacak</label>
+                        <select name="randomized" id="randomized" class="form-control" required>
+                            <option value=""> ~ Pilih ~</option>
+                            <option value="1">Tidak Diacak</option>
+                            <option value="0">Diacak</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -178,6 +196,7 @@
         var duration= $(e.relatedTarget).data('duration');
         var accessCode= $(e.relatedTarget).data('access-code');
         var examTypeId= $(e.relatedTarget).data('exam-type-id');
+        var randomized= $(e.relatedTarget).data('randomized');
 
         $('#editExam').find('input[name="id"]').val(id);
         $('#editExam').find('input[name="name"]').val(name);
@@ -186,6 +205,7 @@
         $('#editExam').find('input[name="duration"]').val(duration);
         $('#editExam').find('input[name="access_code"]').val(accessCode);
         $('#editExam').find('select[name="exam_type_id"]').val(examTypeId);
+        $('#editExam').find('select[name="randomized"]').val(randomized);
     });
 </script>
 @endpush

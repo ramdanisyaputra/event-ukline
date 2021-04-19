@@ -27,6 +27,7 @@ class ExamController extends Controller
             'duration'=>'required',
             'access_code'=>'required',
             'exam_type_id'=>'required',
+            'randomized'=>'required',
         ]);
         if ($validator->fails()) {
             return redirect()->back()->with('alert','Gagal menginput data')->withInput();
@@ -38,6 +39,7 @@ class ExamController extends Controller
         $data['access_code'] = $request->access_code;
         $data['exam_type_id'] = $request->exam_type_id;
         $data['shared'] = 1;
+        $data['randomized'] = $request->randomized;
         $data['regency_id'] = $this->authUser()->regency_id;
         Exam::create($data);
         return redirect(route('question_writer.exams.index'))->with('success','Ujian berhasil ditambahkan');
@@ -51,6 +53,7 @@ class ExamController extends Controller
             'duration'=>'required',
             'access_code'=>'required',
             'exam_type_id'=>'required',
+            'randomized'=>'required',
         ]);
         if ($validator->fails()) {
             return redirect()->back()->with('alert','Gagal mengubah data')->withInput();
@@ -61,6 +64,7 @@ class ExamController extends Controller
         $data['duration'] = $request->duration;
         $data['access_code'] = $request->access_code;
         $data['exam_type_id'] = $request->exam_type_id;
+        $data['randomized'] = $request->randomized;
         Exam::find($request->id)->update($data);
         return redirect(route('question_writer.exams.index'))->with('success','Ujian berhasil diubah');
     }

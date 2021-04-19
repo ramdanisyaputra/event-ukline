@@ -27,7 +27,6 @@
                             <tr>
                                 <th>No</th>
                                 <th>Kelas</th>
-                                <th>Sekolah</th>
                                 <th>Tingkat Kelas</th>
                                 <th></th>
                             </tr>
@@ -37,7 +36,6 @@
                             <tr>
                                 <td>{{ ++$key }}</td>
                                 <td>{{ $class->name }}</td>
-                                <td>{{ $class->school->name }}</td>
                                 <td>{{ $class->grade->number }}</td>
                                 <td class="text-center">
                                     <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#editClass" data-id="{{ $class->id }}" data-name="{{ $class->name }}" data-grade-id="{{ $class->grade_id }}"><i class="fas fa-pencil-alt"></i></button>

@@ -108,6 +108,12 @@
                                 {{ $exam->access_code }}
                             </div>
                             <div class="col-md-4 py-1">
+                                Soal Diacak :
+                            </div>
+                            <div class="col-md-8 font-weight-bold py-1">
+                                {{ $exam->randomized == 1 ? 'Diacak' : 'Tidak Diacak' }}
+                            </div>
+                            <div class="col-md-4 py-1">
                                 Total Soal
                             </div>
                             <div class="col-md-8 font-weight-bold py-1">
@@ -304,6 +310,14 @@
                     <div class="form-group">
                         <label for="access_code">Kode Akses <i class="fa fa-question-circle"></i></label>
                         <input type="text" name="access_code" id="access_code" class="form-control" value="{{ $exam->access_code }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="randomized">Acak Soal <i class="fa fa-question-circle"></i></label>
+                        <select name="randomized" id="randomized" class="custom-select" required>
+                            <option value="" disabled selected></option>
+                            <option value="0" {{$exam->randomized == 0 ? 'selected' : ''}}>Tidak Diacak</option>
+                            <option value="1" {{$exam->randomized == 1 ? 'selected' : ''}}>Diacak</option>
+                        </select>
                     </div>
                     @endif
                 </div>

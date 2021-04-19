@@ -108,6 +108,7 @@ class ExamController extends Controller
             'expired_at' => $request->expired_at,
             'duration' => $request->duration,
             'shared' => false,
+            'randomized' => $request->randomized,
             'regency_id' => $regency_id,
             'access_code' => $request->access_code,
         ])->examClass()->create([
@@ -177,6 +178,7 @@ class ExamController extends Controller
                 'started_at' => 'required',
                 'expired_at' => 'required',
                 'duration' => 'required',
+                'randomized' => 'required',
                 'access_code' => 'required'
             ]);
         }
@@ -209,6 +211,7 @@ class ExamController extends Controller
                 'started_at' => $request->started_at,
                 'expired_at' => $request->expired_at,
                 'duration' => $request->duration,
+                'randomized' => $request->randomized,
                 'access_code' => $request->access_code,
             ]);
         }

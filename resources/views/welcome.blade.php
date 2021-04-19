@@ -10,6 +10,8 @@
 
   <meta content="" name="keywords">
 
+  <link rel="icon" href="{{asset('logo/logo.svg')}}" type="image/png">
+
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 
@@ -38,8 +40,8 @@
   <header id="header" class="header fixed-top">
     <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
 
-      <a href="index.html" class="logo d-flex align-items-center">
-        <img src="assets_landing_akm/img/logo.png" alt="">
+      <a href="#" class="logo d-flex align-items-center">
+        <img src="{{asset('logo/logo.svg')}}" alt="">
         <span>UKLINE EVENTS</span>
       </a>
 

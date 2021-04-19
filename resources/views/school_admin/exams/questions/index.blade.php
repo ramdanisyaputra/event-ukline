@@ -107,6 +107,18 @@
                             <div class="col-md-8 font-weight-bold py-1 text-primary">
                                 {{ $exam->access_code }}
                             </div>
+                            <div class="col-md-4 py-1">
+                                Soal Diacak :
+                            </div>
+                            <div class="col-md-8 font-weight-bold py-1">
+                                {{ $exam->randomized == 1 ? 'Diacak' : 'Tidak Diacak' }}
+                            </div>
+                            <div class="col-md-4 py-1">
+                                Total Soal
+                            </div>
+                            <div class="col-md-8 font-weight-bold py-1">
+                                {{ count($exam->examQuestions) }}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -146,6 +158,7 @@
                 </div>
             </div>
         </div>
+        @if (!$exam->shared)
         <div class="card">
             <div class="card-header">
                 <h4>Daftar Soal</h4>
@@ -153,15 +166,16 @@
                     <a href="#" data-toggle="dropdown" class="btn btn-primary dropdown-toggle"><i class="fa fa-cog"></i> Pengaturan</a>
                     <ul class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
                         <li class="dropdown-title">Pengaturan</li>
-                        <li><a href="#" class="dropdown-item">Pratinjau</a></li>
-                        @if (!$exam->shared)
-                        <li><a href="{{ route('school_admin.exams.questions.create', $exam->id) }}" class="dropdown-item">Buat soal</a></li>
-                        <li><a href="#" class="dropdown-item">Impor soal (.xlsx)</a></li>
-                        @endif
-                        <li><a href="#" class="dropdown-item">Ekspor soal (.xlsx)</a></li>
-                        @if (!$exam->shared)
-                        <li><a href="#" data-toggle="modal" data-target="#confirmDeleteAll" class="dropdown-item text-danger">Hapus semua <i class="fa fa-exclamation-circle"></i></a></li>
-                        @endif
+                        <li><a href="{{ route('school_admin.exams.questions.pratinjau', $exam->id) }}" class="dropdown-item">Pratinjau</a></li>
+                            @if($exam->status != 'published')
+                            <li><a href="{{ route('school_admin.exams.questions.create', $exam->id) }}" class="dropdown-item">Buat soal</a></li>
+                            <li><a data-toggle="modal" data-target="#import" class="dropdown-item">Impor soal (.xlsx)</a></li>
+                            @endif
+                        <li><a href="{{ route('school_admin.exams.questions.export', $exam->id) }}" class="dropdown-item">Ekspor soal (.xlsx)</a></li>
+                        <li><a href="{{ route('school_admin.exams.questions.pdf', $exam->id) }}" target="_blank" class="dropdown-item">Ekspor soal (.pdf)</a></li>
+                            @if($exam->status != 'published')
+                            <li><a href="#" data-toggle="modal" data-target="#confirmDeleteAll" class="dropdown-item text-danger">Hapus semua <i class="fa fa-exclamation-circle"></i></a></li>
+                            @endif
                     </ul>
                 </div>
             </div>
@@ -197,14 +211,18 @@
                                     @endif
                                 </td>
                                 <td class="align-top py-2">
-                                    {!! $question->question_type != 'ESAI' ? ("$question->answer (" . ((array) json_decode($question->option))[$question->answer] . ")") : $question->answer !!}
+                                    {!! $question->answer !!}
                                 </td>
                                 <td class="align-top py-2">
                                     {{ $question->poin ?? 'Belum dipublikasi' }}
                                 </td>
                                 <td class="align-top py-2">
+                                @if($exam->status != 'published')
                                     <a href="{{ route('school_admin.exams.questions.edit', [$exam->id, $question->id]) }}" class="btn btn-sm btn-light d-block" title="Edit"><i class="fa fa-pencil-alt"></i></a>
                                     <button class="btn btn-sm btn-danger mt-2 d-block" data-toggle="modal" data-target="#confirmDelete" data-url="{{ route('school_admin.exams.questions.delete', [$exam->id, $question->id]) }}" title="Hapus"><i class="fa fa-trash"></i></button>
+                                @else
+                                    Tidak ada aksi
+                                @endif
                                 </td>
                             </tr>
                             @empty
@@ -213,9 +231,10 @@
                             </tr>
                             @endforelse
                         </tbody>
-                    </table>
+                    </table>                    
                 </div>
             </div>
+            @endif
         </div>
     </div>
 </section>
@@ -292,10 +311,49 @@
                         <label for="access_code">Kode Akses <i class="fa fa-question-circle"></i></label>
                         <input type="text" name="access_code" id="access_code" class="form-control" value="{{ $exam->access_code }}">
                     </div>
+                    <div class="form-group">
+                        <label for="randomized">Acak Soal <i class="fa fa-question-circle"></i></label>
+                        <select name="randomized" id="randomized" class="custom-select" required>
+                            <option value="" disabled selected></option>
+                            <option value="0" {{$exam->randomized == 0 ? 'selected' : ''}}>Tidak Diacak</option>
+                            <option value="1" {{$exam->randomized == 1 ? 'selected' : ''}}>Diacak</option>
+                        </select>
+                    </div>
                     @endif
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="import" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form action="{{ route('school_admin.exams.questions.import',$exam->id) }}" method="POST" id="formkelolaStudents" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-header">
+                    <h5 class="modal-title"><span>Import</span> Siswa</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <h6 for="file">Download Panduan</h6>
+                        <a href="{{asset('panduan/Panduan Import Soal.xlsx')}}" class="nav-link">Download Panduan Import Soal Berikut</a>
+                    </div>
+                    <div class="form-group">
+                        <label for="file">Data Excel</label>
+                        <input type="file" class="form-control" id="file" name="file" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>
             </form>

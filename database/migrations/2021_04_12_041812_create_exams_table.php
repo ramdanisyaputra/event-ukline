@@ -22,6 +22,7 @@ class CreateExamsTable extends Migration
             $table->integer('duration');
             $table->string('access_code');
             $table->boolean('shared');
+            $table->boolean('randomized');
             $table->foreignId('regency_id')->references('id')->on('regencies')->onDelete('cascade')->nullable();
             $table->enum('status',['drafted','published'])->default('drafted');
             $table->timestamps();

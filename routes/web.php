@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AdminStudentController;
 use App\Http\Controllers\Admin\ExamController as AdminExamController;
 use App\Http\Controllers\Admin\ExamQuestionController as AdminExamQuestionController;
+use App\Http\Controllers\Admin\ExamScoreController;
 use App\Http\Controllers\QuestionWriter\ExamController as QuestionWriterExamController;
 use App\Http\Controllers\QuestionWriter\ExamQuestionController as QuestionWriterExamQuestionController;
 use App\Http\Controllers\QuestionWriter\QuestionDashboardController;
@@ -80,6 +81,8 @@ Route::prefix('superadmin')->name('superadmin.')->middleware(['middleware' => 'a
         Route::post('store', [ExamTypeController::class,'store'])->name('store');
         Route::put('update', [ExamTypeController::class,'update'])->name('update');
     });
+
+
     Route::prefix('question-writers')->name('question-writers.')->group(function(){
         Route::get('', [QuestionWriterController::class,'index'])->name('index');
         Route::get('{regenyId}', [QuestionWriterController::class,'indexWriter'])->name('indexWriter');
@@ -142,15 +145,26 @@ Route::prefix('school_admin')->name('school_admin.')->middleware(['middleware' =
         Route::patch('/update', [AdminExamController::class, 'update'])->name('update');
         Route::put('/update_status', [AdminExamController::class, 'updateStatus'])->name('update_status');
 
+
         Route::prefix('{exam}/questions')->name('questions.')->group(function() {
             Route::get('', [AdminExamQuestionController::class, 'index'])->name('index');
+            Route::get('/pratinjau', [AdminExamQuestionController::class, 'pratinjau'])->name('pratinjau');
+            Route::get('/exportExcel', [AdminExamQuestionController::class, 'exportExcel'])->name('exportExcel');
+            Route::get('/pdf', [AdminExamQuestionController::class, 'pdf'])->name('pdf');
             Route::get('/create', [AdminExamQuestionController::class, 'create'])->name('create');
             Route::post('/store', [AdminExamQuestionController::class, 'store'])->name('store');
             Route::get('/{question}/edit', [AdminExamQuestionController::class, 'edit'])->name('edit');
             Route::patch('/{question}/update', [AdminExamQuestionController::class, 'update'])->name('update');
             Route::delete('/{question}/delete', [AdminExamQuestionController::class, 'destroy'])->name('delete');
             Route::delete('/delete_all', [AdminExamQuestionController::class, 'destroyAll'])->name('delete_all');
+            Route::post('import', [AdminExamQuestionController::class,'import'])->name('import');
+            Route::get('export', [AdminExamQuestionController::class,'export'])->name('export');
         });
+    });
+
+    Route::prefix('exam-scores')->name('exam-scores.')->group(function() {
+        Route::get('/', [ExamScoreController::class, 'index'])->name('index');
+        Route::get('{examId}', [ExamScoreController::class, 'indexScore'])->name('indexScore');
     });
 });
 
@@ -173,16 +187,28 @@ Route::namespace('student')->prefix('student')->name('student.')->middleware(['m
 Route::prefix('question_writer')->name('question_writer.')->middleware(['middleware' => 'auth:question_writer'])->group(function(){
     Route::get('/', [QuestionDashboardController::class, 'index'])->name('index');
     Route::prefix('exams')->name('exams.')->group(function() {
-        Route::prefix('questions')->name('questions.')->group(function() {
-            Route::get('{id}', [QuestionWriterExamQuestionController::class, 'index'])->name('index');
-            Route::get('', [QuestionWriterExamQuestionController::class, 'create'])->name('create');
-        });
         Route::get('', [QuestionWriterExamController::class, 'index'])->name('index');
         Route::get('create', [QuestionWriterExamController::class, 'create'])->name('create');
         Route::get('{id}', [QuestionWriterExamController::class, 'edit'])->name('edit');
         Route::get('show/{id}', [QuestionWriterExamController::class, 'show'])->name('show');
         Route::post('store', [QuestionWriterExamController::class, 'store'])->name('store');
         Route::put('update', [QuestionWriterExamController::class, 'update'])->name('update');
+        Route::put('/update_status', [QuestionWriterExamController::class, 'updateStatus'])->name('update_status');
+
+        // question
+        Route::prefix('{exam}/questions')->name('questions.')->group(function() {
+            Route::get('', [QuestionWriterExamQuestionController::class, 'index'])->name('index');
+            Route::get('/create', [QuestionWriterExamQuestionController::class, 'create'])->name('create');
+            Route::post('/store', [QuestionWriterExamQuestionController::class, 'store'])->name('store');
+            Route::get('/pratinjau', [QuestionWriterExamQuestionController::class, 'pratinjau'])->name('pratinjau');
+            Route::get('/{question}/edit', [QuestionWriterExamQuestionController::class, 'edit'])->name('edit');
+            Route::patch('/{question}/update', [QuestionWriterExamQuestionController::class, 'update'])->name('update');
+            Route::delete('/{question}/delete', [QuestionWriterExamQuestionController::class, 'destroy'])->name('delete');
+            Route::delete('/delete_all', [QuestionWriterExamQuestionController::class, 'destroyAll'])->name('delete_all');
+            Route::post('import', [QuestionWriterExamQuestionController::class,'import'])->name('import');
+            Route::get('export', [QuestionWriterExamQuestionController::class,'export'])->name('export');
+            Route::get('/pdf', [QuestionWriterExamQuestionController::class, 'pdf'])->name('pdf');
+        });
     });
 });
 

@@ -3,7 +3,10 @@
 @section('content')
 <section class="section">
     <div class="section-header">
-        <h1>Beranda</h1>
+        @php
+        $auth = auth()->guard(session()->get('role'))->user()
+        @endphp
+        <h1>Beranda {{$auth->school->name ?? ''}}</h1>
     </div>
     <div class="row">
         <div class="col-lg-3 col-md-6 col-sm-6 col-12">

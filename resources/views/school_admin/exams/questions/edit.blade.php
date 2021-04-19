@@ -1,11 +1,6 @@
-@extends('layouts.main')
 
-@section('content')
-<style>
-    #optionpgtable tr:nth-child(-n+2) button {
-        display: none;
-    }
-</style>
+
+<?php $__env->startSection('content'); ?>
 <section class="section">
     <div class="section-header">
         <h1>Ubah Soal</h1>
@@ -270,4 +265,5 @@
     });
 </script>
 
-@endpush
+<?php $__env->stopPush(); ?>
+<?php echo $__env->make('layouts.main', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\event-ukline\resources\views/school_admin/exams/questions/create.blade.php ENDPATH**/ ?>

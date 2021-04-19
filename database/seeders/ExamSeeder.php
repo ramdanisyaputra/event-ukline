@@ -23,6 +23,7 @@ class ExamSeeder extends Seeder
             'regency_id' => 1,
             'access_code' => '123456',
             'shared' => true,
+            'randomized' => true,
             'status' => 'published',
         ]);
     }

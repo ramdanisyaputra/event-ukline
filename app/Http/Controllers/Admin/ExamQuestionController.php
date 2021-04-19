@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\AdminExportQuestion;
 use App\Http\Controllers\Controller;
+use App\Imports\AdminImportQuestion;
 use App\Models\Classes;
 use App\Models\Exam;
 use App\Models\ExamQuestion;
@@ -11,6 +13,8 @@ use App\Models\School;
 use App\Models\Subject;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use PDF;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ExamQuestionController extends Controller
 {
@@ -74,6 +78,29 @@ class ExamQuestionController extends Controller
                         ->with('success', 'Berhasil menambahkan soal!');
     }
 
+    public function pratinjau($examId)
+    {
+        $exam = Exam::find($examId);
+
+        $examQuestions = ExamQuestion::where('exam_id',$examId)->get();
+        return view('school_admin.exams.questions.pratinjau', compact('exam','examQuestions'));
+    }   
+
+    public function pdf($examId)
+    {
+        $exam = Exam::find($examId);
+
+        $examQuestions = ExamQuestion::where('exam_id',$examId)->get();
+
+        $data = compact('exam','examQuestions');
+
+        $pdf = PDF::loadView('school_admin.exams.questions.pdf', $data);
+    
+        return $pdf->stream('Data Soal '.$exam->name.'.pdf');
+    }
+
+   
+
     public function edit(Exam $exam, ExamQuestion $question)
     {
         return view('school_admin.exams.questions.edit', compact('exam', 'question'));
@@ -128,4 +155,23 @@ class ExamQuestionController extends Controller
 
         return redirect()->back()->with('success', 'Berhasil menghapus semua soal ujian!');
      }
+    public function import(Request $request, $examId)
+    {
+		try {
+            Excel::import(new AdminImportQuestion($examId),$request->file('file'));
+		} catch (\Exception $ex) {
+            return back()->with('alert','adsf');
+		}
+        return back()->with('success','Berhasil Import Data Siswa');
+    }
+    public function export(Request $request, $examId)
+    {
+        $exam = Exam::find($examId);
+		try {
+            return Excel::download(new AdminExportQuestion($examId), 'Data Soal '.$exam->name.'.xlsx');
+		} catch (\Exception $ex) {
+            $errorMsg = json_decode($ex->getMessage());
+            return back()->with('alert','Gagal export data');
+		}
+    }
 }

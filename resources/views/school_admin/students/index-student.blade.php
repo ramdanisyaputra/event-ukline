@@ -34,7 +34,7 @@
                             <form action="{{ route('school_admin.students.export') }}" method="POST">
                                 @csrf
                                 <input type="hidden" value="{{$class->id}}" name="id">
-                                <button class="dropdown-item set-button">Export Siswa</button>
+                                <button class="dropdown-item set-button">Export Siswa (.xlsx)</button>
                             </form>
                         </li>
                     </ul>

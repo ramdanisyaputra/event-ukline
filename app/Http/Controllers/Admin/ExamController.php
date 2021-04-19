@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Classes;
 use App\Models\Exam;
 use App\Models\ExamClass;
+use App\Models\ExamQuestion;
 use App\Models\ExamType;
 use App\Models\School;
 use App\Models\Subject;
@@ -43,7 +44,7 @@ class ExamController extends Controller
         $school_id = $this->authUser()->school_id;
 
         $validator = Validator::make($request->all(), [
-            'exam_id' => 'required|exist:exams,id',
+            'exam_id' => 'required|exists:exams,id',
             'subject_id' => 'required',
             'class_ids' => 'required'
         ]);
@@ -107,6 +108,7 @@ class ExamController extends Controller
             'expired_at' => $request->expired_at,
             'duration' => $request->duration,
             'shared' => false,
+            'randomized' => $request->randomized,
             'regency_id' => $regency_id,
             'access_code' => $request->access_code,
         ])->examClass()->create([
@@ -128,9 +130,42 @@ class ExamController extends Controller
         if ($validator->fails()) {
             return redirect()->back()->with('alert', 'Gagal mengubah status! Silahkan ulangi kembali.');
         }
+        $exam = Exam::find($request->id);
 
-        Exam::find($request->id)->update($request->all());
+        if($exam->status == 'drafted'){
 
+            $examQuestion = ExamQuestion::where('exam_id',$request->id)->get();
+            if(count($examQuestion) == 0){
+                return redirect()->back()->with('alert','Soal masih kosong');
+            }
+            $essay = ExamQuestion::where('exam_id',$request->id)
+                        ->where('question_type','ESAI')
+                        ->sum('poin');
+
+            $pg = ExamQuestion::where('exam_id',$request->id)->where('question_type', 'PG')->get();
+            $hitung = 100 - $essay;
+
+            $hasil = $hitung / count($pg);
+                foreach ($examQuestion as $value) {
+                    ExamQuestion::where('id',$value->id)->where('question_type', 'PG')->update([
+                        'poin'=>round($hasil,2)
+                    ]);
+                }
+
+            $exam->update([
+                'status'=>'published'
+            ]);
+
+            return redirect()->back()->with('success','Soal berhasil di Publikasikan');
+        }else{
+            $exam->update([
+                'status'=>'drafted'
+            ]);
+            ExamQuestion::where('exam_id',$request->id)->where('question_type', 'PG')->update([
+                'poin'=>null
+            ]);
+            return redirect()->back()->with('success','Soal berhasil di Arsipkan');
+        }
         return redirect()->back()->with('success', "Berhasil mengubah status!");
     }
 
@@ -143,6 +178,7 @@ class ExamController extends Controller
                 'started_at' => 'required',
                 'expired_at' => 'required',
                 'duration' => 'required',
+                'randomized' => 'required',
                 'access_code' => 'required'
             ]);
         }
@@ -175,6 +211,7 @@ class ExamController extends Controller
                 'started_at' => $request->started_at,
                 'expired_at' => $request->expired_at,
                 'duration' => $request->duration,
+                'randomized' => $request->randomized,
                 'access_code' => $request->access_code,
             ]);
         }

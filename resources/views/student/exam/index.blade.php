@@ -2965,7 +2965,15 @@
                             <form action="{{ route('student.exam.finish', [$exam->id, $token]) }}" method="POST">
                                 @csrf
                                 <div id="question-list">
-                                    @foreach ($exam->examQuestions->shuffle() as $key => $question)
+                                    @php
+                                        if ($exam->randomized == 1) {
+                                            $questions = $exam->examQuestions->shuffle();
+                                        } else {
+                                            $questions = $exam->examQuestions;
+                                        }
+                                    @endphp
+                                    
+                                    @foreach ($questions as $key => $question)
                                     <div class="card border mb-2 bg-whitesmoke question-item" data-key="{{ $key + 1 }}" data-id="{{ $question->id }}" data-type="{{ $question->question_type }}">
                                         <div class="card-header">
                                             <h4 class="text-dark">No. {{ $key + 1 }} dari {{ count($exam->examQuestions) }} Soal</h4>

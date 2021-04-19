@@ -1,6 +1,4 @@
-@extends('layouts.student')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
     <style>
         .divider {
             display: block;
@@ -22,19 +20,19 @@
                             <div>
                                 <div class="mb-3">
                                     <p class="mb-0"><strong>Judul Ujian</strong></p>
-                                    <p>{{ $exam->name }}</p>
+                                    <p><?php echo e($exam->name); ?></p>
                                 </div>
                                 <div class="mb-3">
                                     <p class="mb-0"><strong>Mata Pelajaran</strong></p>
-                                    <p>{{$exam->examClass()->where('school_id', auth()->guard(session()->get('role'))->user()->school_id)->first()->subject->name}}</p>
+                                    <p><?php echo e($exam->examClass()->where('school_id', auth()->guard(session()->get('role'))->user()->school_id)->first()->subject->name); ?></p>
                                 </div>
                                 <div class="mb-3">
                                     <p class="mb-0"><strong>Total Soal</strong></p>
-                                    <p>{{$exam->examQuestions->count()}} soal</p>
+                                    <p><?php echo e($exam->examQuestions->count()); ?> soal</p>
                                 </div>
                                 <div class="mb-3">
                                     <p class="mb-0"><strong>Durasi</strong></p>
-                                    <p>{{$exam->duration}} Menit</p>
+                                    <p><?php echo e($exam->duration); ?> Menit</p>
                                 </div>
                             </div>
 
@@ -48,8 +46,8 @@
                             </div>
                         </div>
                         <div class="card-footer">
-                            <form action="{{ route('student.exam.access', $exam->id) }}" method="POST">
-                                @csrf
+                            <form action="<?php echo e(route('student.exam.access', $exam->id)); ?>" method="POST">
+                                <?php echo csrf_field(); ?>
                                 <div class="mb-4">
                                     <label for="access_code">Kode Akses <i class="fa fa-question-circle"></i></label>
                                     <input type="text" name="access_code" id="access_code" class="form-control" placeholder="Masukan kode akses" autocomplete="off">
@@ -64,4 +62,5 @@
             </div>
         </div>
     </section>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.student', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /opt/lampp/htdocs/ukline/event-ukline/resources/views/student/exam/boarding.blade.php ENDPATH**/ ?>

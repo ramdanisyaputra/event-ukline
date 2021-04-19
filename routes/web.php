@@ -162,9 +162,14 @@ Route::namespace('student')->prefix('student')->name('student.')->middleware(['m
     });
 
     Route::prefix('exam')->name('exam.')->group(function() {
+        Route::post('/{exam}/restart', [ExamController::class, 'restart'])->name('restart');
         Route::get('/{exam}/boarding', [ExamController::class, 'boarding'])->name('boarding');
+        Route::post('/{exam}/access', [ExamController::class, 'access'])->name('access');
+        Route::get('/{exam}/start/{token}', [ExamController::class, 'start'])->name('start');
+        Route::post('/{exam}/finish/{token}', [ExamController::class, 'finish'])->name('finish');
     });
 });
+
 Route::prefix('question_writer')->name('question_writer.')->middleware(['middleware' => 'auth:question_writer'])->group(function(){
     Route::get('/', [QuestionDashboardController::class, 'index'])->name('index');
     Route::prefix('exams')->name('exams.')->group(function() {

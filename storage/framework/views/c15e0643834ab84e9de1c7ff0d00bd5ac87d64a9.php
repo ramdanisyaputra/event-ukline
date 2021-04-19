@@ -1,62 +1,60 @@
-@extends('layouts.student')
+<?php $__env->startSection('title', 'Beranda'); ?>
 
-@section('title', 'Beranda')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 <section class="section">
 
     <div class="section-body">
         <div class="row">
-            @forelse ($exams as $exam)
+            <?php $__empty_1 = true; $__currentLoopData = $exams; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $exam): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
             <div class="col-md-4 my-2">
                 <div class="card exam-card">
                     <div class="card-body">
                         <div class="bg-light mb-3 text-center shadow-sm rounded exam-card-title">
-                            <h4 class="m-0 text-primary">{{ $exam->name }}</h4>
+                            <h4 class="m-0 text-primary"><?php echo e($exam->name); ?></h4>
                         </div>
                         <div>
                             <table class="w-100">
                                 <tr>
                                     <td class=""><i class="far fa-clock mr-2"></i> Dimulai pada</td>
-                                    <td class="font-weight-bold">{{ \Carbon\Carbon::parse($exam->started_at)->format('H:i') }}</td>
+                                    <td class="font-weight-bold"><?php echo e(\Carbon\Carbon::parse($exam->started_at)->format('H:i')); ?></td>
                                 </tr>
                                 <tr>
                                     <td class=""><i class="far fa-bell mr-2"></i> Berakhir pada</td>
-                                    <td class="font-weight-bold">{{ \Carbon\Carbon::parse($exam->expired_at)->format('H:i') }}</td>
+                                    <td class="font-weight-bold"><?php echo e(\Carbon\Carbon::parse($exam->expired_at)->format('H:i')); ?></td>
                                 </tr>
                                 <tr>
                                     <td class=""><i class="far fa-hourglass mr-2"></i> Durasi</td>
-                                    <td class="font-weight-bold">{{ $exam->duration }} menit</td>
+                                    <td class="font-weight-bold"><?php echo e($exam->duration); ?> menit</td>
                                 </tr>
                             </table>
                         </div>
                     </div>
                     <div class="card-footer text-right">
                         <button class="btn btn-transparent" data-target="#examDetail" data-toggle="modal" 
-                            data-ex-type="{{ $exam->examType->name }}" 
-                            data-ex-title="{{$exam->name}}"
-                            data-ex-total="{{$exam->examQuestions->count()}}" 
-                            data-ex-subject="{{$exam->examClass()->where('school_id', auth()->guard(session()->get('role'))->user()->school_id)->first()->subject->name}}"
+                            data-ex-type="<?php echo e($exam->examType->name); ?>" 
+                            data-ex-title="<?php echo e($exam->name); ?>"
+                            data-ex-total="<?php echo e($exam->examQuestions->count()); ?>" 
+                            data-ex-subject="<?php echo e($exam->examClass()->where('school_id', auth()->guard(session()->get('role'))->user()->school_id)->first()->subject->name); ?>"
                         >Detail</button>
-                        @php
+                        <?php
                             $exam_score = App\Models\ExamScore::where('student_id', auth()->guard(session()->get('role'))->user()->id)->where('exam_id', $exam->id)->first();
-                        @endphp
-                        @if (isset(session()->get('current_exams')[$exam->id]))
-                        <a href="{{ route('student.exam.start', [$exam->id, session()->get('current_exams')[$exam->id]['token']]) }}" class="btn btn-warning">Lanjutkan</a>
-                        @elseif (($exam_score->score ?? false) === '0')
-                        <form action="{{ route('student.exam.restart', $exam->id ) }}" method="POST" class="d-inline">
-                            @csrf
+                        ?>
+                        <?php if(isset(session()->get('current_exams')[$exam->id])): ?>
+                        <a href="<?php echo e(route('student.exam.start', [$exam->id, session()->get('current_exams')[$exam->id]['token']])); ?>" class="btn btn-warning">Lanjutkan</a>
+                        <?php elseif(($exam_score->score ?? false) === '0'): ?>
+                        <form action="<?php echo e(route('student.exam.restart', $exam->id )); ?>" method="POST" class="d-inline">
+                            <?php echo csrf_field(); ?>
                             <button type="submit" class="btn btn-dark">Ulang Ujian</button>
                         </form>
-                        @elseif ($exam_score)
+                        <?php elseif($exam_score): ?>
                         <a href="#" class="btn btn-success">Sudah Dikerjakan</a>
-                        @else
-                        <a href="{{ route('student.exam.boarding', $exam->id ) }}" class="btn btn-primary">Mulai Ujian</a>
-                        @endif
+                        <?php else: ?>
+                        <a href="<?php echo e(route('student.exam.boarding', $exam->id )); ?>" class="btn btn-primary">Mulai Ujian</a>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
-            @empty
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
             <div class="col-12 col-md-12 col-sm-12">
                 <div class="card">
                     <div class="card-body">
@@ -73,7 +71,7 @@
                     </div>
                 </div>
             </div>
-            @endforelse
+            <?php endif; ?>
         </div>
 
     </div>
@@ -115,9 +113,9 @@
         </div>
     </div>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@push('script')
+<?php $__env->startPush('script'); ?>
 <script>
     $('#examDetail').on('show.bs.modal', (e) => {
         var subject = $(e.relatedTarget).data('ex-subject');
@@ -131,4 +129,5 @@
         $(e.currentTarget).find('.ex-total').html(`${total} soal`);
     });
 </script>
-@endpush
+<?php $__env->stopPush(); ?>
+<?php echo $__env->make('layouts.student', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /opt/lampp/htdocs/ukline/event-ukline/resources/views/student/dashboard/index.blade.php ENDPATH**/ ?>

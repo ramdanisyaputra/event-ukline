@@ -38,6 +38,11 @@ class AuthController extends Controller
     {
         $this->validator($request);
 
+        if (session()->has('role')) {
+            Auth::guard(session()->get('role'))->logout();
+            session()->flush('role');
+        }
+
         if (Auth::guard($request->role)->attempt(['username' => $request->username, 'password' => $request->password], $request->filled('remember'))) {
             session()->put('role', $request->role);
             return redirect()

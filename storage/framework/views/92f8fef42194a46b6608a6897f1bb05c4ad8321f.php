@@ -1,6 +1,6 @@
-@extends('layouts.main')
 
-@section('content')
+
+<?php $__env->startSection('content'); ?>
 <section class="section">
     <div class="section-header">
         <h1>FAQ</h1>
@@ -33,30 +33,31 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($faqs as $key => $faq)
+                            <?php $__empty_1 = true; $__currentLoopData = $faqs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $faq): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                             <tr>
-                                <td>{{ ++$key }}</td>
+                                <td><?php echo e(++$key); ?></td>
                                 <td>
-                                    @php
+                                    <?php
                                         $opsi = '';
                                         foreach(json_decode($faq->tags) as $j) {
                                             $opsi .= DB::table('tags')->where('id',$j)->first()->name . ", ";
                                         }
-                                    @endphp
+                                    ?>
 
-                                    {{ trim($opsi, ', ') }}
+                                    <?php echo e(trim($opsi, ', ')); ?>
+
                                 </td>
-                                <td>{{ $faq->question }}</td>
-                                <td>{{ $faq->answer }}</td>
+                                <td><?php echo e($faq->question); ?></td>
+                                <td><?php echo e($faq->answer); ?></td>
                                 <td class="text-center">
-                                    <a href="{{route('superadmin.faqs.edit', $faq->id)}}" class="btn btn-success btn-sm"> <i class="fas fa-edit"></i> </a>
+                                    <a href="<?php echo e(route('superadmin.faqs.edit', $faq->id)); ?>" class="btn btn-success btn-sm"> <i class="fas fa-edit"></i> </a>
                                 </td>
                             </tr>
-                            @empty
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                             <tr>
                                 <td colspan="5" class="text-center">Tidak ada data</td>
                             </tr>
-                            @endforelse
+                            <?php endif; ?>
                         </tbody>
                     </table>
                 </div>
@@ -68,8 +69,8 @@
 <div class="modal fade" id="kelolaFaq" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form action="{{ route('superadmin.faqs.store') }}" method="POST" id="formKelolaFaq">
-                @csrf
+            <form action="<?php echo e(route('superadmin.faqs.store')); ?>" method="POST" id="formKelolaFaq">
+                <?php echo csrf_field(); ?>
                 <div class="modal-header">
                     <h5 class="modal-title"><span>Tambah</span> Provinsi</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -80,18 +81,18 @@
                     <div class="form-group">
                     <label for="tags">Kategori</label>
                         <select class="js-example-basic-multiple" id="tags" name="tags[]" multiple="multiple">
-                            @foreach($tags as $tag)
-                                <option value="{{$tag->id}}">{{$tag->name}}</option>
-                            @endforeach
+                            <?php $__currentLoopData = $tags; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $tag): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($tag->id); ?>"><?php echo e($tag->name); ?></option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="question">Pertanyaan</label>
-                        <textarea class="form-control" name="question" id="question" cols="30" rows="10"> {{old('question')}} </textarea>
+                        <textarea class="form-control" name="question" id="question" cols="30" rows="10"> <?php echo e(old('question')); ?> </textarea>
                     </div>
                     <div class="form-group">
                         <label for="answer">Jawaban</label>
-                        <textarea class="form-control" name="answer" id="answer" cols="30" rows="10"> {{old('question')}} </textarea>
+                        <textarea class="form-control" name="answer" id="answer" cols="30" rows="10"> <?php echo e(old('question')); ?> </textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -102,9 +103,9 @@
         </div>
     </div>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@push('script')
+<?php $__env->startPush('script'); ?>
 <script>
     $('#editFaq').on('show.bs.modal', (e) => {
         var id = $(e.relatedTarget).data('id');
@@ -120,4 +121,5 @@
         $('#editFaq').find('input[name="answer"]').val(answer);
     });
 </script>
-@endpush
+<?php $__env->stopPush(); ?>
+<?php echo $__env->make('layouts.main', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\event-ukline\resources\views/superadmin/faq/index.blade.php ENDPATH**/ ?>

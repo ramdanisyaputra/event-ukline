@@ -1,6 +1,6 @@
-@extends('layouts.main')
 
-@section('content')
+
+<?php $__env->startSection('content'); ?>
 <section class="section">
     <div class="section-header">
         <h1>Admin Sekolah</h1>
@@ -33,28 +33,28 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($schoolAdmins as $key => $admin)
+                            <?php $__empty_1 = true; $__currentLoopData = $schoolAdmins; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $admin): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                             <tr>
-                                <td>{{ ++$key }}</td>
-                                <td>{{ $admin->name }}</td>
-                                <td>{{ $admin->username }}</td>
-                                <td>{{ $admin->school->name }}</td>
+                                <td><?php echo e(++$key); ?></td>
+                                <td><?php echo e($admin->name); ?></td>
+                                <td><?php echo e($admin->username); ?></td>
+                                <td><?php echo e($admin->school->name); ?></td>
                                 <td class="text-center">
                                     <div class="d-inline d-flex">
-                                    <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#editAdminSekolah" data-id="{{ $admin->id }}" data-name="{{ $admin->name }}" data-username="{{ $admin->username }}" data-school="{{ $admin->school_id }}"><i class="fas fa-pencil-alt"></i></button>
-                                    <form action="{{route('superadmin.school-admins.resetPassword')}}" method="POST">
-                                    @csrf    
-                                    @method('PUT')
-                                        <input type="hidden" name="id" value="{{$admin->id}}">
+                                    <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#editAdminSekolah" data-id="<?php echo e($admin->id); ?>" data-name="<?php echo e($admin->name); ?>" data-username="<?php echo e($admin->username); ?>" data-school="<?php echo e($admin->school_id); ?>"><i class="fas fa-pencil-alt"></i></button>
+                                    <form action="<?php echo e(route('superadmin.school-admins.resetPassword')); ?>" method="POST">
+                                    <?php echo csrf_field(); ?>    
+                                    <?php echo method_field('PUT'); ?>
+                                        <input type="hidden" name="id" value="<?php echo e($admin->id); ?>">
                                         <button class="btn btn-sm btn-danger ml-1" onclick="return confirm('Apa Anda yakin ingin mereset password ?');" type="submit"><i class="fas fa-cogs"></i></button>
                                     </form>
                                 </td>
                             </tr>
-                            @empty
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                             <tr>
                                 <td colspan="5" class="text-center">Tidak ada data</td>
                             </tr>
-                            @endforelse
+                            <?php endif; ?>
                         </tbody>
                     </table>
                 </div>
@@ -66,8 +66,8 @@
 <div class="modal fade" id="kelolaAdminSekolah" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form action="{{ route('superadmin.school-admins.store') }}" method="POST" id="formKelolaAdminSekolah">
-                @csrf
+            <form action="<?php echo e(route('superadmin.school-admins.store')); ?>" method="POST" id="formKelolaAdminSekolah">
+                <?php echo csrf_field(); ?>
                 <div class="modal-header">
                     <h5 class="modal-title"><span>Tambah</span> Admin Sekolah</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -86,9 +86,9 @@
                         <label for="school_id">Sekolah</label>
                         <select name="school_id" id="school_id" class="custom-select" required>
                             <option value="" selected></option>
-                            @foreach($schools as $school)
-                            <option value="{{$school->id}}">{{ $school->name }}</option>
-                            @endforeach
+                            <?php $__currentLoopData = $schools; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $school): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <option value="<?php echo e($school->id); ?>"><?php echo e($school->name); ?></option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>
                     </div>
                 </div>
@@ -104,9 +104,9 @@
 <div class="modal fade" id="editAdminSekolah" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form action="{{ route('superadmin.school-admins.update') }}" method="POST" id="formKelolaAdminSekolah">
-                @csrf
-                @method('PUT')
+            <form action="<?php echo e(route('superadmin.school-admins.update')); ?>" method="POST" id="formKelolaAdminSekolah">
+                <?php echo csrf_field(); ?>
+                <?php echo method_field('PUT'); ?>
                 <input type="hidden" name="id">
                 <div class="modal-header">
                     <h5 class="modal-title"><span>Edit</span> Admin Sekolah</h5>
@@ -127,9 +127,9 @@
                         <label for="school_id">Sekolah</label>
                         <select name="school_id" id="school_id" class="custom-select" required>
                             <option value="" selected></option>
-                            @foreach($schools as $school)
-                            <option value="{{$school->id}}">{{ $school->name }}</option>
-                            @endforeach
+                            <?php $__currentLoopData = $schools; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $school): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <option value="<?php echo e($school->id); ?>"><?php echo e($school->name); ?></option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>
                     </div>
                 </div>
@@ -141,10 +141,10 @@
         </div>
     </div>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
 
-@push('script')
+<?php $__env->startPush('script'); ?>
 <script>
     $('#editAdminSekolah').on('show.bs.modal', (e) => {
         var id = $(e.relatedTarget).data('id');
@@ -158,4 +158,5 @@
         $('#editAdminSekolah').find('select[name="school_id"]').val(school_id);
     });
 </script>
-@endpush
+<?php $__env->stopPush(); ?>
+<?php echo $__env->make('layouts.main', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\event-ukline\resources\views/superadmin/school_admins/index.blade.php ENDPATH**/ ?>

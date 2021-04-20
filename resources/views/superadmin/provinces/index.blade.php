@@ -22,7 +22,7 @@
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-bordered">
+                    <table class="table table-bordered" id="table-1">
                         <thead>
                             <tr>
                                 <th>No</th>
@@ -103,7 +103,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="name">Nama Provinsi</label>
-                        <input type="text" class="form-control" id="name" name="name" required placeholder="Contoh: Kota Bekasi atau Kabupaten Bekasi">
+                        <input type="text" class="form-control" id="name" name="name" required placeholder="Contoh: Jawa Barat atau Jawa Timur">
                     </div>
                     <div class="form-group">
                         <label for="province_code">Kode Provinsi</label>

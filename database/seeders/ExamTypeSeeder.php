@@ -14,10 +14,20 @@ class ExamTypeSeeder extends Seeder
      */
     public function run()
     {
-        ExamType::create(
+        $data = [
             [
-                'name' => 'Tryout'
-            ] 
-        );
+                'name'=>'Tryout'
+            ],
+            [
+                'name'=>'PAS'
+            ],
+            [
+                'name'=>'PTS'
+            ],
+        ];
+
+        for ($i=0; $i < count($data); $i++) { 
+            ExamType::create($data[$i]);
+        }
     }
 }

@@ -31,25 +31,29 @@ class ExamQuestionController extends Controller
         $validator1 = Validator::make($request->all(), [
             'question' => 'required',
             'answer' => 'required',
-            'type' => 'required',
+            'question_type' => 'required',
         ]);
 
         if ($request->type == 'PG') {
             $validator2 = Validator::make($request->all(), [
                 'option' => 'required'
             ]);
+            if($validator2->fails()){
+                return redirect()->back()->with('alert', 'Gagal menambahkan soal!')->withInput();
+            }
         }
         if ($request->question_type == 'ESAI') {
             $validator2 = Validator::make($request->all(), [
                 'poin' => 'required'
             ]);
+            if($validator2->fails()){
+                return redirect()->back()->with('alert', 'Gagal menambahkan soal!')->withInput();
+            }
         }
         if($validator1->fails()){
-            return redirect()->back()->with('alert', 'Gagal menambahkan soal!')->withInput()->withErrors($validator1);
+            return redirect()->back()->with('alert', 'Gagal menambahkan soal!')->withInput();
         }
-        if($validator2->fails()){
-            return redirect()->back()->with('alert', 'Gagal menambahkan soal!')->withInput()->withErrors($validator2);
-        }
+        
 
         $exam->examQuestions()->create([
             'question' => $request->question,

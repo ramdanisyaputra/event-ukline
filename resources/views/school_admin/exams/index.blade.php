@@ -44,7 +44,10 @@
                                 <td><span class="badge badge-{{ $exam->exam->status == 'published' ? 'primary' : 'light' }}">{{ ucwords($exam->exam->status == 'published' ? 'dipublikasi' : 'diarsipkan') }}</span></td>
                                 <td>{{ $exam->subject->name }}</td>
                                 <td>
-                                    <a href="{{ route('school_admin.exams.questions.index', $exam->exam->id) }}" class="btn btn-primary"><i class="fa fa-eye"></i></a>
+                                    <div class="d-inline d-flex">
+                                    <a href="{{ route('school_admin.exams.questions.index', $exam->exam->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i></a>
+                                    <button class="btn btn-sm btn-danger ml-1" data-toggle="modal" data-target="#confirmDelete" data-url="{{ route('school_admin.exams.delete', $exam->id) }}" title="Hapus"><i class="fa fa-trash"></i></button>
+                                    </div>
                                 </td>
                             </tr>
                             @empty
@@ -82,9 +85,43 @@
             </div>
             <div class="modal-footer pt-0">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                <button type="button" class="btn btn-primary">Simpan</button>
             </div>
         </div>
     </div>
 </div>
+
+
+<div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form action="" method="post">
+            @csrf
+            @method('DELETE')
+                <div class="modal-header">
+                    <h5 class="modal-title">Peringatan</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Apakah yakin Anda ingin menghapus ujian ini ?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-danger">Hapus</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 @endsection
+@push('script')
+<script>
+    $('#confirmDelete').on('show.bs.modal', (e) => {
+        var url = $(e.relatedTarget).data('url');
+
+        $(e.currentTarget).find('form').attr('action', url);
+    });
+</script>
+@endpush

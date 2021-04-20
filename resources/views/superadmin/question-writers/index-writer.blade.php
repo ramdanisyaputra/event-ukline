@@ -107,7 +107,7 @@
                 <div class="modal-body">
                 <div class="form-group">
                         <label for="name">Nama</label>
-                        <input type="text" class="form-control" id="name" name="name" required placeholder="Contoh: Jawa Barat">
+                        <input type="text" class="form-control" id="name" name="name" required>
                     </div>
                     <div class="form-group">
                         <label for="username">Username</label>

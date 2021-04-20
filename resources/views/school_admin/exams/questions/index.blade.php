@@ -93,7 +93,7 @@
                             <div class="col-md-8 font-weight-bold py-1">
                                 @php
                                 $strClassess = '';
-                                foreach ($classess as $class) {
+                                foreach ($selectedClassess as $class) {
                                     $strClassess .= "$class->name, ";
                                 }
                                 $strClassess = rtrim($strClassess, ', ');
@@ -180,7 +180,7 @@
                                     <h4>Total Kelas</h4>
                                 </div>
                                 <div class="card-body">
-                                    {{ $classess->count() }}
+                                    {{ $selectedClassess->count() }}
                                 </div>
                             </div>
                         </div>
@@ -327,7 +327,7 @@
                         <label for="class_ids">Kelas yang Diizinkan</label>
                         <select name="class_ids[]" id="class_ids" class="js-example-basic-multiple" multiple>
                             <option value=""></option>
-                            @foreach ($classess as $class)
+                            @foreach ($selectedClassess as $class)
                                 <option value="{{ $class->id }}"
                                     @foreach (json_decode($exam->examClass->first()->class_ids) as $class_id)
                                         {{ $class_id == $class->id ? 'selected' : '' }}

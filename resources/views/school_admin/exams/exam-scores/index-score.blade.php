@@ -27,7 +27,7 @@
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-bordered">
+                    <table class="table table-bordered" id="table-1">
                         <thead>
                             <tr>
                                 <th>No</th>
@@ -41,7 +41,7 @@
                                 <td>{{ ++$key }}</td>
                                 <td>{{DB::table('classes')->where('id',$ids)->first()->name}}</td>
                                 <td class="text-center">
-                                    <a href="{{route('school_admin.exam-scores.indexScore', $exam->id)}}" class="btn btn-success">Pilih Kelas</a>
+                                    <a href="{{route('school_admin.exam-scores.indexScoreExam', [$exam->id,$ids])}}" class="btn btn-success">Pilih Kelas</a>
                                 </td>
                             </tr>
                             @empty

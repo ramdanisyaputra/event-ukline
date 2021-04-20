@@ -143,6 +143,7 @@ Route::prefix('school_admin')->name('school_admin.')->middleware(['middleware' =
         Route::get('/create_private', [AdminExamController::class, 'createPrivate'])->name('create_private');
         Route::post('/store_private', [AdminExamController::class, 'storePrivate'])->name('store_private');
         Route::patch('/update', [AdminExamController::class, 'update'])->name('update');
+        Route::delete('/delete/{id}', [AdminExamController::class, 'delete'])->name('delete');
         Route::put('/update_status', [AdminExamController::class, 'updateStatus'])->name('update_status');
 
 
@@ -165,6 +166,8 @@ Route::prefix('school_admin')->name('school_admin.')->middleware(['middleware' =
     Route::prefix('exam-scores')->name('exam-scores.')->group(function() {
         Route::get('/', [ExamScoreController::class, 'index'])->name('index');
         Route::get('{examId}', [ExamScoreController::class, 'indexScore'])->name('indexScore');
+        Route::get('{exam}/{class}', [ExamScoreController::class, 'indexScoreExam'])->name('indexScoreExam');
+        Route::get('export/{exam}/{class}', [ExamScoreController::class, 'exportExam'])->name('exportExam');
     });
 });
 

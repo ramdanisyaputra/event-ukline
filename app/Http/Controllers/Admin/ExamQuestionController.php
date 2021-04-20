@@ -11,9 +11,9 @@ use App\Models\ExamQuestion;
 use App\Models\ExamType;
 use App\Models\School;
 use App\Models\Subject;
+use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use PDF;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ExamQuestionController extends Controller
@@ -36,7 +36,8 @@ class ExamQuestionController extends Controller
                         ExamType::where('name', 'LIKE', '%tryout%')->get();
 
         return view('school_admin.exams.questions.index', compact(
-            'exam', 
+            'exam',
+            'selectedClassess',
             'classess', 
             'subjects', 
             'classess', 

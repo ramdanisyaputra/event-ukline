@@ -107,8 +107,8 @@
                         <label for="randomized">Soal Diacak</label>
                         <select name="randomized" id="randomized" class="form-control" required>
                             <option value=""> ~ Pilih ~</option>
-                            <option value="1">Tidak Diacak</option>
-                            <option value="0">Diacak</option>
+                            <option value="0">Tidak Diacak</option>
+                            <option value="1">Diacak</option>
                         </select>
                     </div>
                 </div>
@@ -169,8 +169,8 @@
                         <label for="randomized">Soal Diacak</label>
                         <select name="randomized" id="randomized" class="form-control" required>
                             <option value=""> ~ Pilih ~</option>
-                            <option value="1">Tidak Diacak</option>
-                            <option value="0">Diacak</option>
+                            <option value="0">Tidak Diacak</option>
+                            <option value="1">Diacak</option>
                         </select>
                     </div>
                 </div>

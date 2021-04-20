@@ -18,7 +18,7 @@ class CreateExamQuestionsTable extends Migration
             $table->foreignId('exam_id')->references('id')->on('exams')->onDelete('cascade');
             $table->string('question_type');
             $table->text('question');
-            $table->text('option');
+            $table->text('option')->nullable();
             $table->text('answer');
             $table->float('poin')->nullable();
             $table->timestamps();

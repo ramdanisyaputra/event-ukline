@@ -7,6 +7,7 @@ use App\Models\Classes;
 use App\Models\Exam;
 use App\Models\ExamClass;
 use App\Models\ExamQuestion;
+use App\Models\ExamScore;
 use App\Models\ExamType;
 use App\Models\School;
 use App\Models\Subject;
@@ -158,6 +159,10 @@ class ExamController extends Controller
 
             return redirect()->back()->with('success','Soal berhasil di Publikasikan');
         }else{
+            $scores = ExamScore::where('exam_id', $exam->id)->count();
+            if($scores > 0){
+                return redirect()->back()->with('alert','Soal tidak dapat di arsipkan, karena telah terdapat nilai siswa yang sudah mengerjakan.');
+            }
             $exam->update([
                 'status'=>'drafted'
             ]);
@@ -217,6 +222,21 @@ class ExamController extends Controller
         }
 
         return redirect()->back()->with('success', 'Berhasil mengubah ujian!');
+    }
+    public function delete(Request $request, $exam)
+    {
+        $schoolId = $this->authUser()->school_id;
+        $scores = ExamScore::where('exam_id', $exam)->where('school_id',$schoolId)->count();
+        if($scores > 0){
+            return redirect()->back()->with('alert','Soal tidak dapat di hapus, karena telah terdapat nilai siswa yang sudah mengerjakan.');
+        }
+        $getExam = Exam::find($exam);
+        if($getExam->shared){ //serentak
+            ExamClass::where('exam_id',$exam)->where('school_id',$schoolId)->delete();
+        }else{ // mandiri
+            $getExam->delete();
+        }
 
+        return redirect()->back()->with('success', 'Berhasil menghapus ujian!');
     }
 }

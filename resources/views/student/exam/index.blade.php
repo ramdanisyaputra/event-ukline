@@ -3022,7 +3022,7 @@
                                             @if (($key + 1) < count($exam->examQuestions))
                                             <button type="button" class="btn btn-primary btn-lg shadow-none btn-next" style="gap: 10px;"><span class="d-none d-md-block">Selanjutnya</span> <i class="fa fa-chevron-right" aria-hidden="true"></i></button>
                                             @else
-                                            <button type="submit" class="btn btn-primary btn-lg shadow-none btn-finish" style="gap: 10px;"><span class="d-none d-md-block">Selesai</span> <i class="fa fa-check" aria-hidden="true"></i></button>
+                                            <button type="button" data-toggle="modal" data-target="#confirmSubmit" class="btn btn-primary btn-lg shadow-none btn-finish" style="gap: 10px;"><span class="d-none d-md-block">Selesai</span> <i class="fa fa-check" aria-hidden="true"></i></button>
                                             @endif
                                         </div>
                                     </div>
@@ -3068,6 +3068,26 @@
                         <button type="submit" class="btn btn-primary">Keluar</button>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal fade" id="confirmSubmit" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Konfirmasi Selesai</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Apakah Anda yakin untuk mengakhiri ujian? Pastikan Anda telah mengisi seluruh pertanyaan.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cek Ulang</button>
+                    <button type="button" onclick="document.getElementById('exam_form').submit()" class="btn btn-primary">Selesai</button>
+                </div>
             </div>
         </div>
     </div>

@@ -55,11 +55,11 @@
                 <ul class="navbar-nav navbar-right">
                     <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
                             <img alt="image" src="{{ asset('main/img/avatar/avatar-1.png') }}" class="rounded-circle mr-1">
-                            <div class="d-sm-none d-lg-inline-block">Hi, Ujang Maman</div>
+                            <div class="d-sm-none d-lg-inline-block">Hi, {{ auth()->guard(session()->get('role'))->user()->name }}</div>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <a href="features-profile.html" class="dropdown-item has-icon">
-                                <i class="far fa-user"></i> Profile
+                            <a href="{{ route('student.profile.index') }}" class="dropdown-item has-icon">
+                                <i class="far fa-user"></i> Profil Peserta
                             </a>
                             <div class="dropdown-divider"></div>
                             <a href="#" onclick="document.getElementById('logoutForm').submit()" class="dropdown-item has-icon text-danger">
@@ -85,7 +85,7 @@
                             <a href="{{ route('student.index') }}" class="nav-link"><i class="fas fa-home"></i><span>Beranda</span></a>
                         </li>
                         <li class="nav-item {{ request()->is('student/profile') ? 'active' : '' }}">
-                            <a href="{{ route('student.profile.index') }}" class="nav-link"><i class="far fa-user"></i><span>Profil Anda</span></a>
+                            <a href="{{ route('student.profile.index') }}" class="nav-link"><i class="far fa-user"></i><span>Profil Peserta</span></a>
                         </li>
                     </ul>
                 </div>

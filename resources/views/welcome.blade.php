@@ -47,10 +47,10 @@
 
       <nav id="navbar" class="navbar">
         <ul>
-          <li><a class="nav-link scrollto active" href="#hero">HOME</a></li>
+          <li><a class="nav-link scrollto active" href="#about">Tentang</a></li>
           <li><a class="nav-link scrollto" href="#faq">FAQ</a></li>
-          <li><a class="nav-link scrollto" href="#features">FEATURE</a></li>
-          <li><a class="nav-link scrollto" href="{{route('login')}}">LOGIN</a></li>
+          <li><a class="nav-link scrollto" href="#features">Fitur</a></li>
+          <li><a class="nav-link scrollto" href="{{route('login')}}">Masuk</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
@@ -64,12 +64,12 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-6 d-flex flex-column justify-content-center">
-          <h1 data-aos="fade-up">Aplikasi Ujian Online Terlengkap Di Indonesia  </h1>
-          <h2 data-aos="fade-up" data-aos-delay="400">Telah Digunakan Oleh Ratusan Sekolah di Indonesia</h2>
+          <h1 data-aos="fade-up">Aplikasi Ujian Daring</h1>
+          <h2 data-aos="fade-up" data-aos-delay="400">Telah digunakan oleh ratusan sekolah di Indonesia</h2>
           <div data-aos="fade-up" data-aos-delay="600">
             <div class="text-center text-lg-start">
-              <a href="{{route('login')}}" class="btn-get-started scrollto d-inline-flex align-items-center justify-content-center align-self-center">
-                <span>Login</span>
+              <a href="{{route('login')}}" class="btn-get-started scrollto d-inline-flex py-4 align-items-center justify-content-center align-self-center">
+                <span>Masuk</span>
               </a>
             </div>
           </div>
@@ -93,6 +93,7 @@
             <div class="content">
               <h2>UKLINE EVENTS</h2>
               <div class="text-center text-lg-start">
+                <p>Seiring kemajuan zaman, teknologi sudah merasuki kehidupan manusia modern. Salah satunya yang terpengaruh adalah ujian. Ujian daring lebih mudah dengan menggunakan <strong>UKLINE EVENTS</strong>.</p>
               </div>
             </div>
           </div>
@@ -112,7 +113,7 @@
       <div class="container" data-aos="fade-up">
 
         <header class="section-header">
-          <h2>Keunggulan Aplikasi UKLINE EVENTS</h2>
+          <h2>Keunggulan</h2>
           <p>UKLINE EVENTS</p>
         </header>
 
@@ -154,7 +155,7 @@
       <div class="container" data-aos="fade-up">
 
         <header class="section-header">
-          <h2>Features</h2>
+          <h2>Lebih mudah dengan</h2>
           <p>Fitur Aplikasi UKLINE EVENTS</p>
         </header>
 
@@ -223,8 +224,8 @@
       <div class="container" data-aos="fade-up">
 
         <header class="section-header">
-          <h2>F.A.Q</h2>
-          <p>F.A.Q</p>
+          <h2>Pertanyaan yang sering ditanyakan di</h2>
+          <p>FAQ UKLINE EVENTS</p>
         </header>
 
         <div class="row">
@@ -331,8 +332,8 @@
       <div class="container" data-aos="fade-up">
 
         <header class="section-header">
-          <h2>Testimoni</h2>
-          <p>Testimoni Pengguna UKLINE</p>
+          <h2>Apa kata mereka di</h2>
+          <p>Testimoni UKLINE EVENTS</p>
         </header>
 
         <div class="testimonials-slider swiper-container" data-aos="fade-up" data-aos-delay="200">
@@ -398,8 +399,8 @@
       <div class="container" data-aos="fade-up">
 
         <header class="section-header">
-          <h2>Contact</h2>
-          <p>Contact Us</p>
+          <h2>Info lebih lanjut</h2>
+          <p>Kontak UKLINE</p>
         </header>
 
         <div class="row gy-4">
@@ -410,7 +411,7 @@
               <div class="col-md-6">
                 <div class="info-box">
                   <i class="bi bi-geo-alt"></i>
-                  <h3>Address</h3>
+                  <h3>Alamat</h3>
                   <p>Ciawi, Kabupaten Bogor, Jawa Barat</p>
                 </div>
               </div>
@@ -424,15 +425,15 @@
               <div class="col-md-6">
                 <div class="info-box">
                   <i class="bi bi-instagram"></i>
-                  <h3>instagram</h3>
-                  <p><a href="https://instagram.com/ukline.id">ukline.id</a></p>
+                  <h3>Instagram</h3>
+                  <p><a href="https://instagram.com/ukline.id">@ukline.id</a></p>
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="info-box">
                   <i class="bi bi-clock"></i>
-                  <h3>Waktu (setiap hari)</h3>
-                  <p>9:00AM - 05:00PM</p>
+                  <h3>Waktu Layanan</h3>
+                  <p>9:00 - 17:00 WIB (Setiap Hari)</p>
                 </div>
               </div>
             </div>

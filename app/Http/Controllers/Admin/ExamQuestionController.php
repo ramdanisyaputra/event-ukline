@@ -24,7 +24,7 @@ class ExamQuestionController extends Controller
         $school_id = $this->authUser()->school_id;
 
         $class_ids = json_decode($examClass->class_ids);
-        $classess = Classes::whereIn('id', $class_ids)->get();
+        $selectedClassess = Classes::whereIn('id', $class_ids)->get();
 
         $subjects = Subject::where('school_id', $school_id)->get();
 

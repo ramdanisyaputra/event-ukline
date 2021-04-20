@@ -9,8 +9,7 @@ use App\Models\Classes;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Excel;
-
+use Maatwebsite\Excel\Facades\Excel;
 
 class AdminStudentController extends Controller
 {

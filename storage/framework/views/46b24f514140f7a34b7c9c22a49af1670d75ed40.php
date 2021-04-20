@@ -99,7 +99,7 @@
                             <div class="col-md-8 font-weight-bold py-1">
                                 <?php
                                 $strClassess = '';
-                                foreach ($classess as $class) {
+                                foreach ($selectedClassess as $class) {
                                     $strClassess .= "$class->name, ";
                                 }
                                 $strClassess = rtrim($strClassess, ', ');
@@ -193,7 +193,7 @@
                                     <h4>Total Kelas</h4>
                                 </div>
                                 <div class="card-body">
-                                    <?php echo e($classess->count()); ?>
+                                    <?php echo e($selectedClassess->count()); ?>
 
                                 </div>
                             </div>
@@ -343,7 +343,7 @@
                         <label for="class_ids">Kelas yang Diizinkan</label>
                         <select name="class_ids[]" id="class_ids" class="js-example-basic-multiple" multiple>
                             <option value=""></option>
-                            <?php $__currentLoopData = $classess; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $class): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <?php $__currentLoopData = $selectedClassess; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $class): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <option value="<?php echo e($class->id); ?>"
                                     <?php $__currentLoopData = json_decode($exam->examClass->first()->class_ids); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $class_id): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <?php echo e($class_id == $class->id ? 'selected' : ''); ?>

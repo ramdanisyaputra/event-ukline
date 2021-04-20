@@ -1,6 +1,6 @@
-@extends('layouts.main')
 
-@section('content')
+
+<?php $__env->startSection('content'); ?>
 <section class="section">
     <div class="section-header">
         <h1>Master Kelas</h1>
@@ -35,23 +35,23 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($grades as $key => $grade)
+                            <?php $__empty_1 = true; $__currentLoopData = $grades; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $grade): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                             <tr>
-                                <td>{{ ++$key }}</td>
-                                <td>{{ $grade->id }}</td>
-                                <td>{{ $grade->number }}</td>
-                                <td>{{ $grade->roman }}</td>
-                                <td>{{ $grade->educationLevel->name }}</td>
-                                <td>{{ $grade->school_year }}</td>
+                                <td><?php echo e(++$key); ?></td>
+                                <td><?php echo e($grade->id); ?></td>
+                                <td><?php echo e($grade->number); ?></td>
+                                <td><?php echo e($grade->roman); ?></td>
+                                <td><?php echo e($grade->educationLevel->name); ?></td>
+                                <td><?php echo e($grade->school_year); ?></td>
                                 <td class="text-center">
-                                    <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#editGrade" data-id="{{ $grade->id }}" data-number="{{ $grade->number }}" data-roman="{{ $grade->roman }}" data-education-level="{{ $grade->education_level_id }}" data-school-year="{{ $grade->school_year }}"><i class="fas fa-pencil-alt"></i></button>
+                                    <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#editGrade" data-id="<?php echo e($grade->id); ?>" data-number="<?php echo e($grade->number); ?>" data-roman="<?php echo e($grade->roman); ?>" data-education-level="<?php echo e($grade->education_level_id); ?>" data-school-year="<?php echo e($grade->school_year); ?>"><i class="fas fa-pencil-alt"></i></button>
                                 </td>
                             </tr>
-                            @empty
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                             <tr>
                                 <td colspan="5" class="text-center">Tidak ada data</td>
                             </tr>
-                            @endforelse
+                            <?php endif; ?>
                         </tbody>
                     </table>
                 </div>
@@ -63,8 +63,8 @@
 <div class="modal fade" id="kelolaMasterKelas" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form action="{{ route('superadmin.grades.store') }}" method="POST" id="formKelolaProvince">
-                @csrf
+            <form action="<?php echo e(route('superadmin.grades.store')); ?>" method="POST" id="formKelolaProvince">
+                <?php echo csrf_field(); ?>
                 <div class="modal-header">
                     <h5 class="modal-title"><span>Tambah</span> Master Kelas</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -88,9 +88,9 @@
                         <label for="education_level_id">Tingkat Pendidikan</label>
                         <select name="education_level_id" id="education_level_id" class="custom-select" required>
                             <option value=""></option>
-                            @foreach($educationLevels as $educationLevel)
-                            <option value="{{$educationLevel->id}}">{{ $educationLevel->name }}</option>
-                            @endforeach
+                            <?php $__currentLoopData = $educationLevels; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $educationLevel): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <option value="<?php echo e($educationLevel->id); ?>"><?php echo e($educationLevel->name); ?></option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>
                     </div>
                     
@@ -107,9 +107,9 @@
 <div class="modal fade" id="editGrade" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form action="{{ route('superadmin.grades.update') }}" method="POST" id="formKelolaProvince">
-                @csrf
-                @method('PUT')
+            <form action="<?php echo e(route('superadmin.grades.update')); ?>" method="POST" id="formKelolaProvince">
+                <?php echo csrf_field(); ?>
+                <?php echo method_field('PUT'); ?>
                 <input type="hidden" name="id">
                 <div class="modal-header">
                     <h5 class="modal-title"><span>Edit</span> Master Kelas</h5>
@@ -134,9 +134,9 @@
                         <label for="education_level_id">Tingkat Pendidikan</label>
                         <select name="education_level_id" id="education_level_id" class="custom-select" required>
                             <option value=""></option>
-                            @foreach($educationLevels as $educationLevel)
-                            <option value="{{$educationLevel->id}}">{{ $educationLevel->name }}</option>
-                            @endforeach
+                            <?php $__currentLoopData = $educationLevels; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $educationLevel): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <option value="<?php echo e($educationLevel->id); ?>"><?php echo e($educationLevel->name); ?></option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>
                     </div>
                 </div>
@@ -148,10 +148,10 @@
         </div>
     </div>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
 
-@push('script')
+<?php $__env->startPush('script'); ?>
 <script>
     $('#editGrade').on('show.bs.modal', (e) => {
         var id = $(e.relatedTarget).data('id');
@@ -167,4 +167,5 @@
         $('#editGrade').find('input[name="school_year"]').val(school_year);
     });
 </script>
-@endpush
+<?php $__env->stopPush(); ?>
+<?php echo $__env->make('layouts.main', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\event-ukline\resources\views/superadmin/grades/index.blade.php ENDPATH**/ ?>

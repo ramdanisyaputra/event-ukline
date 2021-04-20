@@ -1,6 +1,6 @@
-@extends('layouts.main')
 
-@section('content')
+
+<?php $__env->startSection('content'); ?>
 <section class="section">
     <div class="section-header">
         <h1>Kabupaten</h1>
@@ -28,19 +28,19 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($regencies as $key => $regency)
+                            <?php $__empty_1 = true; $__currentLoopData = $regencies; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $regency): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                             <tr>
-                                <td>{{ ++$key }}</td>
-                                <td>{{ $regency->name }}</td>
+                                <td><?php echo e(++$key); ?></td>
+                                <td><?php echo e($regency->name); ?></td>
                                 <td class="text-center">
-                                    <a href="{{route('superadmin.question-writers.indexWriter', $regency->id)}}" class="btn btn-success">Pilih Kabupaten</a>
+                                    <a href="<?php echo e(route('superadmin.question-writers.indexWriter', $regency->id)); ?>" class="btn btn-success">Pilih Kabupaten</a>
                                 </td>
                             </tr>
-                            @empty
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                             <tr>
                                 <td colspan="5" class="text-center">Tidak ada data</td>
                             </tr>
-                            @endforelse
+                            <?php endif; ?>
                         </tbody>
                     </table>
                 </div>
@@ -48,10 +48,10 @@
         </div>
     </div>
 </section>
-@endsection
+<?php $__env->stopSection(); ?>
 
 
-@push('script')
+<?php $__env->startPush('script'); ?>
 <script>
     $('#editProvince').on('show.bs.modal', (e) => {
         var id = $(e.relatedTarget).data('id');
@@ -63,4 +63,5 @@
         $('#editProvince').find('input[name="province_code"]').val(province_code);
     });
 </script>
-@endpush
+<?php $__env->stopPush(); ?>
+<?php echo $__env->make('layouts.main', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\event-ukline\resources\views/superadmin/question-writers/index.blade.php ENDPATH**/ ?>

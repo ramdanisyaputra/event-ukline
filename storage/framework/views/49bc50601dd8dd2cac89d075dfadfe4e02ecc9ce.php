@@ -1,6 +1,6 @@
-@extends('layouts.main')
 
-@section('content')
+
+<?php $__env->startSection('content'); ?>
 <section class="section">
     <div class="section-header">
         <h1>Nilai Ujian</h1>
@@ -30,22 +30,22 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($examClass as $key => $examKelas)
+                            <?php $__empty_1 = true; $__currentLoopData = $examClass; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $examKelas): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                             <tr>
-                                <td>{{ ++$key }}</td>
-                                <td>{{ $examKelas->exam->name }} <span class="badge badge-light p-1 ml-1">{{ ucwords($examKelas->exam->shared ? 'Serentak' : 'Mandiri') }}</span></td>
-                                <td>{{ \Carbon\Carbon::parse($examKelas->exam->started_at)->isoFormat('dddd, DD MMMM Y') }}</td>
-                                <td>{{ $examKelas->exam->duration }} menit</td>
-                                <td>{{ $examKelas->subject->name }}</td>
+                                <td><?php echo e(++$key); ?></td>
+                                <td><?php echo e($examKelas->exam->name); ?> <span class="badge badge-light p-1 ml-1"><?php echo e(ucwords($examKelas->exam->shared ? 'Serentak' : 'Mandiri')); ?></span></td>
+                                <td><?php echo e(\Carbon\Carbon::parse($examKelas->exam->started_at)->isoFormat('dddd, DD MMMM Y')); ?></td>
+                                <td><?php echo e($examKelas->exam->duration); ?> menit</td>
+                                <td><?php echo e($examKelas->subject->name); ?></td>
                                 <td class="text-center">
-                                    <a href="{{route('school_admin.exam-scores.indexScore', $examKelas->exam_id)}}" class="btn btn-success">Pilih Ujian</a>
+                                    <a href="<?php echo e(route('school_admin.exam-scores.indexScore', $examKelas->exam_id)); ?>" class="btn btn-success">Pilih Ujian</a>
                                 </td>
                             </tr>
-                            @empty
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                             <tr>
                                 <td colspan="5" class="text-center">Tidak ada data</td>
                             </tr>
-                            @endforelse
+                            <?php endif; ?>
                         </tbody>
                     </table>
                 </div>
@@ -53,4 +53,5 @@
         </div>
     </div>
 </section>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.main', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\event-ukline\resources\views/school_admin/exams/exam-scores/index.blade.php ENDPATH**/ ?>

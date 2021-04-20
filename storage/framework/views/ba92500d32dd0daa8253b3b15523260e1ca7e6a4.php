@@ -1,6 +1,6 @@
-@extends('layouts.main')
 
-@section('content')
+
+<?php $__env->startSection('content'); ?>
 <section class="section">
     <div class="section-header">
         <h1>Regensi</h1>
@@ -34,22 +34,22 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($regencies as $key => $regency)
+                            <?php $__empty_1 = true; $__currentLoopData = $regencies; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $regency): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                             <tr>
-                                <td>{{ ++$key }}</td>
-                                <td>{{ $regency->id }}</td>
-                                <td>{{ $regency->regency_code }}</td>
-                                <td>{{ $regency->name }}</td>
-                                <td>{{ $regency->province->name }}</td>
+                                <td><?php echo e(++$key); ?></td>
+                                <td><?php echo e($regency->id); ?></td>
+                                <td><?php echo e($regency->regency_code); ?></td>
+                                <td><?php echo e($regency->name); ?></td>
+                                <td><?php echo e($regency->province->name); ?></td>
                                 <td class="text-center">
-                                    <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#editRegen" data-id="{{ $regency->id }}" data-name="{{ $regency->name }}" data-province="{{ $regency->province_id }}" data-regency-code="{{ $regency->regency_code }}"><i class="fas fa-pencil-alt"></i></button>
+                                    <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#editRegen" data-id="<?php echo e($regency->id); ?>" data-name="<?php echo e($regency->name); ?>" data-province="<?php echo e($regency->province_id); ?>" data-regency-code="<?php echo e($regency->regency_code); ?>"><i class="fas fa-pencil-alt"></i></button>
                                 </td>
                             </tr>
-                            @empty
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                             <tr>
                                 <td colspan="5" class="text-center">Tidak ada data</td>
                             </tr>
-                            @endforelse
+                            <?php endif; ?>
                         </tbody>
                     </table>
                 </div>
@@ -61,8 +61,8 @@
 <div class="modal fade" id="kelolaRegen" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form action="{{ route('superadmin.regencies.store') }}" method="POST" id="formKelolaRegen">
-                @csrf
+            <form action="<?php echo e(route('superadmin.regencies.store')); ?>" method="POST" id="formKelolaRegen">
+                <?php echo csrf_field(); ?>
                 <div class="modal-header">
                     <h5 class="modal-title"><span>Tambah</span> Regensi</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -82,9 +82,9 @@
                         <label for="province_id">Provinsi</label>
                         <select name="province_id" id="province_id" class="custom-select" required>
                             <option value=""></option>
-                            @foreach($provinces as $province)
-                            <option value="{{$province->id}}">{{ $province->name }}</option>
-                            @endforeach
+                            <?php $__currentLoopData = $provinces; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $province): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <option value="<?php echo e($province->id); ?>"><?php echo e($province->name); ?></option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>
                     </div>
                 </div>
@@ -100,9 +100,9 @@
 <div class="modal fade" id="editRegen" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form action="{{ route('superadmin.regencies.update') }}" method="POST" id="formKelolaRegen">
-                @csrf
-                @method('PUT')
+            <form action="<?php echo e(route('superadmin.regencies.update')); ?>" method="POST" id="formKelolaRegen">
+                <?php echo csrf_field(); ?>
+                <?php echo method_field('PUT'); ?>
                 <input type="hidden" name="id">
                 <div class="modal-header">
                     <h5 class="modal-title"><span>Edit</span> Regensi</h5>
@@ -123,9 +123,9 @@
                         <label for="province_id">Provinsi</label>
                         <select name="province_id" id="province_id" class="custom-select" required>
                             <option value=""></option>
-                            @foreach($provinces as $province)
-                            <option value="{{$province->id}}">{{ $province->name }}</option>
-                            @endforeach
+                            <?php $__currentLoopData = $provinces; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $province): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <option value="<?php echo e($province->id); ?>"><?php echo e($province->name); ?></option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>
                     </div>
                 </div>
@@ -137,10 +137,10 @@
         </div>
     </div>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
 
-@push('script')
+<?php $__env->startPush('script'); ?>
 <script>
     $('#editRegen').on('show.bs.modal', (e) => {
         var id = $(e.relatedTarget).data('id');
@@ -154,4 +154,5 @@
         $('#editRegen').find('select[name="province_id"]').val(provinceId);
     });
 </script>
-@endpush
+<?php $__env->stopPush(); ?>
+<?php echo $__env->make('layouts.main', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\event-ukline\resources\views/superadmin/regencies/index.blade.php ENDPATH**/ ?>

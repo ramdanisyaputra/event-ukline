@@ -1,13 +1,13 @@
-@extends('layouts.main')
 
-@section('content')
+
+<?php $__env->startSection('content'); ?>
 <section class="section">
     <div class="section-header">
         <h1>Penulis Soal</h1>
 
         <div class="section-header-breadcrumb">
             <div class="breadcrumb-item active"><a href="#">Beranda</a></div>
-            <div class="breadcrumb-item">Penulis Soal {{$regency->name}}</div>
+            <div class="breadcrumb-item">Penulis Soal <?php echo e($regency->name); ?></div>
         </div>
     </div>
 
@@ -17,7 +17,7 @@
             <div class="card-header">
                 <h4>Daftar Penulis Soal</h4>
                 <div class="card-header-action">
-                    <button class="btn btn-primary" data-toggle="modal" data-target="#kelolaQuestionWriter"><i class="fa fa-plus"></i> Tambah Penulis Soal {{$regency->name}}</button>
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#kelolaQuestionWriter"><i class="fa fa-plus"></i> Tambah Penulis Soal <?php echo e($regency->name); ?></button>
                 </div>
             </div>
             <div class="card-body">
@@ -33,22 +33,22 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($questionWriters as $key => $questionWriter)
+                            <?php $__empty_1 = true; $__currentLoopData = $questionWriters; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $questionWriter): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                             <tr>
-                                <td>{{ ++$key }}</td>
-                                <td>{{ $questionWriter->id }}</td>
-                                <td>{{ $questionWriter->name }}</td>
-                                <td>{{ $questionWriter->username }}</td>
+                                <td><?php echo e(++$key); ?></td>
+                                <td><?php echo e($questionWriter->id); ?></td>
+                                <td><?php echo e($questionWriter->name); ?></td>
+                                <td><?php echo e($questionWriter->username); ?></td>
                                 <td class="text-center">
-                                    <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#editQuestionWriter" data-id="{{ $questionWriter->id }}" data-name="{{ $questionWriter->name }}" data-username="{{ $questionWriter->username }}"><i class="fas fa-pencil-alt"></i></button>
-                                    <a href="{{route('superadmin.question-writers.resetPasswordWriter', [$questionWriter->regency_id , $questionWriter->id])}}" class="btn btn-sm btn-warning" onclick="return confirm('Apakah anda yakin? ')">Reset Password</a>
+                                    <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#editQuestionWriter" data-id="<?php echo e($questionWriter->id); ?>" data-name="<?php echo e($questionWriter->name); ?>" data-username="<?php echo e($questionWriter->username); ?>"><i class="fas fa-pencil-alt"></i></button>
+                                    <a href="<?php echo e(route('superadmin.question-writers.resetPasswordWriter', [$questionWriter->regency_id , $questionWriter->id])); ?>" class="btn btn-sm btn-warning" onclick="return confirm('Apakah anda yakin? ')">Reset Password</a>
                                 </td>
                             </tr>
-                            @empty
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                             <tr>
                                 <td colspan="5" class="text-center">Tidak ada data</td>
                             </tr>
-                            @endforelse
+                            <?php endif; ?>
                         </tbody>
                     </table>
                 </div>
@@ -60,8 +60,8 @@
 <div class="modal fade" id="kelolaQuestionWriter" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form action="{{ route('superadmin.question-writers.store',$regency->id) }}" method="POST" id="formKelolaQuestionWriters">
-                @csrf
+            <form action="<?php echo e(route('superadmin.question-writers.store',$regency->id)); ?>" method="POST" id="formKelolaQuestionWriters">
+                <?php echo csrf_field(); ?>
                 <div class="modal-header">
                     <h5 class="modal-title"><span>Tambah</span> Penulis Soal</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -94,9 +94,9 @@
 <div class="modal fade" id="editQuestionWriter" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form action="{{ route('superadmin.question-writers.update',$regency->id) }}" method="POST" id="formKelolaQuestionWriters">
-                @csrf
-                @method('PUT')
+            <form action="<?php echo e(route('superadmin.question-writers.update',$regency->id)); ?>" method="POST" id="formKelolaQuestionWriters">
+                <?php echo csrf_field(); ?>
+                <?php echo method_field('PUT'); ?>
                 <input type="hidden" name="id">
                 <div class="modal-header">
                     <h5 class="modal-title"><span>Edit</span> Penulis Soal</h5>
@@ -122,10 +122,10 @@
         </div>
     </div>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
 
-@push('script')
+<?php $__env->startPush('script'); ?>
 <script>
     $('#editQuestionWriter').on('show.bs.modal', (e) => {
         var id = $(e.relatedTarget).data('id');
@@ -137,4 +137,5 @@
         $('#editQuestionWriter').find('input[name="username"]').val(username);
     });
 </script>
-@endpush
+<?php $__env->stopPush(); ?>
+<?php echo $__env->make('layouts.main', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\event-ukline\resources\views/superadmin/question-writers/index-writer.blade.php ENDPATH**/ ?>

@@ -39,9 +39,9 @@
                     <label for="role" class="col-form-label">{{ __('Login Sebagai') }}</label>
                     <select name="role" id="role" class="custom-select" required tabindex="3">
                         <option value="user" selected></option>
+                        <option value="student">Siswa</option>
                         <option value="question_writer">Penulis Soal</option>
                         <option value="school_admin">Admin Sekolah</option>
-                        <option value="student">Siswa</option>
                     </select>
                   </div>
 

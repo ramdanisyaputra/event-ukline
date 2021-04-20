@@ -8,6 +8,7 @@ use App\Imports\StudentImport;
 use App\Models\Classes;
 use App\Models\Exam;
 use App\Models\ExamClass;
+use App\Models\ExamScore;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -21,11 +22,22 @@ class ExamScoreController extends Controller
         $examClass = ExamClass::where('school_id', $this->authUser()->school_id)->get();
         return view('school_admin.exams.exam-scores.index',compact('examClass'));
     }
+
     public function indexScore($examId)
     {
         $exam = Exam::find($examId);
         $examClass = ExamClass::where('exam_id',$examId)->first();
         return view('school_admin.exams.exam-scores.index-score',compact('exam','examClass'));
+    }
+
+    public function indexScoreExam($examId,$classId)
+    {
+        $exam = Exam::find($examId);
+        $examScore = ExamScore::where('exam_id',$examId)
+                    ->where('class_id',$classId)
+                    ->get();
+        $class = Classes::find($classId);
+        return view('school_admin.exams.exam-scores.index-score-exam',compact('exam','examScore','class'));
     }
 
     public function export(Request $request)

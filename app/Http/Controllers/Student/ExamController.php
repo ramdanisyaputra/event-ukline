@@ -27,7 +27,9 @@ class ExamController extends Controller
 
             $currentExam[$exam->id] = [
                 'exam_id' => $exam->id,
-                'token' => $randomString
+                'token' => $randomString,
+                'start_at' => Carbon::now(),
+                'finish_at' => Carbon::now()->addMinutes($exam->duration)
             ];
 
             array_push($current_exams, $currentExam);
@@ -55,8 +57,9 @@ class ExamController extends Controller
                                                 $current_exams[$exam->id]['token'] == $token : false ) {
             
 
-                    
-            return view('student.exam.index', compact('exam', 'token'));
+            $view = request()->mode == 'paper' ? 'student.exam.paper' : 'student.exam.index';
+            
+            return view($view, compact('exam', 'token'));
         }
 
         return redirect()->route('student.index')
@@ -78,12 +81,12 @@ class ExamController extends Controller
                 $details[$key] = [
                     'question_id' => $original->id,
                     'right_answer' => $original->answer,
-                    'answer' => $answer['answer'],
+                    'answer' => ($answer['answer'] ?? null),
                     'poin' => $original->poin,
                     'type' => $original->question_type,
                 ];
 
-                if ($original->answer == $answer['answer'] && $original->question_type == 'PG') {
+                if ($original->answer == ($answer['answer'] ?? null) && $original->question_type == 'PG') {
                     $details[$key]['is_correct'] = true;
 
                     $total_poin += $original->poin;
@@ -120,6 +123,25 @@ class ExamController extends Controller
 
             return redirect()->route('student.index')
                             ->with('success', 'Selamat Anda sudah selesai mengerjakan ujian!')
+                            ->with('exam_finish', true);
+        }
+
+        return redirect()->route('student.index')
+                        ->with('alert', 'Maaf kode token salah, silahkan ulangi kembali!');
+    }
+
+    public function exit(Exam $exam, $token)
+    {
+        $current_exams = session()->get('current_exams');
+        if (isset($current_exams[$exam->id]) && isset($current_exams[$exam->id]) ? 
+                            $current_exams[$exam->id]['token'] == $token : false ) {
+
+            unset($current_exams[$exam->id]);
+
+            session()->put('current_exams', $current_exams);
+
+            return redirect()->route('student.index')
+                            ->with('alert', 'Anda sudah keluar dari ujian!')
                             ->with('exam_finish', true);
         }
 

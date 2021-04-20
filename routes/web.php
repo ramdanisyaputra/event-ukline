@@ -181,6 +181,7 @@ Route::namespace('student')->prefix('student')->name('student.')->middleware(['m
         Route::post('/{exam}/access', [ExamController::class, 'access'])->name('access');
         Route::get('/{exam}/start/{token}', [ExamController::class, 'start'])->name('start');
         Route::post('/{exam}/finish/{token}', [ExamController::class, 'finish'])->name('finish');
+        Route::post('/{exam}/exit/{token}', [ExamController::class, 'exit'])->name('exit');
     });
 });
 

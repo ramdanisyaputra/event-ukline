@@ -55,7 +55,7 @@
                                     <input type="text" name="access_code" id="access_code" class="form-control" placeholder="Masukan kode akses" autocomplete="off">
                                 </div>
                                 <div class="text-right">
-                                    <a href="" class="btn btn-lg btn-primary">Mulai Ujian</a>
+                                    <button type="submit" class="btn btn-primary">Mulai Ujian</button>
                                 </div>
                             </form>
                         </div>

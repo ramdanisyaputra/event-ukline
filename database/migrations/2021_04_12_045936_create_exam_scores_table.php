@@ -19,10 +19,10 @@ class CreateExamScoresTable extends Migration
             $table->foreignId('exam_id')->references('id')->on('exams')->onDelete('cascade');
             $table->foreignId('class_id')->references('id')->on('classes')->onDelete('cascade');
             $table->foreignId('school_id')->references('id')->on('schools')->onDelete('cascade');
-            $table->string('score');
+            $table->string('score')->nullable();
             $table->datetime('time_start');
             $table->datetime('time_finish');
-            $table->datetime('detail');
+            $table->text('detail');
             $table->timestamps();
         });
     }

@@ -2961,7 +2961,7 @@
             <!-- Main Content -->
             <div class="main-content">
 
-                <div class="container mt-4">
+                <div class="container my-4">
                     <div class="row justify-content-center">
                         <div class="col-md-9">
                             <div class="card card-body py-3 bg-whitesmoke border mb-3">
@@ -3137,7 +3137,7 @@
         if (current.localName == 'input') {
             var current = this.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode;
         } else {
-            var current = this.parentNode.parentNode;
+            var current = this.parentNode.parentNode.parentNode;
         }
 
         var currentIndex = parseInt(current.getAttribute('data-key')) - 1;

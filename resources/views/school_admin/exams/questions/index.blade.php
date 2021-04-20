@@ -127,7 +127,37 @@
                 <div class="row">
                     <div class="col-lg-6 col-md-6 col-sm-6 col-12">
                         <div class="card card-statistic-1">
-                            <div class="card-icon bg-primary">
+                            <div class="card-icon bg-secondary">
+                                <i class="far fa-file"></i>
+                            </div>
+                            <div class="card-wrap">
+                                <div class="card-header">
+                                    <h4>Status</h4>
+                                </div>
+                                <div class="card-body">
+                                    {{ $exam->status == 'published' ? 'Dipublikasi' : 'Diarsipkan' }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-12">
+                        <div class="card card-statistic-1">
+                            <div class="card-icon bg-secondary">
+                                <i class="far fa-file"></i>
+                            </div>
+                            <div class="card-wrap">
+                                <div class="card-header">
+                                    <h4>Jenis Ujian</h4>
+                                </div>
+                                <div class="card-body">
+                                    {{ $exam->shared ? 'Serentak' : 'Mandiri' }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-12">
+                        <div class="card card-statistic-1">
+                            <div class="card-icon bg-secondary">
                                 <i class="far fa-question-circle"></i>
                             </div>
                             <div class="card-wrap">
@@ -142,15 +172,15 @@
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6 col-12">
                         <div class="card card-statistic-1">
-                            <div class="card-icon bg-primary">
-                                <i class="far fa-file"></i>
+                            <div class="card-icon bg-secondary">
+                                <i class="far fa-building"></i>
                             </div>
                             <div class="card-wrap">
                                 <div class="card-header">
-                                    <h4>Status</h4>
+                                    <h4>Total Kelas</h4>
                                 </div>
                                 <div class="card-body">
-                                    {{ $exam->status == 'published' ? 'Dipublikasi' : 'Diarsipkan' }}
+                                    {{ $classess->count() }}
                                 </div>
                             </div>
                         </div>

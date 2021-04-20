@@ -165,6 +165,8 @@ Route::prefix('school_admin')->name('school_admin.')->middleware(['middleware' =
     Route::prefix('exam-scores')->name('exam-scores.')->group(function() {
         Route::get('/', [ExamScoreController::class, 'index'])->name('index');
         Route::get('{examId}', [ExamScoreController::class, 'indexScore'])->name('indexScore');
+        Route::get('{exam}/{class}', [ExamScoreController::class, 'indexScoreExam'])->name('indexScoreExam');
+        Route::get('export/{exam}/{class}', [ExamScoreController::class, 'exportExam'])->name('exportExam');
     });
 });
 

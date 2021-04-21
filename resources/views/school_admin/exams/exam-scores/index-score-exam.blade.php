@@ -60,14 +60,13 @@
                                     {{ $examScore ? \Carbon\Carbon::parse($examScore->time_finish)->isoFormat('dddd, DD MMMM YYYY HH:mm') : '-' }}
                                 </td>
                                 <td>
-                                    {{ $examScore->score ?? 'Belum Mengerjakan' }}
+                                    {{ isset($examScore) ? ($examScore->score ?? 'Belum Dinilai') : 'Belum Mengerjakan' }}
                                 </td>
                                 <td class="text-center">
                                     <div class="d-inline d-flex">
+                                        @if($examScore)
                                         <a href="{{route('school_admin.exam-scores.indexScore', $exam->id)}}" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></a>
-                                        @if($examScore != null)
                                         <button class="btn btn-sm btn-danger ml-1" data-toggle="modal" data-target="#confirmDelete" data-url="{{ route('school_admin.exam-scores.deleteScoreStudent', $examScore->id) }}" title="Hapus"><i class="fa fa-trash"></i></button>
-                                        @else
                                         @endif
                                     </div>
                                 </td>

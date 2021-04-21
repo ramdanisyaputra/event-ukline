@@ -58,4 +58,34 @@ class ExamScoreController extends Controller
         return redirect()->back()->with('success',$message);
     }
 
+    public function updateScore($exam, $class, ExamScore $score, Request $request)
+    {
+        $exam;
+        $class;
+
+        $old_details = json_decode($score->detail);
+        $new_details = [];
+
+        $new_scores = $request->scores;
+        $new_total_score = 0;
+
+        foreach ($old_details as $key => $old_detail) {
+            if (isset($new_scores[$key])) {
+                $old_detail->is_correct = $new_scores[$key] > 0 ? true : false;
+                $new_details[] = $old_detail;
+            } else {
+                $new_details[] = $old_detail;
+            }
+
+            $new_total_score += $new_details[$key]->is_correct ? $new_details[$key]->poin : 0;
+        }
+
+        $score->update([
+            'score' => $new_total_score,
+            'detail' => json_encode($new_details)
+        ]);
+
+        return redirect()->back()->with('success', 'Memberikan nilai!');
+    }
+
 }

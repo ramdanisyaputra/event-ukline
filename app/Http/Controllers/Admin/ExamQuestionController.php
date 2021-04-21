@@ -8,6 +8,7 @@ use App\Imports\AdminImportQuestion;
 use App\Models\Classes;
 use App\Models\Exam;
 use App\Models\ExamQuestion;
+use App\Models\ExamScore;
 use App\Models\ExamType;
 use App\Models\School;
 use App\Models\Subject;
@@ -104,6 +105,11 @@ class ExamQuestionController extends Controller
 
     public function edit(Exam $exam, ExamQuestion $question)
     {
+        $schoolId = $this->authUser()->school_id;
+        $scores = ExamScore::where('exam_id', $exam->id)->where('school_id',$schoolId)->count();
+        if($scores > 0){
+            return redirect()->back()->with('alert','Soal tidak dapat di edit, karena telah terdapat nilai siswa yang sudah mengerjakan.');
+        }
         return view('school_admin.exams.questions.edit', compact('exam', 'question'));
     }
 
@@ -145,13 +151,22 @@ class ExamQuestionController extends Controller
      public function destroy($exam, ExamQuestion $question)
      {
         $exam;
-
+        $schoolId = $this->authUser()->school_id;
+        $scores = ExamScore::where('exam_id', $exam)->where('school_id',$schoolId)->count();
+        if($scores > 0){
+            return redirect()->back()->with('alert','Soal tidak dapat di hapus, karena telah terdapat nilai siswa yang sudah mengerjakan.');
+        }
         $question->delete();
         return redirect()->back()->with('success', 'Berhasil menghapus soal ujian!');
      }
 
      public function destroyAll(Exam $exam)
      {
+        $schoolId = $this->authUser()->school_id;
+        $scores = ExamScore::where('exam_id', $exam->id)->where('school_id',$schoolId)->count();
+        if($scores > 0){
+            return redirect()->back()->with('alert','Soal tidak dapat di hapus, karena telah terdapat nilai siswa yang sudah mengerjakan.');
+        }
         $exam->examQuestions()->delete();
 
         return redirect()->back()->with('success', 'Berhasil menghapus semua soal ujian!');

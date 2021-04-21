@@ -6,7 +6,10 @@ use App\Exports\ExportQuestion;
 use App\Http\Controllers\Controller;
 use App\Imports\QuestionWriterImportQuestion;
 use App\Models\Exam;
+use App\Models\ExamClass;
 use App\Models\ExamQuestion;
+use App\Models\ExamScore;
+use Barryvdh\DomPDF\PDF as DomPDFPDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
@@ -76,6 +79,10 @@ class ExamQuestionController extends Controller
     }
     public function edit(Exam $exam, ExamQuestion $question)
     {
+        $scores = ExamScore::where('exam_id', $exam->id)->count();
+        if($scores > 0){
+            return redirect()->back()->with('alert','Soal tidak dapat di edit, karena telah terdapat nilai siswa yang sudah mengerjakan.');
+        }
         return view('question_writer.exams.questions.edit', compact('exam', 'question'));
     }
 
@@ -116,14 +123,20 @@ class ExamQuestionController extends Controller
 
      public function destroy($exam, ExamQuestion $question)
      {
-        $exam;
-
+        $scores = ExamClass::where('exam_id', $exam)->count();
+        if($scores > 0){
+            return redirect()->back()->with('alert','Soal tidak dapat di edit, karena telah terdapat sekolah yang mengambil soal ujian ini.');
+        }
         $question->delete();
         return redirect()->back()->with('success', 'Berhasil menghapus soal ujian!');
      }
 
      public function destroyAll(Exam $exam)
      {
+        $scores = ExamClass::where('exam_id', $exam->id)->count();
+        if($scores > 0){
+            return redirect()->back()->with('alert','Soal tidak dapat di edit, karena telah terdapat sekolah yang mengambil soal ujian ini.');
+        }
         $exam->examQuestions()->delete();
 
         return redirect()->back()->with('success', 'Berhasil menghapus semua soal ujian!');
@@ -158,7 +171,7 @@ class ExamQuestionController extends Controller
 
         $data = compact('exam','examQuestions');
 
-        $pdf = PDF::loadView('question_writer.exams.questions.pdf', $data);
+        $pdf = DomPDFPDF::loadView('question_writer.exams.questions.pdf', $data);
     
         return $pdf->stream('Data Soal '.$exam->name.'.pdf');
     }

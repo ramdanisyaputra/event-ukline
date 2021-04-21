@@ -116,6 +116,7 @@
 </div>
 
 @endsection
+
 @push('script')
 <script>
     $('#confirmDelete').on('show.bs.modal', (e) => {

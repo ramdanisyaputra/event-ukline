@@ -37,6 +37,7 @@
                                 <button class="dropdown-item set-button">Export Siswa (.xlsx)</button>
                             </form>
                         </li>
+                        <li><button class="dropdown-item set-button text-danger" data-toggle="modal" data-target="#confirmDeleteAll" data-url="{{ route('school_admin.students.deleteAll', $class->id) }}" title="Hapus">Hapus Semua Siswa <i class="fa fa-exclamation-circle"></i></button></li>
                     </ul>
                 </div>
             </div>
@@ -67,8 +68,8 @@
                                 <td>{{ $student->student_number }}</td>
                                 <td class="text-center">
                                     <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#editStudent" data-id="{{ $student->id }}" data-nisn="{{ $student->nisn }}" data-nis="{{ $student->nis }}" data-name="{{ $student->name }}" data-pob="{{ $student->pob }}" data-dob="{{ date('Y-m-d', strtotime($student->dob)) }}" data-gender="{{ $student->gender }}" data-student-number="{{ $student->student_number }}" data-username="{{ $student->username }}"><i class="fas fa-pencil-alt"></i></button>
-
                                     <a href="{{route('school_admin.students.resetPasswordStudent', [$student->class_id , $student->id])}}" class="btn btn-sm btn-warning" onclick="return confirm('Apakah anda yakin? ')">Reset Password</a>
+                                    <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#confirmDelete" data-url="{{ route('school_admin.students.delete', $student->id) }}" title="Hapus"><i class="fa fa-trash"></i></button>
                                     
                                 </td>
                             </tr>
@@ -229,8 +230,56 @@
         </div>
     </div>
 </div>
-@endsection
 
+<div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form action="" method="post">
+            @csrf
+            @method('DELETE')
+                <div class="modal-header">
+                    <h5 class="modal-title">Peringatan</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Apakah yakin Anda ingin menghapus data siswa ini?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-danger">Hapus</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="confirmDeleteAll" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form action="" method="post">
+            @csrf
+            @method('DELETE')
+                <div class="modal-header">
+                    <h5 class="modal-title">Peringatan</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Apakah yakin Anda ingin menghapus semua data siswa</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-danger">Hapus</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@endsection
 
 @push('script')
 <script>
@@ -252,6 +301,18 @@
         $('#editStudent').find('input[name="dob"]').val(dob);
         $('#editStudent').find('input[name="student_number"]').val(studentNumber);
         $('#editStudent').find('select[name="gender"]').val(gender);
+    });
+
+    
+    $('#confirmDelete').on('show.bs.modal', (e) => {
+        var url = $(e.relatedTarget).data('url');
+
+        $(e.currentTarget).find('form').attr('action', url);
+    });
+    $('#confirmDeleteAll').on('show.bs.modal', (e) => {
+        var url = $(e.relatedTarget).data('url');
+
+        $(e.currentTarget).find('form').attr('action', url);
     });
 </script>
 @endpush

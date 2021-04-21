@@ -28,16 +28,21 @@
                                 <li class="dropdown-title">Pengaturan</li>
                                 <li><a href="#editExam" data-toggle="modal" data-target="#editExam" class="dropdown-item">Ubah</a></li>
                                 <li class="dropdown-title">Aksi</li>
-                                <li><a href="#" class="dropdown-item">Lihat nilai</a></li>
+                                <li><a href="{{ route('school_admin.exam-scores.indexScore', $exam->id) }}" class="dropdown-item">Lihat nilai</a></li>
                                 @if (!$exam->shared)
+                                    @if ($exam->examQuestions->count() > 0)
+                                    <li>
+                                        <form action="{{ route('school_admin.exams.update_status') }}" method="POST" id="examUpdateStatus">
+                                            @csrf
+                                            @method('PUT')
+                                            <input type="hidden" name="id" value="{{ $exam->id }}">
+                                            <input type="hidden" name="status" value="{{ $exam->status == 'published' ? 'drafted' : 'published' }}">
+                                        </form>
+                                        <a href="#" onclick="document.getElementById('examUpdateStatus').submit()" class="dropdown-item">{{ $exam->status == 'published' ? 'Arsipkan' : 'Publikasikan' }}</a>
+                                    </li>
+                                    @endif
                                 <li>
-                                    <form action="{{ route('school_admin.exams.update_status') }}" method="POST" id="examUpdateStatus">
-                                        @csrf
-                                        @method('PUT')
-                                        <input type="hidden" name="id" value="{{ $exam->id }}">
-                                        <input type="hidden" name="status" value="{{ $exam->status == 'published' ? 'drafted' : 'published' }}">
-                                    </form>
-                                    <a href="#" onclick="document.getElementById('examUpdateStatus').submit()" class="dropdown-item">{{ $exam->status == 'published' ? 'Arsipkan' : 'Publikasikan' }}</a>
+                                    <a href="#" data-toggle="modal" data-target="#examConfirmDelete" class="dropdown-item">Hapus Ujian</a>
                                 </li>
                                 @endif
                             </ul>
@@ -429,6 +434,30 @@
                 </div>
                 <div class="modal-body">
                     <p>Apakah yakin Anda ingin menghapus <strong>semua soal ujian</strong> ini?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-danger">Hapus</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="examConfirmDelete" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form action="{{ route('school_admin.exams.delete', $exam->id) }}" method="post">
+            @csrf
+            @method('DELETE')
+                <div class="modal-header">
+                    <h5 class="modal-title">Peringatan</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Apakah yakin Anda ingin menghapus ujian ini? Ujian yang dihapus tidak dapat dikembalikan!</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>

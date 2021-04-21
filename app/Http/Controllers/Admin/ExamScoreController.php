@@ -71,7 +71,7 @@ class ExamScoreController extends Controller
 
         foreach ($old_details as $key => $old_detail) {
             if (isset($new_scores[$key])) {
-                $old_detail->is_correct = $new_scores[$key] > 0 ? true : false;
+                $old_detail->is_correct = $new_scores[$key]['score'] > 0 ? true : false;
                 $new_details[] = $old_detail;
             } else {
                 $new_details[] = $old_detail;

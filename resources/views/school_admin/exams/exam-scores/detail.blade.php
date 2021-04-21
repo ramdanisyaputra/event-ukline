@@ -145,7 +145,7 @@
                                             <td class="font-weight-bold ">{!! $detail->answer ?? 'Tidak diisi' !!}</td>
                                         </tr>
                                         <tr>
-                                            <td>Kumci Jawaban</td>
+                                            <td>Kunci Jawaban</td>
                                             <td class="px-2">:</td>
                                             <td class="font-weight-bold ">{!! $detail->right_answer !!}</td>
                                         </tr>

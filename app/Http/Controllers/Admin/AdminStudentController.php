@@ -22,7 +22,7 @@ class AdminStudentController extends Controller
     }
     public function indexStudent($classId)
     {
-        $students = Student::where('class_id', $classId)->get();
+        $students = Student::where('class_id', $classId)->orderBy('name','ASC')->get();
         $class = Classes::find($classId);
         return view('school_admin.students.index-student',compact('students','class'));
     }
@@ -131,7 +131,8 @@ class AdminStudentController extends Controller
         {
             $studentId [] =  $student->id;
         }
-        $examScore = ExamScore::whereIn('student_id', $studentId)->delete();
+        ExamScore::whereIn('student_id', $studentId)->delete();
+        Student::where('class_id',$classId)->delete();
         return back()->with('success','Berhasil Hapus Semua Data Siswa');
     }
 }

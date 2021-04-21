@@ -19,7 +19,9 @@ class StudentExport implements FromCollection, WithHeadings
     public function collection()
     {
         $models = Student::where('class_id',$this->classId)
-        ->select('nisn','nis','name','pob','dob','student_number','gender','nisn')->get();
+        ->select('nisn','nis','name','pob','dob','student_number','gender','nisn')
+        ->orderBy('name','ASC')
+        ->get();
         
         foreach ($models as $key => $student) {
             $result['items'][$key]['nisn'] = $student->nisn;

@@ -62,10 +62,15 @@ z
                                     {{ $examScore ? \Carbon\Carbon::parse($examScore->time_finish)->isoFormat('dddd, DD MMMM YYYY HH:mm') : '-' }}
                                 </td>
                                 <td>
-                                    {{ $examScore->score ?? 'Belum Mengerjakan' }}
+                                    {{ isset($examScore) ? ($examScore->score ?? 'Belum Dinilai') : 'Belum Mengerjakan' }}
                                 </td>
                                 <td class="text-center">
-                                    <a href="{{route('school_admin.exam-scores.indexScore', $exam->id)}}" class="btn btn-primary"><i class="fas fa-eye"></i></a>
+                                    <div class="d-inline d-flex">
+                                        @if($examScore)
+                                        <a href="{{route('school_admin.exam-scores.indexScore', $exam->id)}}" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></a>
+                                        <button class="btn btn-sm btn-danger ml-1" data-toggle="modal" data-target="#confirmDelete" data-url="{{ route('school_admin.exam-scores.deleteScoreStudent', $examScore->id) }}" title="Hapus"><i class="fa fa-trash"></i></button>
+                                        @endif
+                                    </div>
                                 </td>
                             </tr>
                             @empty
@@ -79,5 +84,40 @@ z
             </div>
         </div>
     </div>
+</section>
 
+
+<div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form action="" method="post">
+            @csrf
+            @method('DELETE')
+                <div class="modal-header">
+                    <h5 class="modal-title">Peringatan</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Apakah yakin Anda ingin menghapus nilai siswa ini?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-danger">Hapus</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 @endsection
+
+@push('script')
+<script>
+    $('#confirmDelete').on('show.bs.modal', (e) => {
+        var url = $(e.relatedTarget).data('url');
+
+        $(e.currentTarget).find('form').attr('action', url);
+    });
+</script>
+@endpush

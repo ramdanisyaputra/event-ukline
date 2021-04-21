@@ -169,6 +169,7 @@ Route::prefix('school_admin')->name('school_admin.')->middleware(['middleware' =
         Route::get('{exam}/{class}', [ExamScoreController::class, 'indexScoreExam'])->name('indexScoreExam');
         Route::get('export/{exam}/{class}', [ExamScoreController::class, 'exportExam'])->name('exportExam');
         Route::get('detail/{exam}/{class}/{score}', [ExamScoreController::class, 'detail'])->name('detail');
+        Route::delete('delete/{exam}', [ExamScoreController::class, 'deleteScoreStudent'])->name('deleteScoreStudent');
     });
 });
 
@@ -185,6 +186,7 @@ Route::namespace('student')->prefix('student')->name('student.')->middleware(['m
         Route::post('/{exam}/access', [ExamController::class, 'access'])->name('access');
         Route::get('/{exam}/start/{token}', [ExamController::class, 'start'])->name('start');
         Route::post('/{exam}/finish/{token}', [ExamController::class, 'finish'])->name('finish');
+        Route::post('/{exam}/exit/{token}', [ExamController::class, 'exit'])->name('exit');
     });
 });
 

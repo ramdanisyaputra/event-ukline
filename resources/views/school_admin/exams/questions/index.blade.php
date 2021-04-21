@@ -220,7 +220,9 @@
                                 <th>Opsi</th>
                                 <th>Jawaban</th>
                                 <th>Poin</th>
+                                @if($exam->status != 'published')
                                 <th></th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
@@ -246,14 +248,12 @@
                                 <td class="align-top py-2">
                                     {{ $question->poin ?? 'Belum dipublikasi' }}
                                 </td>
-                                <td class="align-top py-2">
                                 @if($exam->status != 'published')
+                                <td class="align-top py-2">
                                     <a href="{{ route('school_admin.exams.questions.edit', [$exam->id, $question->id]) }}" class="btn btn-sm btn-light d-block" title="Edit"><i class="fa fa-pencil-alt"></i></a>
-                                    <button class="btn btn-sm btn-danger mt-2 d-block" data-toggle="modal" data-target="#confirmDelete" data-url="{{ route('school_admin.exams.questions.delete', [$exam->id, $question->id]) }}" title="Hapus"><i class="fa fa-trash"></i></button>
-                                @else
-                                    Tidak ada aksi
-                                @endif
+                                    <button class="btn btn-sm btn-danger w-100 mt-2 d-block" data-toggle="modal" data-target="#confirmDelete" data-url="{{ route('school_admin.exams.questions.delete', [$exam->id, $question->id]) }}" title="Hapus"><i class="fa fa-trash"></i></button>
                                 </td>
+                                @endif
                             </tr>
                             @empty
                             <tr>

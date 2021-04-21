@@ -2911,14 +2911,6 @@
             overflow: hidden;
         }
 
-        #question-list .question-item {
-            display: none;
-        }
-
-        #question-list .question-item:first-child {
-            display: block;
-        }
-
         #question-list .question-item .btn-prev,
         #question-list .question-item .btn-next,
         #question-list .question-item .btn-finish {
@@ -2952,7 +2944,7 @@
 <body>
     <div id="app">
         <div class="main-wrapper bg-white">
-            <nav class="navbar px-0 d-flex align-items-center py-2 navbar-dark" style="background: #007b88;">
+            <nav class="navbar px-0 d-flex sticky-top align-items-center py-2 navbar-dark" style="background: #007b88;">
                 <div class="container">
                     <a class="navbar-brand" href="#" tabindex="-1">{{ $exam->name }}</a>
                     <ul class="navbar-nav d-flex ml-auto mt-2 mt-lg-0">
@@ -2969,9 +2961,12 @@
             <!-- Main Content -->
             <div class="main-content">
 
-                <div class="container mt-4">
+                <div class="container my-4">
                     <div class="row justify-content-center">
                         <div class="col-md-9">
+                            <div class="card card-body py-3 bg-whitesmoke border mb-3">
+                                <a href="{{ route('student.exam.start', [$exam->id, $token]) }}">Ke mode satu normal</a>
+                            </div>
                             <form action="{{ route('student.exam.finish', [$exam->id, $token]) }}" method="POST" id="exam_form">
                                 @csrf
                                 <div id="question-list">
@@ -2984,15 +2979,15 @@
                                     @endphp
 
                                     @foreach ($questions as $key => $question)
-                                    <div class="card border mb-2 bg-whitesmoke question-item" data-key="{{ $key + 1 }}" data-id="{{ $question->id }}" data-type="{{ $question->question_type }}">
+                                    <div id="question{{ $key }}" class="card border mb-3 bg-whitesmoke question-item" data-key="{{ $key + 1 }}" data-id="{{ $question->id }}" data-type="{{ $question->question_type }}">
                                         <div class="card-header">
                                             <h4 class="text-dark">No. {{ $key + 1 }} dari {{ count($exam->examQuestions) }} Soal</h4>
                                         </div>
                                         <div class="card-body">
                                             <input type="hidden" name="question[{{$key}}][question_id]" value="{{ $question->id }}">
-                                            <div id="question" class="mb-3">{!! $question->question !!}</div>
+                                            <div class="mb-3">{!! $question->question !!}</div>
                                             @if ($question->question_type == 'PG')
-                                            <div id="option">
+                                            <div>
                                                 <div class="options">
                                                     @foreach (json_decode($question->option) as $ind => $option)
                                                     <div class="option d-flex">
@@ -3012,35 +3007,20 @@
                                                 </div>
                                             </div>
                                             @elseif ($question->question_type == 'ESAI')
-                                            <div id="esai">
+                                            <div>
                                                 <textarea name="question[{{$key}}][answer]" id="answer{{$key}}" class="form-control mt-3" style="height: 120px;"></textarea>
                                             </div>
                                             @endif
                                         </div>
+                                        @if (($key + 1) == count($exam->examQuestions))
                                         <div class="card-footer border-top py-2 bg-whitesmoke d-flex align-items-center justify-content-end" style="gap: 10px;">
-                                            <button type="button" class="btn btn-light btn-lg shadow-none btn-prev" style="gap: 10px;"><i class="fa fa-chevron-left" aria-hidden="true"></i> <span class="d-none d-md-block">Sebelumnya</span></button>
-                                            @if (($key + 1) < count($exam->examQuestions))
-                                            <button type="button" class="btn btn-primary btn-lg shadow-none btn-next" style="gap: 10px;"><span class="d-none d-md-block">Selanjutnya</span> <i class="fa fa-chevron-right" aria-hidden="true"></i></button>
-                                            @else
-                                            <button type="button" data-toggle="modal" data-target="#confirmSubmit" class="btn btn-primary btn-lg shadow-none btn-finish" style="gap: 10px;"><span class="d-none d-md-block">Selesai</span> <i class="fa fa-check" aria-hidden="true"></i></button>
-                                            @endif
+                                            <button type="submit" class="btn btn-primary btn-lg shadow-none btn-finish" style="gap: 10px;"><span class="d-none d-md-block">Selesai</span> <i class="fa fa-check" aria-hidden="true"></i></button>
                                         </div>
+                                        @endif
                                     </div>
                                     @endforeach
                                 </div>
                             </form>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="card border mb-3 bg-whitesmoke d-none d-md-block">
-                                <div class="card-body">
-                                    @foreach ($exam->examQuestions as $key => $question)
-                                    <button type="button" class="btn btn-light shadow-none btn-pagination {{ $key == 0 ? 'active' : '' }}" data-key="{{ $key }}">{{ $key + 1 }}</button>
-                                    @endforeach
-                                </div>
-                            </div>
-                            <div class="card card-body py-3 bg-whitesmoke border">
-                                <a href="?mode=paper">Ke mode satu halaman</a>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -3068,26 +3048,6 @@
                         <button type="submit" class="btn btn-primary">Keluar</button>
                     </div>
                 </form>
-            </div>
-        </div>
-    </div>
-    
-    <div class="modal fade" id="confirmSubmit" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Konfirmasi Selesai</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>Apakah Anda yakin untuk mengakhiri ujian? Pastikan Anda telah mengisi seluruh pertanyaan.</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cek Ulang</button>
-                    <button type="button" onclick="document.getElementById('exam_form').submit()" class="btn btn-primary">Selesai</button>
-                </div>
             </div>
         </div>
     </div>
@@ -3149,73 +3109,10 @@
         }
     }, 0);
 
-    function getActiveQuestion() {
-        var elements = document.querySelectorAll('.question-item');
-        var el;
-        
-        elements.forEach((element, index) => {
-            if (window.getComputedStyle(element).display == 'block') {
-                el = element;
-            }
-        });
-
-        return el;
-    }
-
-    function getActiveQuestionIndex() {
-        var current = getActiveQuestion();
-
-        return parseInt(current.getAttribute("data-key") - 1);
-    }
-
     function getQuestionAt(index) {
         var element = document.querySelectorAll('.question-item')[index];
 
         return element;
-    }
-
-    function setQuestion(target) {
-        var current = getActiveQuestion();
-
-        current.style.display = 'none';
-        target.style.display = 'block';
-
-        setPagination();
-    }
-
-    function setPagination() {
-        var currentIndex = getActiveQuestionIndex();
-
-        var paginations = document.querySelectorAll('.btn-pagination');
-
-        paginations.forEach((element, index) => {
-            element.classList.remove('active', 'answered');
-            
-            if (isQuestionAnswered(index)) {
-                element.classList.add('answered');
-
-                setToLocalStorage();
-            }
-        });
-
-        paginations[currentIndex].classList.add('active');
-    }
-
-    function setNextQuestion() {
-        var currentIndex = getActiveQuestionIndex();
-        var nextQuestion = getQuestionAt(parseInt(currentIndex + 1));
-
-        setQuestion(nextQuestion);
-    }
-
-    function isQuestionAnswered(index) {
-        var isAnswered = getQuestionAnswer(index);
-
-        if (isAnswered != null) {
-            return true;
-        }
-
-        return false;
     }
 
     function getQuestionAnswer(index) {
@@ -3235,22 +3132,15 @@
         return answerValue;
     }
 
-    function setPrevQuestion() {
-        var currentIndex = getActiveQuestionIndex();
-        var prevQuestion = getQuestionAt(parseInt(currentIndex - 1));
-
-        setQuestion(prevQuestion);
-    }
-
-    function setQuestionAt() {
-        var getQuestion = getQuestionAt(this.getAttribute("data-key"));
-
-        setQuestion(getQuestion);
-    }
-
     function setToLocalStorage() {
-        var current = getActiveQuestion();
-        var currentIndex = getActiveQuestionIndex();
+        var current = this;
+        if (current.localName == 'input') {
+            var current = this.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode;
+        } else {
+            var current = this.parentNode.parentNode.parentNode;
+        }
+
+        var currentIndex = parseInt(current.getAttribute('data-key')) - 1;
         var id = current.getAttribute('data-id');
         var answer = getQuestionAnswer(currentIndex);
         var type = current.getAttribute('data-type');
@@ -3304,45 +3194,13 @@
     }
 
     document.querySelectorAll('input[type="radio"]').forEach((element, index) => {
-        element.addEventListener('click', setPagination);
+        element.addEventListener('click', setToLocalStorage);
     });
 
     document.querySelectorAll('textarea').forEach((element, index) => {
-        element.addEventListener('input', setPagination);
-    });
-
-    document.querySelectorAll('.btn-next').forEach((element, index) => {
-        element.addEventListener('click', setNextQuestion);
-    });
-
-    document.querySelectorAll('.btn-prev').forEach((element, index) => {
-        element.addEventListener('click', setPrevQuestion);
-    });
-
-    document.addEventListener('keyup', function(e) {
-        var currentIndex = getActiveQuestionIndex();
-
-        if (e.target.localName != 'textarea' && e.target.localName != 'input') {
-            if (e.keyCode == '39') {
-                var totalQuestion = document.querySelectorAll('.question-item').length;
-                if (parseInt(currentIndex + 1) < totalQuestion) {
-                    setNextQuestion();
-                }
-            }
-
-            if (e.keyCode == '37') {
-                if (currentIndex > 0) {
-                    setPrevQuestion();
-                }
-            }
-        }
-    });
-
-    document.querySelectorAll('.btn-pagination').forEach((element, index) => {
-        element.addEventListener('click', setQuestionAt);
+        element.addEventListener('input', setToLocalStorage);
     });
 
     setAnsweredQuestion();
-    setPagination();
 </script>
 </html>

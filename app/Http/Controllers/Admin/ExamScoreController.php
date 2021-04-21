@@ -34,7 +34,6 @@ class ExamScoreController extends Controller
 
     public function indexScoreExam(Exam $exam, Classes $class)
     {
-
         return view('school_admin.exams.exam-scores.index-score-exam', 
                     compact('exam','class'));
     }
@@ -49,6 +48,14 @@ class ExamScoreController extends Controller
         $examQuestions = ExamQuestion::where('exam_id',$exam)->get();
         return view('school_admin.exams.exam-scores.detail', 
                     compact('exam','class','score','examQuestions'));
+    }
+
+    public function deleteScoreStudent(Request $request, $id)
+    {
+        $examScore = ExamScore::find($id);
+        $message = 'Nilai siswa '. $examScore->student->name. ' berhasil dihapus';
+        $examScore->delete();
+        return redirect()->back()->with('success',$message);
     }
 
 }

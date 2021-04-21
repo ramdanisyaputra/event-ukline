@@ -18,11 +18,11 @@
                             <table class="w-100">
                                 <tr>
                                     <td class=""><i class="far fa-clock mr-2"></i> Dimulai pada</td>
-                                    <td class="font-weight-bold">{{ \Carbon\Carbon::parse($exam->started_at)->format('H:i') }}</td>
+                                    <td class="font-weight-bold">{{ \Carbon\Carbon::parse($exam->started_at)->isoFormat('DD MMMM YYYY, HH:mm') }}</td>
                                 </tr>
                                 <tr>
                                     <td class=""><i class="far fa-bell mr-2"></i> Berakhir pada</td>
-                                    <td class="font-weight-bold">{{ \Carbon\Carbon::parse($exam->expired_at)->format('H:i') }}</td>
+                                    <td class="font-weight-bold">{{ \Carbon\Carbon::parse($exam->expired_at)->isoFormat('DD MMMM YYYY, HH:mm') }}</td>
                                 </tr>
                                 <tr>
                                     <td class=""><i class="far fa-hourglass mr-2"></i> Durasi</td>

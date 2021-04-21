@@ -23,7 +23,7 @@
     <div class="section-body">
         <div class="card">
             <div class="card-header">
-                <h4>Daftar Soal</h4>
+                <h4>Daftar Siswa</h4>
                 <div class="card-header-action dropdown">
                     <a href="#" data-toggle="dropdown" class="btn btn-primary dropdown-toggle"><i class="fa fa-cog"></i> Pengaturan</a>
                     <ul class="dropdown-menu dropdown-menu-sm dropdown-menu-right">

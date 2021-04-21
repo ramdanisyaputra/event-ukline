@@ -15,6 +15,7 @@
 
         <div class="section-header-breadcrumb">
             <div class="breadcrumb-item active"><a href="#">Beranda</a></div>
+            <div class="breadcrumb-item active"><a href="{{ route('school_admin.exam-scores.index') }}">Daftar Ujian</a></div>
             <div class="breadcrumb-item">Daftar Kelas yang mengikuti {{$exam->name}}</div>
         </div>
     </div>

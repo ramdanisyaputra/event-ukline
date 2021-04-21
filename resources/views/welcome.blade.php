@@ -48,8 +48,8 @@
       <nav id="navbar" class="navbar">
         <ul>
           <li><a class="nav-link scrollto active" href="#about">Tentang</a></li>
-          <li><a class="nav-link scrollto" href="#faq">FAQ</a></li>
           <li><a class="nav-link scrollto" href="#features">Fitur</a></li>
+          <li><a class="nav-link scrollto" href="#faq">FAQ</a></li>
           <li><a class="nav-link scrollto" href="{{route('login')}}">Masuk</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
@@ -192,7 +192,7 @@
               <div class="col-md-6" data-aos="zoom-out" data-aos-delay="500">
                 <div class="feature-box d-flex align-items-center">
                   <i class="bi bi-check"></i>
-                  <h3>Kelola Nilai Serentak 1 Kabupaten</h3>
+                  <h3>Kelola Ujian Serentak</h3>
                 </div>
               </div>
 

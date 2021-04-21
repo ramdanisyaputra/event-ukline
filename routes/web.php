@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\AdminStudentController;
 use App\Http\Controllers\Admin\ExamController as AdminExamController;
 use App\Http\Controllers\Admin\ExamQuestionController as AdminExamQuestionController;
 use App\Http\Controllers\Admin\ExamScoreController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\QuestionWriter\ExamController as QuestionWriterExamController;
 use App\Http\Controllers\QuestionWriter\ExamQuestionController as QuestionWriterExamQuestionController;
 use App\Http\Controllers\QuestionWriter\QuestionDashboardController;
@@ -41,7 +42,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('landing_page');
 
 // Auth::routes();
 
@@ -218,6 +219,9 @@ Route::prefix('question_writer')->name('question_writer.')->middleware(['middlew
 });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+// FAQ
+Route::get('/faq', [HomeController::class, 'faq'])->name('faq');
 
 
 Route::post('/web/upload_image', [WebController::class, 'uploadImage'])->name('web.upload_image');

@@ -9,6 +9,7 @@ use App\Imports\StudentImport;
 use App\Models\Classes;
 use App\Models\Exam;
 use App\Models\ExamClass;
+use App\Models\ExamQuestion;
 use App\Models\ExamScore;
 use App\Models\Student;
 use Illuminate\Http\Request;
@@ -41,6 +42,13 @@ class ExamScoreController extends Controller
     public function exportExam(Exam $exam, Classes $class)
     {
         return Excel::download(new ScoreExport($class,$exam), "Nilai $exam->name $class->name.xlsx");
+    }
+
+    public function detail(Exam $exam, Classes $class,ExamScore $score)
+    {
+        $examQuestions = ExamQuestion::where('exam_id',$exam)->get();
+        return view('school_admin.exams.exam-scores.detail', 
+                    compact('exam','class','score','examQuestions'));
     }
 
 }

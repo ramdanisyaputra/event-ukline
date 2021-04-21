@@ -9,7 +9,6 @@ use App\Models\Exam;
 use App\Models\ExamClass;
 use App\Models\ExamQuestion;
 use App\Models\ExamScore;
-use Barryvdh\DomPDF\PDF as DomPDFPDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
@@ -131,13 +130,14 @@ class ExamQuestionController extends Controller
         return redirect()->back()->with('success', 'Berhasil menghapus soal ujian!');
      }
 
-     public function destroyAll(Exam $exam)
+     public function destroyAll($exam)
      {
-        $scores = ExamClass::where('exam_id', $exam->id)->count();
+        $scores = ExamClass::where('exam_id', $exam)->count();
         if($scores > 0){
             return redirect()->back()->with('alert','Soal tidak dapat di edit, karena telah terdapat sekolah yang mengambil soal ujian ini.');
         }
-        $exam->examQuestions()->delete();
+        $exams = Exam::find($exam);
+        $exams->examQuestions()->delete();
 
         return redirect()->back()->with('success', 'Berhasil menghapus semua soal ujian!');
      }
@@ -156,7 +156,7 @@ class ExamQuestionController extends Controller
     {
         $exam = Exam::find($examId);
 		try {
-            return Excel::download(new ExportQuestion($examId), 'Data Soal'.$exam->name.'.xlsx');
+            return Excel::download(new ExportQuestion($examId), 'Data Soal '.$exam->name.'.xlsx');
 		} catch (\Exception $ex) {
             $errorMsg = json_decode($ex->getMessage());
             return back()->with('alert','Gagal export data');
@@ -171,7 +171,7 @@ class ExamQuestionController extends Controller
 
         $data = compact('exam','examQuestions');
 
-        $pdf = DomPDFPDF::loadView('question_writer.exams.questions.pdf', $data);
+        $pdf = PDF::loadView('question_writer.exams.questions.pdf', $data);
     
         return $pdf->stream('Data Soal '.$exam->name.'.pdf');
     }

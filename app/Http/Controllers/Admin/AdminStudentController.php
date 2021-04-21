@@ -37,7 +37,6 @@ class AdminStudentController extends Controller
             'dob'=>'required',
             'student_number'=>'required',
             'gender'=>'required',
-            'password'=>'required',
         ]);
         if ($validator->fails()) {
             return redirect()->back()->with('alert','Gagal menginput data')->withInput();
@@ -52,7 +51,7 @@ class AdminStudentController extends Controller
         $student->student_number = $request->student_number;
         $student->gender = $request->gender;
         $student->username = $request->nisn; //username itu nisn
-        $student->password = bcrypt($request->password);
+        $student->password = bcrypt($request->nisn);
         $student->class_id = $classId;
         $student->school_id = $this->authUser()->school_id;
         $student->save();
@@ -83,13 +82,13 @@ class AdminStudentController extends Controller
         return redirect()->back()->with('success','Siswa berhasil diubah');
     }
     
-    public function resetPasswordStudent($classId,$studentId)
+    public function resetPasswordStudent($studentId)
     {
         $student = Student::find($studentId);
         $student->password = bcrypt($student->username);
         $student->save();
 
-        return redirect()->back()->with('success','Berhasil Reset Password Penulis Soal');
+        return redirect()->back()->with('success','Berhasil Reset Password Siswa Sesuai NISN');
     }
 
     public function import(Request $request , $classId)
@@ -125,14 +124,14 @@ class AdminStudentController extends Controller
     }
     public function deleteAll($classId)
     {
-        $students = Student::where('class_id', $classId)->get();
+        $students = Student::where('class_id', $classId);
         $studentId = [];
-        foreach($students as $student)
+        foreach($students->get() as $student)
         {
             $studentId [] =  $student->id;
         }
         ExamScore::whereIn('student_id', $studentId)->delete();
-        Student::where('class_id',$classId)->delete();
+        $students->delete();
         return back()->with('success','Berhasil Hapus Semua Data Siswa');
     }
 }

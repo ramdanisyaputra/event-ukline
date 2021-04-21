@@ -189,8 +189,10 @@
 
                                 <td class="align-top py-2">
                                     @if($exam->status == 'drafted')
+                                    <div class="d-inline d-flex">
                                     <a href="{{ route('question_writer.exams.questions.edit', [$exam->id, $question->id]) }}" class="btn btn-sm btn-light d-block" title="Edit"><i class="fa fa-pencil-alt"></i></a>
-                                    <button class="btn btn-sm btn-danger mt-2 d-block w-100" data-toggle="modal" data-target="#confirmDelete" data-url="{{ route('question_writer.exams.questions.delete', [$exam->id, $question->id]) }}" title="Hapus"><i class="fa fa-trash"></i></button>
+                                    <button class="btn btn-sm btn-danger ml-1" data-toggle="modal" data-target="#confirmDelete" data-url="{{ route('question_writer.exams.questions.delete', [$exam->id, $question->id]) }}" title="Hapus"><i class="fa fa-trash"></i></button>
+                                    </div>
                                     @else
                                         Arsipkan ujian untuk mengubah soal
                                     @endif

@@ -12,7 +12,7 @@ use App\Models\ExamScore;
 use App\Models\ExamType;
 use App\Models\School;
 use App\Models\Subject;
-use Barryvdh\DomPDF\PDF;
+use PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
@@ -93,9 +93,8 @@ class ExamQuestionController extends Controller
         $exam = Exam::find($examId);
 
         $examQuestions = ExamQuestion::where('exam_id',$examId)->get();
-
         $data = compact('exam','examQuestions');
-
+        
         $pdf = PDF::loadView('school_admin.exams.questions.pdf', $data);
     
         return $pdf->stream('Data Soal '.$exam->name.'.pdf');

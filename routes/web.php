@@ -133,6 +133,8 @@ Route::prefix('school_admin')->name('school_admin.')->middleware(['middleware' =
         Route::put('update/{classId}', [AdminStudentController::class,'update'])->name('update');
         Route::get('reset/{classId}/{studentId}', [AdminStudentController::class,'resetPasswordStudent'])->name('resetPasswordStudent');
         Route::post('import/{classId}', [AdminStudentController::class,'import'])->name('import');
+        Route::delete('delete/{id}', [AdminStudentController::class,'delete'])->name('delete');
+        Route::delete('deleteAll/{classId}', [AdminStudentController::class,'deleteAll'])->name('deleteAll');
 
     });
     // Exam
@@ -199,6 +201,7 @@ Route::prefix('question_writer')->name('question_writer.')->middleware(['middlew
         Route::post('store', [QuestionWriterExamController::class, 'store'])->name('store');
         Route::put('update', [QuestionWriterExamController::class, 'update'])->name('update');
         Route::put('/update_status', [QuestionWriterExamController::class, 'updateStatus'])->name('update_status');
+        Route::delete('delete/{examId}', [QuestionWriterExamController::class, 'delete'])->name('delete');
 
         // question
         Route::prefix('{exam}/questions')->name('questions.')->group(function() {

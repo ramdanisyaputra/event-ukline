@@ -4,7 +4,9 @@ namespace App\Http\Controllers\QuestionWriter;
 
 use App\Http\Controllers\Controller;
 use App\Models\Exam;
+use App\Models\ExamClass;
 use App\Models\ExamQuestion;
+use App\Models\ExamScore;
 use App\Models\ExamType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -106,6 +108,10 @@ class ExamController extends Controller
 
             return redirect()->back()->with('success','Soal berhasil di Publikasikan');
         }else{
+            $scores = ExamScore::where('exam_id', $exam->id)->count();
+            if($scores > 0){
+                return redirect()->back()->with('alert','Soal tidak dapat di edit, karena telah terdapat nilai siswa yang sudah mengerjakan.');
+            }
             $exam->update([
                 'status'=>'drafted'
             ]);
@@ -114,6 +120,16 @@ class ExamController extends Controller
             ]);
             return redirect()->back()->with('success','Soal berhasil di Arsipkan');
         }
-        return redirect()->back()->with('success', "Berhasil mengubah status!");
+        return redirect()->back()->with('success', "Berhasil mengubah status");
+    }
+
+    public function delete($examId)
+    {
+        $scores = ExamClass::where('exam_id', $examId)->count();
+        if($scores > 0){
+            return redirect()->back()->with('alert','Soal tidak dapat di edit, karena telah terdapat sekolah yang mengambil soal ujian ini.');
+        }
+        Exam::find($examId)->delete();
+        return redirect()->back()->with('success', "Berhasil menghapus ujian");
     }
 }

@@ -6,6 +6,7 @@ use App\Exports\StudentExport;
 use App\Http\Controllers\Controller;
 use App\Imports\StudentImport;
 use App\Models\Classes;
+use App\Models\ExamScore;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -51,7 +52,7 @@ class AdminStudentController extends Controller
         $student->student_number = $request->student_number;
         $student->gender = $request->gender;
         $student->username = $request->nisn; //username itu nisn
-        $student->password = $request->password;
+        $student->password = bcrypt($request->password);
         $student->class_id = $classId;
         $student->school_id = $this->authUser()->school_id;
         $student->save();
@@ -116,5 +117,21 @@ class AdminStudentController extends Controller
             $errorMsg = json_decode($ex->getMessage());
             return back()->with('alert','Gagal export data');
 		}
+    }
+    public function delete($studentId)
+    {
+        Student::find($studentId)->delete();
+        return back()->with('success','Berhasil Hapus Data Siswa');
+    }
+    public function deleteAll($classId)
+    {
+        $students = Student::where('class_id', $classId)->get();
+        $studentId = [];
+        foreach($students as $student)
+        {
+            $studentId [] =  $student->id;
+        }
+        $examScore = ExamScore::whereIn('student_id', $studentId)->delete();
+        return back()->with('success','Berhasil Hapus Semua Data Siswa');
     }
 }

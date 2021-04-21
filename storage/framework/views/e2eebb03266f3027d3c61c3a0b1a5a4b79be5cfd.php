@@ -1,6 +1,6 @@
-@extends('layouts.main')
 
-@section('content')
+
+<?php $__env->startSection('content'); ?>
 <section class="section">
     <div class="section-header">
         <h1>Kumpulan Ujian</h1>
@@ -35,28 +35,28 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($exams as $key => $exam)
+                            <?php $__empty_1 = true; $__currentLoopData = $exams; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $exam): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                             <tr>
-                                <td>{{ ++$key }}</td>
-                                <td>{{ $exam->name }}</td>
-                                <td>{{ $exam->started_at }}</td>
-                                <td>{{ $exam->expired_at }}</td>
-                                <td>{{ $exam->access_code }}</td>
-                                <td>{{ $exam->examType->name }}</td>
-                                <td>{{ $exam->randomized == 1 ? 'Diacak' : 'Tidak Diacak' }}</td>
+                                <td><?php echo e(++$key); ?></td>
+                                <td><?php echo e($exam->name); ?></td>
+                                <td><?php echo e($exam->started_at); ?></td>
+                                <td><?php echo e($exam->expired_at); ?></td>
+                                <td><?php echo e($exam->access_code); ?></td>
+                                <td><?php echo e($exam->examType->name); ?></td>
+                                <td><?php echo e($exam->randomized == 1 ? 'Diacak' : 'Tidak Diacak'); ?></td>
                                 <td class="text-center">
                                     <div class="d-inline d-flex">
-                                        <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#editExam" data-id="{{ $exam->id }}" data-name="{{ $exam->name }}" data-started-at="{{ date('Y-m-d\TH:i', strtotime($exam->started_at)) }}" data-expired-at="{{ date('Y-m-d\TH:i', strtotime($exam->expired_at)) }}" data-access-code="{{ $exam->access_code }}" data-duration="{{ $exam->duration }}" data-exam-type-id="{{ $exam->exam_type_id }}"  data-randomized="{{ $exam->randomized }}"><i class="fas fa-pencil-alt"></i></button>
-                                        <a href="{{ route('question_writer.exams.questions.index', $exam->id) }}" class="btn btn-primary btn-sm ml-1"><i class="fa fa-eye"></i></a>
-                                        <button class="btn btn-sm btn-danger ml-1" data-toggle="modal" data-target="#confirmDelete" data-url="{{ route('question_writer.exams.delete', $exam->id) }}" title="Hapus"><i class="fa fa-trash"></i></button>
+                                        <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#editExam" data-id="<?php echo e($exam->id); ?>" data-name="<?php echo e($exam->name); ?>" data-started-at="<?php echo e(date('Y-m-d\TH:i', strtotime($exam->started_at))); ?>" data-expired-at="<?php echo e(date('Y-m-d\TH:i', strtotime($exam->expired_at))); ?>" data-access-code="<?php echo e($exam->access_code); ?>" data-duration="<?php echo e($exam->duration); ?>" data-exam-type-id="<?php echo e($exam->exam_type_id); ?>"  data-randomized="<?php echo e($exam->randomized); ?>"><i class="fas fa-pencil-alt"></i></button>
+                                        <a href="<?php echo e(route('question_writer.exams.questions.index', $exam->id)); ?>" class="btn btn-primary btn-sm ml-1"><i class="fa fa-eye"></i></a>
+                                        <button class="btn btn-sm btn-danger ml-1" data-toggle="modal" data-target="#confirmDelete" data-url="<?php echo e(route('question_writer.exams.delete', $exam->id)); ?>" title="Hapus"><i class="fa fa-trash"></i></button>
                                     </div>
                                 </td>
                             </tr>
-                            @empty
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                             <tr>
                                 <td colspan="7" class="text-center">Tidak ada data</td>
                             </tr>
-                            @endforelse
+                            <?php endif; ?>
                         </tbody>
                     </table>
                 </div>
@@ -68,8 +68,8 @@
 <div class="modal fade" id="kelolaStudent" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form action="{{route('question_writer.exams.store')}}" method="POST" id="formKelolaExam">
-                @csrf
+            <form action="<?php echo e(route('question_writer.exams.store')); ?>" method="POST" id="formKelolaExam">
+                <?php echo csrf_field(); ?>
                 <div class="modal-header">
                     <h5 class="modal-title"><span>Tambah</span> Siswa</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -101,9 +101,9 @@
                         <label for="exam_type_id">Jenis Ujian</label>
                         <select name="exam_type_id" id="exam_type_id" class="form-control" required>
                             <option value=""> ~ Pilih ~</option>
-                            @foreach($examTypes as $exam)
-                                <option value="{{$exam->id}}">{{$exam->name}}</option>
-                            @endforeach
+                            <?php $__currentLoopData = $examTypes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $exam): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($exam->id); ?>"><?php echo e($exam->name); ?></option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>
                     </div>
                     <div class="form-group">
@@ -128,9 +128,9 @@
 <div class="modal fade" id="editExam" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form action="{{route('question_writer.exams.update')}}" method="POST" id="formKelolaExam">
-                @csrf
-                @method('PUT')
+            <form action="<?php echo e(route('question_writer.exams.update')); ?>" method="POST" id="formKelolaExam">
+                <?php echo csrf_field(); ?>
+                <?php echo method_field('PUT'); ?>
                 <input type="hidden" name="id">
                 <div class="modal-header">
                     <h5 class="modal-title"><span>Edit</span> Siswa</h5>
@@ -163,9 +163,9 @@
                         <label for="exam_type_id">Jenis Ujian</label>
                         <select name="exam_type_id" id="exam_type_id" class="form-control" required>
                             <option value=""> ~ Pilih ~</option>
-                            @foreach($examTypes as $exam)
-                                <option value="{{$exam->id}}">{{$exam->name}}</option>
-                            @endforeach
+                            <?php $__currentLoopData = $examTypes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $exam): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($exam->id); ?>"><?php echo e($exam->name); ?></option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>
                     </div>
                     <div class="form-group">
@@ -190,8 +190,8 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <form action="" method="post">
-            @csrf
-            @method('DELETE')
+            <?php echo csrf_field(); ?>
+            <?php echo method_field('DELETE'); ?>
                 <div class="modal-header">
                     <h5 class="modal-title">Peringatan</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -210,10 +210,10 @@
     </div>
 </div>
 
-@endsection
+<?php $__env->stopSection(); ?>
 
 
-@push('script')
+<?php $__env->startPush('script'); ?>
 <script>
     $('#editExam').on('show.bs.modal', (e) => {
         var id = $(e.relatedTarget).data('id');
@@ -240,4 +240,5 @@
         $(e.currentTarget).find('form').attr('action', url);
     });
 </script>
-@endpush
+<?php $__env->stopPush(); ?>
+<?php echo $__env->make('layouts.main', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\event-ukline\resources\views/question_writer/exams/index.blade.php ENDPATH**/ ?>

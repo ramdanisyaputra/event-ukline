@@ -8,14 +8,14 @@
             <div class="breadcrumb-item active"><a href="">Beranda</a></div>
             <div class="breadcrumb-item active"><a href="{{ route('school_admin.exam-scores.index') }}">Daftar Ujian</a></div>
             <div class="breadcrumb-item"><a href="{{ route('school_admin.exam-scores.indexScore',$exam->id) }}">Daftar Kelas</a></div>
-            <div class="breadcrumb-item">{{$class->name}} Peserta {{$exam->name}}</div>
+            <div class="breadcrumb-item"><a href="{{route('school_admin.exam-scores.indexScoreExam', [$exam->id,$class->id])}}">{{$class->name}} Peserta {{$exam->name}}</a></div>
             <div class="breadcrumb-item">Detail Pengerjaan</div>
         </div>
     </div>
     <div class="section-body">
         <div class="card">
             <div class="card-header">
-                <h4>Detail Pengerjaan Soal {{ $exam->name }} oleh {{$score->students->name}}</h4>
+                <h4>Detail Pengerjaan Soal {{ $exam->name }} oleh {{$score->student->name}}</h4>
             </div>
             <div class="card-body">
                 <div>

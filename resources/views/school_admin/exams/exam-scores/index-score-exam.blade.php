@@ -12,9 +12,11 @@
 <section class="section">
     <div class="section-header">
         <h1>{{$class->name}} Peserta {{$exam->name}}</h1>
-
+z
         <div class="section-header-breadcrumb">
             <div class="breadcrumb-item active"><a href="#">Beranda</a></div>
+            <div class="breadcrumb-item active"><a href="{{ route('school_admin.exam-scores.index') }}">Daftar Ujian</a></div>
+            <div class="breadcrumb-item"><a href="{{ route('school_admin.exam-scores.indexScore',$exam->id) }}">Daftar Kelas</a></div>
             <div class="breadcrumb-item">{{$class->name}} Peserta {{$exam->name}}</div>
         </div>
     </div>
@@ -65,7 +67,7 @@
                                 <td class="text-center">
                                     <div class="d-inline d-flex">
                                         @if($examScore)
-                                        <a href="{{route('school_admin.exam-scores.indexScore', $exam->id)}}" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></a>
+                                        <a href="{{route('school_admin.exam-scores.detail',[$exam->id,$class->id,$examScore->id])}}" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></a>
                                         <button class="btn btn-sm btn-danger ml-1" data-toggle="modal" data-target="#confirmDelete" data-url="{{ route('school_admin.exam-scores.deleteScoreStudent', $examScore->id) }}" title="Hapus"><i class="fa fa-trash"></i></button>
                                         @endif
                                     </div>

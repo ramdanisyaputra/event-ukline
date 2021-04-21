@@ -3060,6 +3060,9 @@
 
 <!-- JS Libraies -->
 <script src="{{ asset('main/plugins/izitoast/dist/js/iziToast.min.js') }}"></script>
+<script>window.MathJax = { MathML: { extensions: ["mml3.js", "content-mathml.js"]}}</script>
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=MML_HTMLorMML"></script>
+
 
 @if (session()->has('alert'))
 <script>

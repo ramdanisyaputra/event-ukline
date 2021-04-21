@@ -159,7 +159,8 @@ class ExamController extends Controller
 
             return redirect()->back()->with('success','Soal berhasil di Publikasikan');
         }else{
-            $scores = ExamScore::where('exam_id', $exam->id)->count();
+            $schoolId = $this->authUser()->school_id;
+            $scores = ExamScore::where('exam_id', $exam->id)->where('school_id',$schoolId)->count();
             if($scores > 0){
                 return redirect()->back()->with('alert','Soal tidak dapat di arsipkan, karena telah terdapat nilai siswa yang sudah mengerjakan.');
             }

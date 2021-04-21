@@ -68,7 +68,7 @@
                             <p class="lead">
                                 Maaf kami tidak dapat menemukan data ujian, silahkan hubungi kami atau guru Anda terkait hal ini.
                             </p>
-                            <a href="#" class="mt-4 bb">Butuh bantuan?</a>
+                            <a href="#" class="mt-4 bb">Butuh bantuan? (FAQ)</a>
                         </div>
                     </div>
                 </div>

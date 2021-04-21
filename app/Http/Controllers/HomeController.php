@@ -27,4 +27,9 @@ class HomeController extends Controller
             session()->get('role') == 'user' ? 'superadmin.index' : session()->get('role') . '.index'
         );
     }
+
+    public function faq()
+    {
+        return view('faq');
+    }
 }

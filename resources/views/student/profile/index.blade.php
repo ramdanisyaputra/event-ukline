@@ -4,7 +4,7 @@
 <section class="section">
     <div class="section-body">
         <div class="row">
-            <div class="col-md-7">
+            <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
                         <h4>Profil Peserta</h4>
@@ -74,6 +74,11 @@
                                 XI-2
                             </div>
                         </div>
+                    </div>
+                    <div class="card-footer">
+                        <small>
+                            <i class="fa fa-question-circle"></i> Terdapat kesalahan? Lihat : <a href="#" class="font-weight-bold" target="_blank">Bagaimana cara melaporkan indentitas peserta yang salah?</a>
+                        </small>
                     </div>
                 </div>
             </div>

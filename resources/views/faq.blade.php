@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>UKLINE EVENT </title>
+  <title>FAQ - UKLINE EVENT</title>
   <meta content="" name="description">
 
   <meta content="" name="keywords">
@@ -42,15 +42,13 @@
 
       <a href="#" class="logo d-flex align-items-center">
         <img src="{{asset('logo/logo.svg')}}" alt="">
-        <span>UKLINE EVENT</span>
+        <span>FAQ</span>
       </a>
 
       <nav id="navbar" class="navbar">
         <ul>
-          <li><a class="nav-link scrollto active" href="#about">Tentang</a></li>
-          <li><a class="nav-link scrollto" href="#features">Fitur</a></li>
-          <li><a class="nav-link scrollto" href="#faq">FAQ</a></li>
-          <li><a class="nav-link scrollto" href="{{route('login')}}">Masuk</a></li>
+          <li><a class="nav-link" href="{{ route('landing_page') }}">Beranda</a></li>
+          <li><a class="nav-link" href="{{route('login')}}">Masuk</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
@@ -93,8 +91,7 @@
             <div class="content">
               <h2>UKLINE EVENTS</h2>
               <div class="text-center text-lg-start">
-                <p>Dunia pendidikan sudah mulai terbiasa dengan pembelajaran jarak jauh atau daring, peserta didik pun sudah terbiasa belajar dengan menggunakan aplikasi.</p>
-                <p>Hal ini dapat dikatakan bahwa dunia pendidikan Indonesia sudah mampu menggunakan berbagai aplikasi 4.0.</p>
+                <p>Seiring kemajuan zaman, teknologi sudah merasuki kehidupan manusia modern. Salah satunya yang terpengaruh adalah ujian. Ujian daring lebih mudah dengan menggunakan <strong>UKLINE EVENTS</strong>.</p>
               </div>
             </div>
           </div>
@@ -114,7 +111,7 @@
       <div class="container" data-aos="fade-up">
 
         <header class="section-header">
-          <h2>Keunggulan & Manfaat</h2>
+          <h2>Keunggulan</h2>
           <p>UKLINE EVENTS</p>
         </header>
 
@@ -123,24 +120,24 @@
           <div class="col-lg-4">
             <div class="box" data-aos="fade-up" data-aos-delay="200">
               <img src="{{asset('landing/assets_landing_akm/img/values-1.png')}}" class="img-fluid" alt="">
-              <h3>Akses Mudah</h3>
-              <p>Semua fitur yang dimiliki oleh UKline terpusat dalam satu server yang membuat aplikasi mudah diakses<p>
+              <h3>Dapat Digunakan Dimana Saja Dan Kapan Saja</h3>
+              <p>UKLINE Dapat Memudahkan Dalam Mengatur Jadwal Ujian Dimana Saja Dan Kapan Saja <p>
             </div>
           </div>
 
           <div class="col-lg-4 mt-4 mt-lg-0">
             <div class="box" data-aos="fade-up" data-aos-delay="400">
               <img src="{{asset('landing/assets_landing_akm/img/values-2.png')}}" class="img-fluid" alt="">
-              <h3>Biaya Terjangkau</h3>
-              <p>Dengan menggunakan UKline Event, Anda cukup membayar fitur yang digunakan</p>
+              <h3>Cepat Dan Mudah Diakses</h3>
+              <p>UKLINE Mempunyai Peforma Ringan dan Mudah Diakses</p>
             </div>
           </div>
 
           <div class="col-lg-4 mt-4 mt-lg-0">
             <div class="box" data-aos="fade-up" data-aos-delay="600">
               <img src="{{asset('landing/assets_landing_akm/img/values-3.png')}}" class="img-fluid" alt="">
-              <h3>Fleksibilitas Waktu</h3>
-              <p>Anda dapat mengerjakan soal pada fitur yang telah dipilih dengan waktu yang fleksibel</p>
+              <h3>Mudah Digunakan Oleh Siapa Saja</h3>
+              <p>Aplikasi UKLINE Di desain agar Pengguna Dari Segala Usia Mudah Menggunakan UKLINE</p>
             </div>
           </div>
 
@@ -156,7 +153,7 @@
       <div class="container" data-aos="fade-up">
 
         <header class="section-header">
-          <h2>Lebih mudah dan terorganisir</h2>
+          <h2>Lebih mudah dengan</h2>
           <p>Fitur Aplikasi UKLINE EVENTS</p>
         </header>
 
@@ -169,45 +166,45 @@
           <div class="col-lg-6 mt-5 mt-lg-0 d-flex">
             <div class="row align-self-center gy-4">
 
-              <div class="col-md-6" data-aos="zoom-out" data-aos-delay="400">
+              <div class="col-md-6" data-aos="zoom-out" data-aos-delay="200">
                 <div class="feature-box d-flex align-items-center">
                   <i class="bi bi-check"></i>
-                  <h3>Tryout AKM</h3>
+                  <h3>Kelola Mata Pelajaran</h3>
                 </div>
               </div>
 
               <div class="col-md-6" data-aos="zoom-out" data-aos-delay="400">
                 <div class="feature-box d-flex align-items-center">
                   <i class="bi bi-check"></i>
-                  <h3>PAS</h3>
+                  <h3>Kelola Siswa</h3>
+                </div>
+              </div>
+
+              <div class="col-md-6" data-aos="zoom-out" data-aos-delay="400">
+                <div class="feature-box d-flex align-items-center">
+                  <i class="bi bi-check"></i>
+                  <h3>Kelola Ujian</h3>
                 </div>
               </div>
 
               <div class="col-md-6" data-aos="zoom-out" data-aos-delay="500">
                 <div class="feature-box d-flex align-items-center">
                   <i class="bi bi-check"></i>
-                  <h3>PTS</h3>
+                  <h3>Kelola Nilai Serentak 1 Kabupaten</h3>
                 </div>
               </div>
 
               <div class="col-md-6" data-aos="zoom-out" data-aos-delay="600">
                 <div class="feature-box d-flex align-items-center">
                   <i class="bi bi-check"></i>
-                  <h3>TOEFL</h3>
+                  <h3>Kelola Ujian Mandiri </h3>
                 </div>
               </div>
 
               <div class="col-md-6" data-aos="zoom-out" data-aos-delay="700">
                 <div class="feature-box d-flex align-items-center">
                   <i class="bi bi-check"></i>
-                  <h3>Tryout SBMPTN</h3>
-                </div>
-              </div>
-
-              <div class="col-md-6" data-aos="zoom-out" data-aos-delay="200">
-                <div class="feature-box d-flex align-items-center">
-                  <i class="bi bi-check"></i>
-                  <h3>Tryout STAN</h3>
+                  <h3>Kelola Nilai</h3>
                 </div>
               </div>
 
@@ -225,7 +222,7 @@
       <div class="container" data-aos="fade-up">
 
         <header class="section-header">
-          <h2>Pertanyaan yang sering ditanyakan</h2>
+          <h2>Pertanyaan yang sering ditanyakan di</h2>
           <p>FAQ UKLINE EVENTS</p>
         </header>
 
@@ -333,7 +330,7 @@
       <div class="container" data-aos="fade-up">
 
         <header class="section-header">
-          <h2>Apa kata mereka</h2>
+          <h2>Apa kata mereka di</h2>
           <p>Testimoni UKLINE EVENTS</p>
         </header>
 
@@ -410,28 +407,28 @@
 
             <div class="row gy-4">
               <div class="col-md-6">
-                <div class="info-box h-100">
+                <div class="info-box">
                   <i class="bi bi-geo-alt"></i>
                   <h3>Alamat</h3>
-                  <p>Jl. Raya Puncak Seuseupan No. 358 Kelurahan Bendungan, Kecamatan Ciawi, Kota Bogor 16720</p>
+                  <p>Ciawi, Kabupaten Bogor, Jawa Barat</p>
                 </div>
               </div>
               <div class="col-md-6">
-                <div class="info-box h-100">
+                <div class="info-box">
                   <i class="bi bi-telephone"></i>
                   <h3>Hubungi Kami</h3>
-                  <p>+62 821-1137-1600 (CS. UKLINE)</p>
+                  <p>+62 821-1137-1600</p>
                 </div>
               </div>
               <div class="col-md-6">
-                <div class="info-box h-100">
+                <div class="info-box">
                   <i class="bi bi-instagram"></i>
-                  <h3>Media Sosial</h3>
-                  <p><a href="https://instagram.com/ukline.id">@ukline.id</a> (Instagram)</p>
+                  <h3>Instagram</h3>
+                  <p><a href="https://instagram.com/ukline.id">@ukline.id</a></p>
                 </div>
               </div>
               <div class="col-md-6">
-                <div class="info-box h-100">
+                <div class="info-box">
                   <i class="bi bi-clock"></i>
                   <h3>Waktu Layanan</h3>
                   <p>9:00 - 17:00 WIB (Setiap Hari)</p>

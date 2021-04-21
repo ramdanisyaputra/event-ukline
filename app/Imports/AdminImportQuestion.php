@@ -45,7 +45,7 @@ class AdminImportQuestion implements ToCollection
                         $answer = trim(strtoupper($answer));
                     }
 
-                    if(count($option) < 4)
+                    if(count($option) < 2)
                     {
                         throw new Exception("Error");
                     }

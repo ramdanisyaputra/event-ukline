@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Exports\AdminExportQuestion;
+use App\Exports\ExportQuestion;
 use App\Http\Controllers\Controller;
 use App\Imports\AdminImportQuestion;
 use App\Models\Classes;
@@ -184,7 +184,7 @@ class ExamQuestionController extends Controller
     {
         $exam = Exam::find($examId);
 		try {
-            return Excel::download(new AdminExportQuestion($examId), 'Data Soal '.$exam->name.'.xlsx');
+            return Excel::download(new ExportQuestion($examId), 'Data Soal '.$exam->name.'.xlsx');
 		} catch (\Exception $ex) {
             $errorMsg = json_decode($ex->getMessage());
             return back()->with('alert','Gagal export data');

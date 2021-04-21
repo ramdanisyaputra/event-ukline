@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\QuestionWriter;
 
-use App\Exports\QuestionWriterExportQuestion;
+use App\Exports\ExportQuestion;
 use App\Http\Controllers\Controller;
 use App\Imports\QuestionWriterImportQuestion;
 use App\Models\Exam;
@@ -148,7 +148,7 @@ class ExamQuestionController extends Controller
 		try {
             Excel::import(new QuestionWriterImportQuestion($examId),$request->file('file'));
 		} catch (\Exception $ex) {
-            return back()->with('alert','adsf');
+            return back()->with('alert', "Maaf terjadi  kesalahan, silahkan cek file dan ulangi kembali!");
 		}
         return back()->with('success','Berhasil Import Data Siswa');
     }
@@ -156,7 +156,7 @@ class ExamQuestionController extends Controller
     {
         $exam = Exam::find($examId);
 		try {
-            return Excel::download(new QuestionWriterExportQuestion($examId), 'Data Soal'.$exam->name.'.xlsx');
+            return Excel::download(new ExportQuestion($examId), 'Data Soal'.$exam->name.'.xlsx');
 		} catch (\Exception $ex) {
             $errorMsg = json_decode($ex->getMessage());
             return back()->with('alert','Gagal export data');

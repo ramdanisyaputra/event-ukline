@@ -151,7 +151,7 @@
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-bordered table-questions">
+                    <table class="table table-bordered table-questions table-hover">
                         <thead>
                             <tr>
                                 <th>No</th>
@@ -190,7 +190,7 @@
                                 <td class="align-top py-2">
                                     @if($exam->status == 'drafted')
                                     <a href="{{ route('question_writer.exams.questions.edit', [$exam->id, $question->id]) }}" class="btn btn-sm btn-light d-block" title="Edit"><i class="fa fa-pencil-alt"></i></a>
-                                    <button class="btn btn-sm btn-danger mt-2 d-block" data-toggle="modal" data-target="#confirmDelete" data-url="{{ route('question_writer.exams.questions.delete', [$exam->id, $question->id]) }}" title="Hapus"><i class="fa fa-trash"></i></button>
+                                    <button class="btn btn-sm btn-danger mt-2 d-block w-100" data-toggle="modal" data-target="#confirmDelete" data-url="{{ route('question_writer.exams.questions.delete', [$exam->id, $question->id]) }}" title="Hapus"><i class="fa fa-trash"></i></button>
                                     @else
                                         Arsipkan ujian untuk mengubah soal
                                     @endif

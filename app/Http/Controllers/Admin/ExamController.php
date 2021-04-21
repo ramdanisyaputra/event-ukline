@@ -238,6 +238,6 @@ class ExamController extends Controller
             $getExam->delete();
         }
 
-        return redirect()->back()->with('success', 'Berhasil menghapus ujian!');
+        return redirect()->route('school_admin.exams.index')->with('success', 'Berhasil menghapus ujian!');
     }
 }

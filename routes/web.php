@@ -132,7 +132,7 @@ Route::prefix('school_admin')->name('school_admin.')->middleware(['middleware' =
         Route::post('store/{classId}', [AdminStudentController::class,'store'])->name('store');
         Route::post('export', [AdminStudentController::class,'export'])->name('export');
         Route::put('update/{classId}', [AdminStudentController::class,'update'])->name('update');
-        Route::get('reset/{classId}/{studentId}', [AdminStudentController::class,'resetPasswordStudent'])->name('resetPasswordStudent');
+        Route::patch('reset/{studentId}', [AdminStudentController::class,'resetPasswordStudent'])->name('resetPasswordStudent');
         Route::post('import/{classId}', [AdminStudentController::class,'import'])->name('import');
         Route::delete('delete/{id}', [AdminStudentController::class,'delete'])->name('delete');
         Route::delete('deleteAll/{classId}', [AdminStudentController::class,'deleteAll'])->name('deleteAll');

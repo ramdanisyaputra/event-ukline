@@ -28,6 +28,14 @@
         color: #fc544b;
         font-weight: 900 !important;
     }
+
+    .preview-detail td {
+        vertical-align: top;
+    }
+
+    .preview-detail td:first-child {
+        width: 120px;
+    }
 </style>
 <section class="section">
     <div class="section-header">
@@ -130,14 +138,14 @@
                                 @endif
 
                                 <div class="bg-light p-2 mt-2 border">
-                                    <table>
+                                    <table class="preview-detail">
                                         <tr>
                                             <td>Jawaban Siswa</td>
                                             <td class="px-2">:</td>
                                             <td class="font-weight-bold ">{!! $detail->answer ?? 'Tidak diisi' !!}</td>
                                         </tr>
                                         <tr>
-                                            <td>Kumci Jawaban</td>
+                                            <td>Kunci Jawaban</td>
                                             <td class="px-2">:</td>
                                             <td class="font-weight-bold ">{!! $detail->right_answer !!}</td>
                                         </tr>

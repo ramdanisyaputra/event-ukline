@@ -1,4 +1,31 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<style>
+    .question p:last-child {
+        margin-bottom: 10px;
+    }
+
+    .option-list, .question-list {
+        padding-left: 20px;
+        margin-top: 15px;
+    }
+
+    .option-list {
+        margin-top: 0px;
+    }
+
+    .option-item, .question-item {
+        padding-left: 10px;
+    }
+
+    .question-item {
+        margin-bottom: 20px;
+    }
+
+    .option-item.correct {
+        color: #47c363;
+        font-weight: 900 !important;
+    }
+</style>
 <div class="card">
     <div class="card-body">
         <div>
@@ -26,21 +53,24 @@
             </table>
             <hr>
             <div class="mt-3">
-                <ol class="pl-4">
-                @foreach($examQuestions as $examQuestion)
-                    <li class="pb-3">
-                        <div class="ml-2">
-                            {!! $examQuestion->question !!}
-                        </div>
+                <ol class="question-list">
+                    @foreach($examQuestions as $examQuestion)
+                    <li class="question-item">
+                        <div class="question">{!! $examQuestion->question !!}</div>
                         @if($examQuestion->question_type == 'PG')
-                        <ol type="a" class="pl-3">
+                        <ol type="a" class="option-list">
                             @foreach (json_decode($examQuestion->option) as $key => $option)
-                            <li class="{{ $key == $examQuestion->answer ? 'text-primary font-weight-bold' : '' }}">{!! $option !!}</li>
+                            <li class="{{ $key == $examQuestion->answer ? 'correct' : '' }} option-item">{!! $option !!}</li>
                             @endforeach
                         </ol>
+                        @else
+                        <div class="py-2 px-3 bg-light mt-2">
+                            <p class="font-weight-bold mb-0">Rekomendasi Jawaban</p>
+                            {!! $examQuestion->answer !!}
+                        </div>
                         @endif
                     </li>
-                @endforeach
+                    @endforeach
                 </ol>
             </div>
         </div>

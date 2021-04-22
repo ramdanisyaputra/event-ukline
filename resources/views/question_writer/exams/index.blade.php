@@ -14,7 +14,7 @@
     <div class="section-body">
         <div class="card">
             <div class="card-header">
-                <h4>Daftar Ujian</h4>
+                <h4>Daftar Ujian : {{ $regency->name }}</h4>
                 <div class="card-header-action">
                     <button class="btn btn-primary" data-toggle="modal" data-target="#kelolaStudent"><i class="fa fa-plus"></i> Tambah Ujian</button>
                 </div>
@@ -25,11 +25,11 @@
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Nama</th>
+                                <th>Judul</th>
                                 <th>Mulai Pada</th>
                                 <th>Berakhir Pada</th>
                                 <th>Kode Akses</th>
-                                <th>Jenis Ujian</th>
+                                <th>Tipe Ujian</th>
                                 <th>Soal Diacak</th>
                                 <th></th>
                             </tr>
@@ -39,16 +39,16 @@
                             <tr>
                                 <td>{{ ++$key }}</td>
                                 <td>{{ $exam->name }}</td>
-                                <td>{{ $exam->started_at }}</td>
-                                <td>{{ $exam->expired_at }}</td>
+                                <td>{{ \Carbon\Carbon::parse($exam->started_at)->isoFormat('DD MMMM YYYY, HH:mm') }}</td>
+                                <td>{{ \Carbon\Carbon::parse($exam->expired_at)->isoFormat('DD MMMM YYYY, HH:mm') }}</td>
                                 <td>{{ $exam->access_code }}</td>
                                 <td>{{ $exam->examType->name }}</td>
                                 <td>{{ $exam->randomized == 1 ? 'Diacak' : 'Tidak Diacak' }}</td>
                                 <td class="text-center">
                                     <div class="d-inline d-flex">
-                                        <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#editExam" data-id="{{ $exam->id }}" data-name="{{ $exam->name }}" data-started-at="{{ date('Y-m-d\TH:i', strtotime($exam->started_at)) }}" data-expired-at="{{ date('Y-m-d\TH:i', strtotime($exam->expired_at)) }}" data-access-code="{{ $exam->access_code }}" data-duration="{{ $exam->duration }}" data-exam-type-id="{{ $exam->exam_type_id }}"  data-randomized="{{ $exam->randomized }}"><i class="fas fa-pencil-alt"></i></button>
-                                        <a href="{{ route('question_writer.exams.questions.index', $exam->id) }}" class="btn btn-primary btn-sm ml-1"><i class="fa fa-eye"></i></a>
-                                        <button class="btn btn-sm btn-danger ml-1" data-toggle="modal" data-target="#confirmDelete" data-url="{{ route('question_writer.exams.delete', $exam->id) }}" title="Hapus"><i class="fa fa-trash"></i></button>
+                                        <button title="Ubah" class="btn btn-sm btn-success" data-toggle="modal" data-target="#editExam" data-id="{{ $exam->id }}" data-name="{{ $exam->name }}" data-started-at="{{ date('Y-m-d\TH:i', strtotime($exam->started_at)) }}" data-expired-at="{{ date('Y-m-d\TH:i', strtotime($exam->expired_at)) }}" data-access-code="{{ $exam->access_code }}" data-duration="{{ $exam->duration }}" data-exam-type-id="{{ $exam->exam_type_id }}"  data-randomized="{{ $exam->randomized }}"><i class="fas fa-pencil-alt"></i></button>
+                                        <a title="Lihat" href="{{ route('question_writer.exams.questions.index', $exam->id) }}" class="btn btn-primary btn-sm ml-1"><i class="fa fa-eye"></i></a>
+                                        <button title="Hapus" class="btn btn-sm btn-danger ml-1" data-toggle="modal" data-target="#confirmDelete" data-url="{{ route('question_writer.exams.delete', $exam->id) }}" title="Hapus"><i class="fa fa-trash"></i></button>
                                     </div>
                                 </td>
                             </tr>
@@ -71,14 +71,14 @@
             <form action="{{route('question_writer.exams.store')}}" method="POST" id="formKelolaExam">
                 @csrf
                 <div class="modal-header">
-                    <h5 class="modal-title"><span>Tambah</span> Siswa</h5>
+                    <h5 class="modal-title">Tambah Ujian</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="name">Nama Ujian</label>
+                        <label for="name">Judul</label>
                         <input type="text" class="form-control" name="name" id="name">
                     </div>
                     <div class="form-group">
@@ -98,7 +98,7 @@
                         <input type="text" class="form-control" name="access_code" id="access_code">
                     </div>
                     <div class="form-group">
-                        <label for="exam_type_id">Jenis Ujian</label>
+                        <label for="exam_type_id">Tipe Ujian</label>
                         <select name="exam_type_id" id="exam_type_id" class="form-control" required>
                             <option value=""> ~ Pilih ~</option>
                             @foreach($examTypes as $exam)
@@ -133,7 +133,7 @@
                 @method('PUT')
                 <input type="hidden" name="id">
                 <div class="modal-header">
-                    <h5 class="modal-title"><span>Edit</span> Ujian</h5>
+                    <h5 class="modal-title">Ubah Ujian</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -160,7 +160,7 @@
                         <input type="text" class="form-control" name="access_code" id="access_code">
                     </div>
                     <div class="form-group">
-                        <label for="exam_type_id">Jenis Ujian</label>
+                        <label for="exam_type_id">Tipe Ujian</label>
                         <select name="exam_type_id" id="exam_type_id" class="form-control" required>
                             <option value=""> ~ Pilih ~</option>
                             @foreach($examTypes as $exam)

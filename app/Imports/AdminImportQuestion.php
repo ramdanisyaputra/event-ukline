@@ -37,7 +37,7 @@ class AdminImportQuestion implements ToCollection
 
                 if (strtoupper($questionType) == "PG") {
                     $option = [];
-                    for ($i=4; $i <= 8; $i++) {
+                    for ($i=3; $i < 8; $i++) {
                         if ($row[$i] !== null)
                         {
                             $option[] = $row[$i];

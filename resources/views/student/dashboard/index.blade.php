@@ -51,7 +51,15 @@
                         @elseif ($exam_score)
                         <a href="#" class="btn btn-success">Sudah Dikerjakan</a>
                         @else
-                        <a href="{{ route('student.exam.boarding', $exam->id ) }}" class="btn btn-primary">Mulai Ujian</a>
+                            @if (date('H:i:s', strtotime($exam->expired_at)) > date('H:i:s'))
+                                @if(date('H:i:s', strtotime($exam->started_at)) <= date('H:i:s'))
+                                    <a href="{{ route('student.exam.boarding', $exam->id ) }}" class="btn btn-primary">Mulai Ujian</a>
+                                @else
+                                    <a href="#" class="btn btn-success" data-toggle="modal" data-clock="{{date('H:i', strtotime($exam->started_at))}}" data-target="#forbidden" style="cursor: not-allowed" disabled>Mulai Ujian</a>
+                                @endif
+                            @else
+                                <button class="btn btn-light" disabled>🚫 Sudah Terlambat</button>
+                            @endif
                         @endif
                     </div>
                 </div>
@@ -115,6 +123,26 @@
         </div>
     </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="forbidden" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Perhatian</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Anda dapat mengerjakan ujian ini pada pukul <span class="clock text-danger"></span>
+            </div>
+            <div class="modal-footer pt-0">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Tutup</button>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 
 @push('script')
@@ -130,5 +158,11 @@
         $(e.currentTarget).find('.ex-type').html(type);
         $(e.currentTarget).find('.ex-total').html(`${total} soal`);
     });
+    
+    $('#forbidden').on('show.bs.modal', (e) => {
+        var clock = $(e.relatedTarget).data('clock');
+        $(e.currentTarget).find('.clock').html(clock);
+    });
+    
 </script>
 @endpush

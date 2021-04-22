@@ -89,7 +89,7 @@ Route::prefix('superadmin')->name('superadmin.')->middleware(['middleware' => 'a
         Route::get('{regenyId}', [QuestionWriterController::class,'indexWriter'])->name('indexWriter');
         Route::post('store/{regencyId}', [QuestionWriterController::class,'store'])->name('store');
         Route::put('update/{regencyId}', [QuestionWriterController::class,'update'])->name('update');
-        Route::get('reset/{regencyId}/{questionWriterId}', [QuestionWriterController::class,'resetPasswordWriter'])->name('resetPasswordWriter');
+        Route::put('reset/{questionWriterId}', [QuestionWriterController::class,'resetPasswordWriter'])->name('resetPasswordWriter');
     });
     Route::prefix('schools')->name('schools.')->group(function(){
         Route::get('', [SchoolController::class,'index'])->name('index');
@@ -102,7 +102,7 @@ Route::prefix('superadmin')->name('superadmin.')->middleware(['middleware' => 'a
         Route::get('', [SchoolAdminController::class,'index'])->name('index');
         Route::post('store', [SchoolAdminController::class,'store'])->name('store');
         Route::put('update', [SchoolAdminController::class,'update'])->name('update');
-        Route::put('reset-password', [SchoolAdminController::class,'resetPassword'])->name('resetPassword');
+        Route::put('reset-password/{id}', [SchoolAdminController::class,'resetPassword'])->name('resetPassword');
     });
     Route::prefix('faqs')->name('faqs.')->group(function(){
         Route::get('', [FaqController::class,'index'])->name('index');

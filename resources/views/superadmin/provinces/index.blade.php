@@ -28,7 +28,7 @@
                                 <th>No</th>
                                 <th>ID</th>
                                 <th>Kode Provinsi</th>
-                                <th>Pronvisi</th>
+                                <th>Provinsi</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -70,13 +70,22 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="name">Nama Provinsi</label>
-                        <input type="text" class="form-control" id="name" name="name" required placeholder="Contoh: Jawa Barat">
+                        <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{old('name')}}" placeholder="Contoh: Jawa Barat" required>
+                        @error('name')
+                        <div class="invalid-feedback">
+                            {{$message}}
+                        </div>
+                        @enderror
                     </div>
                     <div class="form-group">
                         <label for="province_code">Kode Provinsi</label>
-                        <input type="text" class="form-control" id="province_code" name="province_code" required>
+                        <input type="text" class="form-control @error('province_code') is-invalid @enderror" id="province_code" name="province_code" value="{{old('province_code')}}" required>
+                        @error('province_code')
+                        <div class="invalid-feedback">
+                            {{$message}}
+                        </div>
+                        @enderror
                     </div>
-                    
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -103,11 +112,21 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="name">Nama Provinsi</label>
-                        <input type="text" class="form-control" id="name" name="name" required placeholder="Contoh: Jawa Barat atau Jawa Timur">
+                        <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" required placeholder="Contoh: Jawa Barat atau Jawa Timur">
+                        @error('name')
+                        <div class="invalid-feedback">
+                            {{$message}}
+                        </div>
+                        @enderror
                     </div>
                     <div class="form-group">
                         <label for="province_code">Kode Provinsi</label>
-                        <input type="text" class="form-control" id="province_code" name="province_code" required>
+                        <input type="text" class="form-control @error('province_code') is-invalid @enderror" id="province_code" name="province_code" required>
+                        @error('province_code')
+                        <div class="invalid-feedback">
+                            {{$message}}
+                        </div>
+                        @enderror
                     </div>
                 </div>
                 <div class="modal-footer">

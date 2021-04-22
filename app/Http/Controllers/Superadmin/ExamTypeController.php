@@ -17,16 +17,28 @@ class ExamTypeController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name'=>'required',
+            'name'=>'required|unique:exam_types',
+        ], [
+            'name.required' => 'Tipe ujian wajib diisi',
+            'name.unique' => 'Tipe ujian telah digunakan',
         ]);
         if ($validator->fails()) {
-            return redirect()->back()->with('alert','Gagal menginput data')->withInput();
+            return redirect()->back()->with('alert','Gagal menginput data')->withInput()->withErrors($validator);
         }
         ExamType::create($request->all());
         return redirect()->back()->with('success','Jenis Ujian berhasil ditambahkan');
     }
     public function update(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'name'=>'required|unique:exam_types,name,'.$request->id,
+        ], [
+            'name.required' => 'Tipe ujian wajib diisi',
+            'name.unique' => 'Tipe ujian telah digunakan',
+        ]);
+        if ($validator->fails()) {
+            return redirect()->back()->with('alert','Gagal mengubah data')->withInput()->withErrors($validator);
+        }
         ExamType::find($request->id)->update($request->all());
         return redirect()->back()->with('success','Jenis Ujian berhasil diubah');
     }

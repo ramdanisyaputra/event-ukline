@@ -72,20 +72,35 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="name">Nama Regensi</label>
-                        <input type="text" class="form-control" id="name" name="name" required placeholder="Contoh: Kota Bekasi atau Kabupaten Bekasi">
+                        <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{old('name')}}" required placeholder="Contoh: Kota Bekasi atau Kabupaten Bekasi">
+                        @error('name')
+                        <div class="invalid-feedback">
+                            {{$message}}
+                        </div>
+                        @enderror
                     </div>
                     <div class="form-group">
                         <label for="regency_code">Kode Regensi</label>
-                        <input type="text" class="form-control" id="regency_code" name="regency_code" required>
+                        <input type="text" class="form-control @error('regency_code') is-invalid @enderror" id="regency_code" name="regency_code" value="{{old('regency_code')}}" required>
+                        @error('regency_code')
+                        <div class="invalid-feedback">
+                            {{$message}}
+                        </div>
+                        @enderror
                     </div>
                     <div class="form-group">
                         <label for="province_id">Provinsi</label>
-                        <select name="province_id" id="province_id" class="custom-select" required>
+                        <select name="province_id" id="province_id" class="custom-select @error('province_id') is-invalid @enderror" required>
                             <option value=""></option>
                             @foreach($provinces as $province)
                             <option value="{{$province->id}}">{{ $province->name }}</option>
                             @endforeach
                         </select>
+                        @error('province_id')
+                        <div class="invalid-feedback">
+                            {{$message}}
+                        </div>
+                        @enderror
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -113,20 +128,35 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="name">Nama Regensi</label>
-                        <input type="text" class="form-control" id="name" name="name" required placeholder="Contoh: Kota Bekasi atau Kabupaten Bekasi">
+                        <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" required placeholder="Contoh: Kota Bekasi atau Kabupaten Bekasi">
+                        @error('name')
+                        <div class="invalid-feedback">
+                            {{$message}}
+                        </div>
+                        @enderror
                     </div>
                     <div class="form-group">
                         <label for="regency_code">Kode Regensi</label>
-                        <input type="text" class="form-control" id="regency_code" name="regency_code" required>
+                        <input type="text" class="form-control @error('regency_code') is-invalid @enderror" id="regency_code" name="regency_code" required>
+                        @error('regency_code')
+                        <div class="invalid-feedback">
+                            {{$message}}
+                        </div>
+                        @enderror
                     </div>
                     <div class="form-group">
                         <label for="province_id">Provinsi</label>
-                        <select name="province_id" id="province_id" class="custom-select" required>
+                        <select name="province_id" id="province_id" class="custom-select @error('province_id') is-invalid @enderror" required>
                             <option value=""></option>
                             @foreach($provinces as $province)
                             <option value="{{$province->id}}">{{ $province->name }}</option>
                             @endforeach
                         </select>
+                        @error('province_id')
+                        <div class="invalid-feedback">
+                            {{$message}}
+                        </div>
+                        @enderror
                     </div>
                 </div>
                 <div class="modal-footer">

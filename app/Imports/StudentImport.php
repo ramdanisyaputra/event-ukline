@@ -56,7 +56,7 @@ class StudentImport implements ToCollection
                 if ($validator->fails()) {
                     throw new Exception($validator->getMessageBag(), 1);
                 }
-
+                $date = date("d",strtotime($dob));
                 $student[] = [
                     'nisn' => $nisn,
                     'nis' => $nis,
@@ -66,7 +66,7 @@ class StudentImport implements ToCollection
                     'student_number' => $student_number,
                     'gender' => $gender,
                     'username' => $username,
-                    'password' => bcrypt($password),
+                    'password' => bcrypt($password.'-'.$date),
                     'class_id' => $class_id,
                     'school_id' => $school_id,
                 ];

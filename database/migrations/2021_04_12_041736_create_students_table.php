@@ -19,7 +19,7 @@ class CreateStudentsTable extends Migration
             $table->integer('nis');
             $table->string('name');
             $table->string('pob');
-            $table->string('dob');
+            $table->date('dob');
             $table->string('student_number');
             $table->string('gender');
             $table->string('username');

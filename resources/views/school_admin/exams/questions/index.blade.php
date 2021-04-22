@@ -29,6 +29,9 @@
                                 <li><a href="#editExam" data-toggle="modal" data-target="#editExam" class="dropdown-item">Ubah</a></li>
                                 <li class="dropdown-title">Aksi</li>
                                 <li><a href="{{ route('school_admin.exam-scores.indexScore', $exam->id) }}" class="dropdown-item">Lihat nilai</a></li>
+                                <li>
+                                    <a href="#" data-toggle="modal" data-target="#examConfirmDelete" class="dropdown-item">Hapus Ujian</a>
+                                </li>
                                 @if (!$exam->shared)
                                     @if ($exam->examQuestions->count() > 0)
                                     <li>
@@ -332,7 +335,7 @@
                         <label for="class_ids">Kelas yang Diizinkan</label>
                         <select name="class_ids[]" id="class_ids" class="js-example-basic-multiple" multiple>
                             <option value=""></option>
-                            @foreach ($selectedClassess as $class)
+                            @foreach ($classess as $class)
                                 <option value="{{ $class->id }}"
                                     @foreach (json_decode($exam->examClass->first()->class_ids) as $class_id)
                                         {{ $class_id == $class->id ? 'selected' : '' }}

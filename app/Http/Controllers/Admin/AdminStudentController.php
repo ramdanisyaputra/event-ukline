@@ -41,6 +41,8 @@ class AdminStudentController extends Controller
         if ($validator->fails()) {
             return redirect()->back()->with('alert','Gagal menginput data')->withInput();
         }
+        
+        $date = date("d",strtotime($request->dob));
 
         $student = new Student();
         $student->nisn = $request->nisn;
@@ -51,7 +53,7 @@ class AdminStudentController extends Controller
         $student->student_number = $request->student_number;
         $student->gender = $request->gender;
         $student->username = $request->nisn; //username itu nisn
-        $student->password = bcrypt($request->nisn);
+        $student->password = bcrypt($request->nisn.'-'.$date);
         $student->class_id = $classId;
         $student->school_id = $this->authUser()->school_id;
         $student->save();
@@ -66,6 +68,9 @@ class AdminStudentController extends Controller
         if ($validator->fails()) {
             return redirect()->back()->with('alert','Gagal mengubah data')->withInput();
         }
+        $date = date("d",strtotime($request->dob));
+
+
         $student = Student::find($request->id);
         $student->nisn = $request->nisn;
         $student->nis = $request->nis;
@@ -75,6 +80,7 @@ class AdminStudentController extends Controller
         $student->student_number = $request->student_number;
         $student->gender = $request->gender;
         $student->username = $request->nisn; //username itu nisn
+        $student->password = bcrypt($request->nisn.'-'.$date);
         $student->class_id = $classId;
         $student->school_id = $this->authUser()->school_id;
         $student->save();
@@ -85,7 +91,8 @@ class AdminStudentController extends Controller
     public function resetPasswordStudent($studentId)
     {
         $student = Student::find($studentId);
-        $student->password = bcrypt($student->username);
+        $date = date("d",strtotime($student->dob));
+        $student->password = bcrypt($student->username.'-'.$date);
         $student->save();
 
         return redirect()->back()->with('success','Berhasil Reset Password Siswa Sesuai NISN');

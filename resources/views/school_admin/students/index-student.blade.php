@@ -212,7 +212,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <h6 for="file">Download Panduan</h6>
-                        <a href="{{asset('panduan')}}" class="nav-link">Download Panduan Import Siswa Berikut</a>
+                        <a href="{{asset('panduan/Panduan Import Siswa.xlsx')}}" class="nav-link">Download Panduan Import Siswa Berikut</a>
                     </div>
                     <div class="form-group">
                         <label for="file">Data Excel</label>

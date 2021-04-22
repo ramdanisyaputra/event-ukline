@@ -46,8 +46,6 @@
                                 <td>
                                     <div class="d-inline d-flex">
                                     <a href="{{ route('school_admin.exams.questions.index', $exam->exam->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i></a>
-                                    <button class="btn btn-sm btn-danger ml-1" data-toggle="modal" data-target="#confirmDelete" data-url="{{ route('school_admin.exams.delete', $exam->exam->id) }}" title="Hapus"><i class="fa fa-trash"></i></button>
-                                    </div>
                                 </td>
                             </tr>
                             @empty

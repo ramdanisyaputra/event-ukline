@@ -53,9 +53,9 @@ class SchoolAdminController extends Controller
         SchoolAdmin::find($request->id)->update($data);
         return redirect()->back()->with('success','Admin sekolah berhasil diubah');
     }
-    public function resetPassword(Request $request)
+    public function resetPassword(Request $request, $id)
     {
-        $schoolAdmin = SchoolAdmin::find($request->id);
+        $schoolAdmin = SchoolAdmin::find($id);
         $schoolAdmin->update([
             'password'=>bcrypt($schoolAdmin->username)
         ]);

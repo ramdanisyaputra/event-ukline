@@ -37,7 +37,7 @@
                                         <input type="hidden" name="id" value="{{ $exam->id }}">
                                         <input type="hidden" name="status" value="{{ $exam->status == 'published' ? 'drafted' : 'published' }}">
                                     </form>
-                                    <a href="#" onclick="document.getElementById('examUpdateStatus').submit()" class="dropdown-item">{{ $exam->status == 'published' ? 'Arsipkan' : 'Publikasikan' }}</a>
+                                    <a href="#" onclick="document.getElementById('examUpdateStatus').submit()" class="dropdown-item">{{ $exam->status == 'published' ? 'Arsipkan' : 'Terbitkan' }}</a>
                                 </li>
                                 @endif
                                 @if ($exam->status === 'drafted')
@@ -58,7 +58,7 @@
                                 {{ $exam->name }}
                             </div>
                             <div class="col-md-4 py-1">
-                                Jenis Ujian
+                                Tipe Ujian
                             </div>
                             <div class="col-md-8 font-weight-bold py-1">
                                 {{ $exam->examType->name }}
@@ -70,16 +70,16 @@
                                 {{ $exam->shared ? 'Serentak' : 'Mandiri' }}
                             </div>
                             <div class="col-md-4 py-1">
-                                Tanggal
+                                Dimulai pada
                             </div>
                             <div class="col-md-8 font-weight-bold py-1">
-                                {{ \Carbon\Carbon::parse($exam->started_at)->isoFormat('dddd, DD MMMM YYYY') }}
+                                {{ \Carbon\Carbon::parse($exam->started_at)->isoFormat('dddd, DD MMMM YYYY, HH:mm') }}
                             </div>
                             <div class="col-md-4 py-1">
-                                Waktu
+                                Selesai Pada
                             </div>
                             <div class="col-md-8 font-weight-bold py-1">
-                                {{ \Carbon\Carbon::parse($exam->started_at)->isoFormat('HH:mm') }} - {{ \Carbon\Carbon::parse($exam->expired_at)->isoFormat('HH:mm') }}
+                                {{ \Carbon\Carbon::parse($exam->fisnished_at)->isoFormat('dddd, DD MMMM YYYY, HH:mm') }}
                             </div>
                             <div class="col-md-4 py-1">
                                 Durasi
@@ -94,7 +94,7 @@
                                 {{ $exam->access_code }}
                             </div>
                             <div class="col-md-4 py-1">
-                                Soal Diacak :
+                                Soal Diacak
                             </div>
                             <div class="col-md-8 font-weight-bold py-1">
                                 {{ $exam->randomized == 1 ? 'Diacak' : 'Tidak Diacak' }}
@@ -136,7 +136,7 @@
                                     <h4>Status</h4>
                                 </div>
                                 <div class="card-body">
-                                    {{ $exam->status == 'published' ? 'Dipublikasi' : 'Diarsipkan' }}
+                                    {{ $exam->status == 'published' ? 'Diterbitkan' : 'Diarsipkan' }}
                                 </div>
                             </div>
                         </div>
@@ -201,7 +201,7 @@
                                     {!! $question->answer !!}
                                 </td>
                                 <td class="align-top py-2">
-                                    {{ $question->poin ?? 'Belum dipublikasi' }}
+                                    {{ $question->poin ?? 'Belum Diterbitkan' }}
                                 </td>
 
                                 @if($exam->status == 'drafted')
@@ -274,7 +274,7 @@
                         <input type="text" name="name" id="name" class="form-control" value="{{ $exam->name }}">
                     </div>
                     <div class="form-group">
-                        <label for="exam_type_id">Jenis Ujian</label>
+                        <label for="exam_type_id">Tipe Ujian</label>
                         <select name="exam_type_id" id="exam_type_id" class="custom-select">
                             <option value=""></option>
                             @foreach ($exam_types as $exam_type)

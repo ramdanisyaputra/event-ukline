@@ -70,11 +70,21 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="name">Tingkat Pendidikan</label>
-                        <input type="name" class="form-control" id="name" name="name" placeholder="Contoh : SD ,SMP, SMA" required>
+                        <input type="name" class="form-control @error('name') is-invalid @enderror" value="{{old('name')}}" id="name" name="name" placeholder="Contoh : SD ,SMP, SMA" required>
+                        @error('name')
+                        <div class="invalid-feedback">
+                            {{$message}}
+                        </div>
+                        @enderror
                     </div>
                     <div class="form-group">
                         <label for="level_code">Kode Tingkat Pendidikan</label>
-                        <input type="level_code" class="form-control" id="level_code" name="level_code" required>
+                        <input type="level_code" class="form-control @error('level_code') is-invalid @enderror" value="{{old('level_code')}}" id="level_code" name="level_code" required>
+                        @error('level_code')
+                        <div class="invalid-feedback">
+                            {{$message}}
+                        </div>
+                        @enderror
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -102,11 +112,21 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="name">Tingkat Pendidikan</label>
-                        <input type="name" class="form-control" id="name" name="name" required>
+                        <input type="name" class="form-control @error('name') is-invalid @enderror" id="name" name="name" required>
+                        @error('name')
+                        <div class="invalid-feedback">
+                            {{$message}}
+                        </div>
+                        @enderror
                     </div>
                     <div class="form-group">
                         <label for="level_code">Kode Tingkat Pendidikan</label>
-                        <input type="level_code" class="form-control" id="level_code" name="level_code" required>
+                        <input type="level_code" class="form-control @error('level_code') is-invalid @enderror" id="level_code" name="level_code" required>
+                        @error('level_code')
+                        <div class="invalid-feedback">
+                            {{$message}}
+                        </div>
+                        @enderror
                     </div>
                 </div>
                 <div class="modal-footer">

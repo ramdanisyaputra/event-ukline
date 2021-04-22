@@ -8,6 +8,7 @@ use App\Models\ExamClass;
 use App\Models\ExamQuestion;
 use App\Models\ExamScore;
 use App\Models\ExamType;
+use App\Models\Regency;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -17,7 +18,8 @@ class ExamController extends Controller
     {
         $exams = Exam::where('regency_id', $this->authUser()->regency_id)->where('shared','1')->get();
         $examTypes = ExamType::all();
-        return view('question_writer.exams.index',compact('exams','examTypes'));
+        $regency = Regency::findOrFail($this->authUser()->regency_id);
+        return view('question_writer.exams.index',compact('exams','examTypes', 'regency'));
     }
    
     public function store(Request $request)

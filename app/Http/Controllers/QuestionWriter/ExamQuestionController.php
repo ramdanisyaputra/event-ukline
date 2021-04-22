@@ -125,9 +125,9 @@ class ExamQuestionController extends Controller
 
      public function destroy($exam, ExamQuestion $question)
      {
-        $scores = ExamClass::where('exam_id', $exam)->count();
+        $scores = ExamScore::where('exam_id', $exam)->count();
         if($scores > 0){
-            return redirect()->back()->with('alert','Soal tidak dapat di edit, karena telah terdapat sekolah yang mengambil soal ujian ini.');
+            return redirect()->back()->with('alert','Soal tidak dapat dihapus, karena telah terdapat siswa yang sudah mengerjakan soal ujian ini.');
         }
         $question->delete();
         return redirect()->back()->with('success', 'Berhasil menghapus soal ujian!');
@@ -135,9 +135,9 @@ class ExamQuestionController extends Controller
 
      public function destroyAll($exam)
      {
-        $scores = ExamClass::where('exam_id', $exam)->count();
+        $scores = ExamScore::where('exam_id', $exam)->count();
         if($scores > 0){
-            return redirect()->back()->with('alert','Soal tidak dapat di edit, karena telah terdapat sekolah yang mengambil soal ujian ini.');
+            return redirect()->back()->with('alert','Soal tidak dapat dihapus, karena telah terdapat siswa yang sudah mengerjakan soal ujian ini.');
         }
         $exams = Exam::find($exam);
         $exams->examQuestions()->delete();

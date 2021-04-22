@@ -66,7 +66,12 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="name">Nama Tag</label>
-                        <input type="text" class="form-control" id="name" name="name" required placeholder="Contoh: Guru atau Siswa">
+                        <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{old('name')}}" required placeholder="Contoh: Guru atau Siswa">
+                        @error('name')
+                            <div class="invalid-feedback">
+                                {{$message}}
+                            </div>
+                        @enderror
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -93,8 +98,13 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="name">Nama Provinsi</label>
-                        <input type="text" class="form-control" id="name" name="name" required placeholder="Contoh: Guru atau Siswa">
+                        <label for="name">Nama Tag</label>
+                        <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{old('name')}}" required placeholder="Contoh: Guru atau Siswa">
+                        @error('name')
+                            <div class="invalid-feedback">
+                                {{$message}}
+                            </div>
+                        @enderror
                     </div>
                 </div>
                 <div class="modal-footer">

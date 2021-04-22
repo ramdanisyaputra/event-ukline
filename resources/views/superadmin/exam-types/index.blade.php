@@ -27,7 +27,7 @@
                             <tr>
                                 <th>No</th>
                                 <th>ID</th>
-                                <th>Name</th>
+                                <th>Nama</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -68,7 +68,12 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="name">Tipe Ujian</label>
-                        <input type="text" class="form-control" id="name" name="name" required placeholder="Contoh: Tryout,PAS,PTS">
+                        <input type="text" class="form-control @error('name') is-invalid @enderror" value="{{old('name')}}" id="name" name="name" required placeholder="Contoh: Tryout,PAS,PTS">
+                        @error('name')
+                        <div class="invalid-feedback">
+                            {{$message}}
+                        </div>
+                        @enderror
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -96,7 +101,12 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="name">Tipe Ujian</label>
-                        <input type="text" class="form-control" id="name" name="name" required placeholder="Contoh: Tryout,PAS,PTS">
+                        <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" required placeholder="Contoh: Tryout,PAS,PTS">
+                        @error('name')
+                        <div class="invalid-feedback">
+                            {{$message}}
+                        </div>
+                        @enderror
                     </div>
                 </div>
                 <div class="modal-footer">

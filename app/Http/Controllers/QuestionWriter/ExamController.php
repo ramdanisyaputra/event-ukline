@@ -68,6 +68,11 @@ class ExamController extends Controller
         $data['exam_type_id'] = $request->exam_type_id;
         $data['randomized'] = $request->randomized;
         Exam::find($request->id)->update($data);
+
+        if (isset($request->detail)) {
+            return redirect()->back()->with('success','Ujian berhasil diubah');
+        }
+
         return redirect(route('question_writer.exams.index'))->with('success','Ujian berhasil diubah');
     }
     public function updateStatus(Request $request)
@@ -130,6 +135,10 @@ class ExamController extends Controller
             return redirect()->back()->with('alert','Soal tidak dapat di edit, karena telah terdapat sekolah yang mengambil soal ujian ini.');
         }
         Exam::find($examId)->delete();
+
+        if (isset(request()->detail)) {
+            return redirect()->route('question_writer.exams.index')->with('success', "Berhasil menghapus ujian");
+        }
         return redirect()->back()->with('success', "Berhasil menghapus ujian");
     }
 }

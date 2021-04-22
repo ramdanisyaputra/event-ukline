@@ -14,7 +14,8 @@
         <h1>Siswa {{$class->name}}</h1>
 
         <div class="section-header-breadcrumb">
-            <div class="breadcrumb-item active"><a href="#">Beranda</a></div>
+            <div class="breadcrumb-item active"><a href="{{ route('school_admin.index') }}">Beranda</a></div>
+            <div class="breadcrumb-item active"><a href="{{ route('school_admin.students.index') }}">Daftar Kelas</a></div>
             <div class="breadcrumb-item">Siswa {{$class->name}}</div>
         </div>
     </div>
@@ -67,9 +68,9 @@
                                 <td>{{ $student->gender }}</td>
                                 <td>{{ $student->student_number }}</td>
                                 <td class="text-center">
-                                    <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#editStudent" data-id="{{ $student->id }}" data-nisn="{{ $student->nisn }}" data-nis="{{ $student->nis }}" data-name="{{ $student->name }}" data-pob="{{ $student->pob }}" data-dob="{{ date('Y-m-d', strtotime($student->dob)) }}" data-gender="{{ $student->gender }}" data-student-number="{{ $student->student_number }}" data-username="{{ $student->username }}"><i class="fas fa-pencil-alt"></i></button>
-                                    <button class="btn btn-sm btn-warning" data-toggle="modal" data-target="#confirmResetPassword" data-url="{{ route('school_admin.students.resetPasswordStudent', $student->id) }}" title="Hapus"><i class="fa fa-cogs"></i></button>
-                                    <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#confirmDelete" data-url="{{ route('school_admin.students.delete', $student->id) }}" title="Hapus"><i class="fa fa-trash"></i></button>
+                                    <button title="Ubah" class="btn btn-sm btn-success" data-toggle="modal" data-target="#editStudent" data-id="{{ $student->id }}" data-nisn="{{ $student->nisn }}" data-nis="{{ $student->nis }}" data-name="{{ $student->name }}" data-pob="{{ $student->pob }}" data-dob="{{ date('Y-m-d', strtotime($student->dob)) }}" data-gender="{{ $student->gender }}" data-student-number="{{ $student->student_number }}" data-username="{{ $student->username }}"><i class="fas fa-pencil-alt"></i></button>
+                                    <button title="Atur ulang password" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#confirmResetPassword" data-url="{{ route('school_admin.students.resetPasswordStudent', $student->id) }}" title="Hapus"><i class="fas fa-redo-alt"></i></button>
+                                    <button title="Hapus" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#confirmDelete" data-url="{{ route('school_admin.students.delete', $student->id) }}" title="Hapus"><i class="fa fa-trash"></i></button>
                                     
                                 </td>
                             </tr>

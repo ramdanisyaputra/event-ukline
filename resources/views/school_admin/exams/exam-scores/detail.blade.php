@@ -41,7 +41,7 @@
     <div class="section-header">
         <h1>Detail Pengerjaan Soal</h1>
         <div class="section-header-breadcrumb">
-            <div class="breadcrumb-item active"><a href="">Beranda</a></div>
+            <div class="breadcrumb-item active"><a href="{{ route('school_admin.index') }}">Beranda</a></div>
             <div class="breadcrumb-item active"><a href="{{ route('school_admin.exam-scores.index') }}">Daftar Ujian</a></div>
             <div class="breadcrumb-item"><a href="{{ route('school_admin.exam-scores.indexScore',$exam->id) }}">Daftar Kelas</a></div>
             <div class="breadcrumb-item"><a href="{{route('school_admin.exam-scores.indexScoreExam', [$exam->id,$class->id])}}">{{$class->name}} Peserta {{$exam->name}}</a></div>

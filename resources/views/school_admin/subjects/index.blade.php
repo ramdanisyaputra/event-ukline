@@ -6,7 +6,7 @@
         <h1>Mata Pelajaran</h1>
 
         <div class="section-header-breadcrumb">
-            <div class="breadcrumb-item active"><a href="#">Beranda</a></div>
+            <div class="breadcrumb-item active"><a href="{{ route('school_admin.index') }}">Beranda</a></div>
             <div class="breadcrumb-item">Mata Pelajaran</div>
         </div>
     </div>

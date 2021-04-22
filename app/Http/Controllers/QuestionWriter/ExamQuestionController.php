@@ -9,6 +9,7 @@ use App\Models\Exam;
 use App\Models\ExamClass;
 use App\Models\ExamQuestion;
 use App\Models\ExamScore;
+use App\Models\ExamType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
@@ -18,8 +19,10 @@ class ExamQuestionController extends Controller
 {
     public function index(Exam $exam)
     {
+        $exam_types = ExamType::all();
         return view('question_writer.exams.questions.index', compact(
             'exam', 
+            'exam_types'
         ));
     }
 

@@ -87,11 +87,11 @@
                     </div>
                     <div class="form-group">
                         <label for="question">Pertanyaan</label>
-                        <textarea class="form-control" name="question" id="question" cols="30" rows="10"> {{old('question')}} </textarea>
+                        <textarea class="form-control" name="question" id="question" cols="30" rows="10">{{old('question')}}</textarea>
                     </div>
                     <div class="form-group">
                         <label for="answer">Jawaban</label>
-                        <textarea class="form-control" name="answer" id="answer" cols="30" rows="10"> {{old('question')}} </textarea>
+                        <textarea class="form-control" name="answer" id="answer" cols="30" rows="10">{{old('question')}}</textarea>
                     </div>
                 </div>
                 <div class="modal-footer">

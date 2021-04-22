@@ -56,7 +56,7 @@ class QuestionWriterController extends Controller
         return redirect()->back()->with('success','Admin sekolah berhasil diubah');
     }
 
-    public function resetPasswordWriter($regencyId,$questionWriterId)
+    public function resetPasswordWriter($questionWriterId)
     {
         $questionWriter = QuestionWriter::find($questionWriterId);
         $questionWriter->password = bcrypt($questionWriter->username);

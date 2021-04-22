@@ -17,16 +17,28 @@ class TagController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name'=>'unique:provinces',
+            'name'=>'required|unique:tags',
+        ],[
+            'name.required' => 'Nama tag wajib diisi',
+            'name.unique' => 'Nama tag telah digunakan',
         ]);
         if ($validator->fails()) {
-            return redirect()->back()->with('alert','Gagal menginput data')->withInput();
+            return redirect()->back()->with('alert','Gagal menginput data')->withInput()->withErrors($validator);
         }
         Tag::create($request->all());
         return redirect()->back()->with('success','Tag berhasil ditambahkan');
     }
     public function update(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'name'=>'required|unique:tags,name,'.$request->id,
+        ],[
+            'name.required' => 'Nama tag wajib diisi',
+            'name.unique' => 'Nama tag telah digunakan',
+        ]);
+        if ($validator->fails()) {
+            return redirect()->back()->with('alert','Gagal menginput data')->withInput()->withErrors($validator);
+        }
         Tag::find($request->id)->update($request->all());
         return redirect()->back()->with('success','Tag berhasil diubah');
     }

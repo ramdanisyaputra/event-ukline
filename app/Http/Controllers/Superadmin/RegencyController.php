@@ -22,12 +22,17 @@ class RegencyController extends Controller
             'name'=>'required',
             'regency_code'=>'required|unique:regencies',
             'province_id'=>'required',
+        ], [
+            'name.required' => 'Nama regensi wajib diisi',
+            'regency_code.required' => 'Kode regensi wajib diisi',
+            'regency_code.unique' => 'Kode regensi telah digunakan',
+            'province_id.required' => 'Nama provinsi wajib diisi',
         ]);
         if ($validator->fails()) {
-            return redirect()->back()->with('alert','Gagal menginput data!');
+            return redirect()->back()->with('alert','Gagal menginput data!')->withInput()->withErrors($validator);
         }
         Regency::create($request->all());
-        return redirect()->back()->with('success','Kabupaten berhasil ditambahkan');
+        return redirect()->back()->with('success','Regensi berhasil ditambahkan');
     }
     public function update(Request $request)
     {
@@ -35,11 +40,16 @@ class RegencyController extends Controller
             'name'=>'required',
             'regency_code'=>'required|unique:regencies,regency_code,' . $request->id,
             'province_id'=>'required',
+        ], [
+            'name.required' => 'Nama regensi wajib diisi',
+            'regency_code.required' => 'Kode regensi wajib diisi',
+            'regency_code.unique' => 'Kode regensi telah digunakan',
+            'province_id.required' => 'Nama provinsi wajib diisi',
         ]);
         if ($validator->fails()) {
-            return redirect()->back()->with('alert','Gagal mengubah data!');
+            return redirect()->back()->with('alert','Gagal mengubah data!')->withInput()->withErrors($validator);
         }
         Regency::find($request->id)->update($request->all());
-        return redirect()->back()->with('success','Kabupaten berhasil diubah');
+        return redirect()->back()->with('success','Regensi berhasil diubah');
     }
 }

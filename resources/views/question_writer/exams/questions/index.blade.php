@@ -50,7 +50,8 @@
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-md-4 py-1">
+                            
+                        <div class="col-md-4 py-1">
                                 Judul
                             </div>
                             <div class="col-md-8 font-weight-bold py-1">
@@ -66,19 +67,13 @@
                                 Jenis Ujian
                             </div>
                             <div class="col-md-8 font-weight-bold py-1">
-                                {{ $exam->shared == 0 ? 'Serentak' : 'Mandiri' }}
+                                {{ $exam->shared ? 'Serentak' : 'Mandiri' }}
                             </div>
                             <div class="col-md-4 py-1">
-                                Dilaksanakan
+                                Tanggal
                             </div>
                             <div class="col-md-8 font-weight-bold py-1">
                                 {{ \Carbon\Carbon::parse($exam->started_at)->isoFormat('dddd, DD MMMM YYYY') }}
-                            </div>
-                            <div class="col-md-4 py-1">
-                                Berakhir
-                            </div>
-                            <div class="col-md-8 font-weight-bold py-1">
-                                {{ \Carbon\Carbon::parse($exam->expired_at)->isoFormat('dddd, DD MMMM YYYY') }}
                             </div>
                             <div class="col-md-4 py-1">
                                 Waktu

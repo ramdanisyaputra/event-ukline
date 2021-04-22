@@ -13,7 +13,7 @@ class AdminController extends Controller
 {
     public function index()
     {
-        $subjects = Subject::where('school_id', $this->authUser()->schol_id)->count();
+        $subjects = Subject::where('school_id', $this->authUser()->school_id)->count();
         $classes = Classes::where('school_id', $this->authUser()->school_id)->count();
         $students = Student::where('school_id', $this->authUser()->school_id)->count();
         $exams = ExamClass::where('school_id', $this->authUser()->school_id)->with('exam')->count();

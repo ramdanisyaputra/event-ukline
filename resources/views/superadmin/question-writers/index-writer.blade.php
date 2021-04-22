@@ -40,8 +40,8 @@
                                 <td>{{ $questionWriter->name }}</td>
                                 <td>{{ $questionWriter->username }}</td>
                                 <td class="text-center">
-                                    <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#editQuestionWriter" data-id="{{ $questionWriter->id }}" data-name="{{ $questionWriter->name }}" data-username="{{ $questionWriter->username }}"><i class="fas fa-pencil-alt"></i></button>
-                                    <a href="{{route('superadmin.question-writers.resetPasswordWriter', [$questionWriter->regency_id , $questionWriter->id])}}" class="btn btn-sm btn-warning" onclick="return confirm('Apakah anda yakin? ')">Reset Password</a>
+                                    <button title="Ubah" class="btn btn-sm btn-success" data-toggle="modal" data-target="#editQuestionWriter" data-id="{{ $questionWriter->id }}" data-name="{{ $questionWriter->name }}" data-username="{{ $questionWriter->username }}"><i class="fas fa-pencil-alt"></i></button>
+                                    <a title="Atur ulang password" href="{{route('superadmin.question-writers.resetPasswordWriter', [$questionWriter->regency_id , $questionWriter->id])}}" class="btn btn-sm btn-warning" onclick="return confirm('Apakah anda yakin? ')"><i class="fas fa-redo-alt    "></i></a>
                                 </td>
                             </tr>
                             @empty

@@ -26,8 +26,10 @@
                         <div class="card-header-action dropdown">
                             <a href="#" data-toggle="dropdown" class="btn btn-primary dropdown-toggle"><i class="fa fa-cog"></i> Pengaturan</a>
                             <ul class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
-                                <!-- <li><a href="#editExam" data-toggle="modal" data-target="#editExam" class="dropdown-item">Ubah</a></li> -->
                                 <li class="dropdown-title">Pengaturan</li>
+                                <li><a href="#editExam" data-toggle="modal" data-target="#editExam" class="dropdown-item">Ubah</a></li>
+                                <li class="dropdown-title">Aksi</li>
+                                @if ($exam->examQuestions->count() > 0)
                                 <li>
                                     <form action="{{ route('question_writer.exams.update_status') }}" method="POST" id="examUpdateStatus">
                                         @csrf
@@ -37,6 +39,12 @@
                                     </form>
                                     <a href="#" onclick="document.getElementById('examUpdateStatus').submit()" class="dropdown-item">{{ $exam->status == 'published' ? 'Arsipkan' : 'Publikasikan' }}</a>
                                 </li>
+                                @endif
+                                @if ($exam->status === 'drafted')
+                                <li>
+                                    <a href="#" data-toggle="modal" data-target="#examConfirmDelete" class="dropdown-item">Hapus Ujian</a>
+                                </li>
+                                @endif
                             </ul>
                         </div>
                     </div>
@@ -167,7 +175,9 @@
                                 <th>Opsi</th>
                                 <th>Jawaban</th>
                                 <th>Poin</th>
+                                @if($exam->status == 'drafted')
                                 <th></th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
@@ -194,16 +204,15 @@
                                     {{ $question->poin ?? 'Belum dipublikasi' }}
                                 </td>
 
+                                @if($exam->status == 'drafted')
                                 <td class="align-top py-2">
-                                    @if($exam->status == 'drafted')
                                     <div class="d-inline d-flex">
                                     <a href="{{ route('question_writer.exams.questions.edit', [$exam->id, $question->id]) }}" class="btn btn-sm btn-light d-block" title="Edit"><i class="fa fa-pencil-alt"></i></a>
                                     <button class="btn btn-sm btn-danger ml-1" data-toggle="modal" data-target="#confirmDelete" data-url="{{ route('question_writer.exams.questions.delete', [$exam->id, $question->id]) }}" title="Hapus"><i class="fa fa-trash"></i></button>
                                     </div>
-                                    @else
-                                        Arsipkan ujian untuk mengubah soal
-                                    @endif
+
                                 </td>
+                                @endif
                             </tr>
                             @empty
                             <tr>
@@ -219,10 +228,35 @@
 </section>
 
 <!-- Modal -->
+<div class="modal fade" id="examConfirmDelete" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form action="{{ route('question_writer.exams.delete', $exam->id) }}" method="post">
+            @csrf
+            @method('DELETE')
+            <input type="hidden" name="detail" value="true">
+                <div class="modal-header">
+                    <h5 class="modal-title">Peringatan</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Apakah yakin Anda ingin menghapus ujian ini ?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-danger">Hapus</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <div class="modal fade" id="editExam" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form action="{{ route('school_admin.exams.update') }}" method="POST">
+            <form action="{{route('question_writer.exams.update')}}" method="POST">
                 <div class="modal-header">
                     <h5 class="modal-title">Ubah Ujian</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -231,20 +265,21 @@
                 </div>
                 <div class="modal-body">
                     @csrf
-                    @method('PATCH')
+                    @method('PUT')
                     <input type="hidden" name="id" value="{{ $exam->id }}">
                     <input type="hidden" name="shared" value="{{ $exam->shared }}">
-                    @if (!$exam->shared)
+                    <input type="hidden" name="detail" value="true">
                     <div class="form-group">
                         <label for="name">Judul</label>
                         <input type="text" name="name" id="name" class="form-control" value="{{ $exam->name }}">
                     </div>
-                    @endif
-                    @if (!$exam->shared)
                     <div class="form-group">
                         <label for="exam_type_id">Jenis Ujian</label>
                         <select name="exam_type_id" id="exam_type_id" class="custom-select">
                             <option value=""></option>
+                            @foreach ($exam_types as $exam_type)
+                                <option value="{{$exam_type->id}}" {{ $exam_type->id == $exam->exam_type_id ? 'selected' : '' }}>{{ $exam_type->name }}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="form-group">
@@ -259,13 +294,18 @@
                         <label for="duration">Durasi</label>
                         <input type="number" name="duration" id="duration" class="form-control" value="{{ $exam->duration }}">
                     </div>
-                    @endif
-                    @if (!$exam->shared)
                     <div class="form-group">
                         <label for="access_code">Kode Akses <i class="fa fa-question-circle"></i></label>
                         <input type="text" name="access_code" id="access_code" class="form-control" value="{{ $exam->access_code }}">
                     </div>
-                    @endif
+                    <div class="form-group">
+                        <label for="randomized">Acak Soal <i class="fa fa-question-circle"></i></label>
+                        <select name="randomized" id="randomized" class="custom-select" required>
+                            <option value="" disabled selected></option>
+                            <option value="0" {{$exam->randomized == 0 ? 'selected' : ''}}>Tidak Diacak</option>
+                            <option value="1" {{$exam->randomized == 1 ? 'selected' : ''}}>Diacak</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>

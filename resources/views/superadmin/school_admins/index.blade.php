@@ -39,14 +39,13 @@
                                 <td>{{ $admin->name }}</td>
                                 <td>{{ $admin->username }}</td>
                                 <td>{{ $admin->school->name }}</td>
-                                <td class="text-center">
-                                    <div class="d-inline d-flex">
-                                    <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#editAdminSekolah" data-id="{{ $admin->id }}" data-name="{{ $admin->name }}" data-username="{{ $admin->username }}" data-school="{{ $admin->school_id }}"><i class="fas fa-pencil-alt"></i></button>
+                                <td class="d-flex justify-content-center" style="gap: 10px;">
+                                    <button class="btn btn-sm btn-success mb-2" data-toggle="modal" data-target="#editAdminSekolah" data-id="{{ $admin->id }}" data-name="{{ $admin->name }}" data-username="{{ $admin->username }}" data-school="{{ $admin->school_id }}"><i class="fas fa-pencil-alt"></i></button>
                                     <form action="{{route('superadmin.school-admins.resetPassword')}}" method="POST">
                                     @csrf    
                                     @method('PUT')
                                         <input type="hidden" name="id" value="{{$admin->id}}">
-                                        <button class="btn btn-sm btn-danger ml-1" onclick="return confirm('Apa Anda yakin ingin mereset password ?');" type="submit"><i class="fas fa-cogs"></i></button>
+                                        <button class="btn btn-sm btn-warning" onclick="return confirm('Apa Anda yakin ingin mereset password ?');" type="submit"><i class="fas fa-redo-alt"></i></button>
                                     </form>
                                 </td>
                             </tr>

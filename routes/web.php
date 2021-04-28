@@ -83,7 +83,6 @@ Route::prefix('superadmin')->name('superadmin.')->middleware(['middleware' => 'a
         Route::put('update', [ExamTypeController::class,'update'])->name('update');
     });
 
-
     Route::prefix('question-writers')->name('question-writers.')->group(function(){
         Route::get('', [QuestionWriterController::class,'index'])->name('index');
         Route::get('{regenyId}', [QuestionWriterController::class,'indexWriter'])->name('indexWriter');
@@ -96,8 +95,6 @@ Route::prefix('superadmin')->name('superadmin.')->middleware(['middleware' => 'a
         Route::post('store', [SchoolController::class,'store'])->name('store');
         Route::put('update', [SchoolController::class,'update'])->name('update');
     });
-
-
     Route::prefix('school-admins')->name('school-admins.')->group(function(){
         Route::get('', [SchoolAdminController::class,'index'])->name('index');
         Route::post('store', [SchoolAdminController::class,'store'])->name('store');
